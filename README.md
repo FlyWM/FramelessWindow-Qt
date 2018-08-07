@@ -6,6 +6,8 @@ GitHub: https://github.com/FlyWM
 CSDN: https://blog.csdn.net/a844651990
 
 使用方法：
+
+```c++
 #include "framelesswindow.h"
 #include <QWidget>
 #include <QApplication>
@@ -32,4 +34,5 @@ int main(int argc, char *argv[])
     FramelessMessageBox::showInformation(pWindow, QObject::tr("提示!"), QObject::tr("自定义提示框！"));
     return a.exec();
 }
+```
 
