@@ -12,10 +12,13 @@
 
 #include <QApplication>
 #include "mainwindow.h"
+#include "stylesheethelper.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    StyleSheetHelper::setStyle(":/style.qss");
 
     MainWindow w;
     w.show();

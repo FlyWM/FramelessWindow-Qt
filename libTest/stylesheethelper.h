@@ -10,8 +10,8 @@
  *
  */
 
-#ifndef STYLESHEETHELPER_H
-#define STYLESHEETHELPER_H
+#ifndef LSSTYLESHEETHELPER_H
+#define LSSTYLESHEETHELPER_H
 
 #include <QFile>
 #include <QApplication>
@@ -28,4 +28,4 @@ public:
     }
 };
 
-#endif // STYLESHEETHELPER_H
+#endif // LSSTYLESHEETHELPER_H

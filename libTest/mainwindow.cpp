@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle(tr("自定义无边框窗体"));
     QWidget *pWidget = new QWidget(this);
     QPushButton *pDialogBtn = new QPushButton(tr("Dialog"), pWidget);
+    pDialogBtn->setObjectName("openDlgBtn");
+    pDialogBtn->setFixedSize(60, 25);
     QPushButton *pMessageBoxBtn = new QPushButton(tr("MessageBox"), pWidget);
     FramelessDialog *pDialog = new FramelessDialog(this);
     pDialog->setWindowTitle(tr("自定义无边框对话框"));

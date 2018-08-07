@@ -22,7 +22,6 @@ FramelessWindow-buildlib{
         framelesshelperprivate.h \
         framelesswindow.h \
         framelesswindow_global.h \
-        stylesheethelper.h \
         widgetdata.h\
         titlebar.h
 

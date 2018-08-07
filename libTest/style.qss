@@ -1,0 +1,4 @@
+QPushButton#openDlgBtn {
+    background: lightgreen;
+    border: none;
+}

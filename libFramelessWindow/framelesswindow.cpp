@@ -13,7 +13,6 @@
 #include "framelesswindow.h"
 #include "framelesshelper.h"
 #include "titlebar.h"
-#include "stylesheethelper.h"
 #include <QLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -26,14 +25,19 @@
 #include <QMessageBox>
 #include <QIcon>
 #include <windows.h>
-#include <QDebug>
+#include <QFile>
 
 FramelessWindow::FramelessWindow(QWidget *parent)
     : QWidget(parent),
       m_pCentralWdiget(new QWidget(this))
 {
     setObjectName("framelessWindow");
-    StyleSheetHelper::setStyle(":/style/style.qss");
+
+    QFile qss(":/style/style.qss");
+    qss.open(QFile::ReadOnly);
+    this->setStyleSheet(qss.readAll());
+    qss.close();
+
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
 
     m_pTitleBar = new TitleBar(this);
@@ -130,22 +134,22 @@ FramelessDialog::FramelessDialog(QWidget *parent)
 {
     setObjectName("framelessDialog");
     resize(400, 300);
-//    StyleSheetHelper::setStyle(":/style/style.qss");
+
+    QFile qss(":/style/style.qss");
+    qss.open(QFile::ReadOnly);
+    this->setStyleSheet(qss.readAll());
+    qss.close();
+
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
     m_pTitleBar = new TitleBar(this);
     installEventFilter(m_pTitleBar);
     setTitleHeight(m_pTitleBar->height());
 
     setWindowTitle("Custom Window");
-    QPalette pal(palette());
-    pal.setColor(QPalette::Background, QColor(50, 50, 50));
-    setAutoFillBackground(true);
-    setPalette(pal);
 
     pFrameLessWindowLayout = new QVBoxLayout();
     pFrameLessWindowLayout->addWidget(m_pTitleBar);
     pFrameLessWindowLayout->addWidget(m_pCentralWidget, 1);
-//    pFrameLessWindowLayout->addStretch();
     pFrameLessWindowLayout->setSpacing(0);
     pFrameLessWindowLayout->setContentsMargins(0, 0, 0, 0);
     setLayout(pFrameLessWindowLayout);
@@ -223,7 +227,8 @@ FramelessMessageBox::FramelessMessageBox(QWidget *parent, const QString &title, 
     m_pButtonBox->setStandardButtons(QDialogButtonBox::StandardButtons(int(buttons)));
     setDefaultButton(defaultButton);
 
-    QPushButton *pYesButton = m_pButtonBox->button(QDialogButtonBox::Yes);
+    // 根据用到的按钮进行设置,太多了就不一一写了
+    QPushButton *pYesButton = m_pButtonBox->button(QDialogButtonBox::Ok);
     if (pYesButton != NULL)
     {
         pYesButton->setObjectName("yesButton");
@@ -261,7 +266,6 @@ FramelessMessageBox::FramelessMessageBox(QWidget *parent, const QString &title, 
     m_pGridLayout->setVerticalSpacing(10);
     m_pGridLayout->setContentsMargins(10, 10, 10, 10);
     pFrameLessWindowLayout->addLayout(m_pGridLayout);
-//    pFrameLessWindowLayout->addStretch();
 
     translateUI();
 

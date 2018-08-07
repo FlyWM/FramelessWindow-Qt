@@ -15,5 +15,9 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    stylesheethelper.h
+
+RESOURCES += \
+    style.qrc
 
