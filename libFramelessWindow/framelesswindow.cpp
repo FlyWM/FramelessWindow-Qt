@@ -27,13 +27,21 @@
 #include <windows.h>
 #include <QFile>
 
+#ifdef Q_CC_MSVC
+#pragma comment(lib, "user32.lib")
+#endif
+
 FramelessWindow::FramelessWindow(QWidget *parent)
     : QWidget(parent),
       m_pCentralWdiget(new QWidget(this))
 {
-    setObjectName("framelessWindow");
+    QWidget *pMainWindow = new QWidget(this);
+    pMainWindow->setObjectName("framelessWindow");
+    QVBoxLayout *pLayout = new QVBoxLayout(this);
+    pLayout->addWidget(pMainWindow);
+    pLayout->setContentsMargins(1, 1, 1, 1);
 
-    QFile qss(":/style/style.qss");
+    QFile qss(":/style/style_white.qss");
     qss.open(QFile::ReadOnly);
     this->setStyleSheet(qss.readAll());
     qss.close();
@@ -48,7 +56,7 @@ FramelessWindow::FramelessWindow(QWidget *parent)
     setWindowTitle("Custom Window");
     setWindowIcon(QIcon(":/images/logo.jpg"));
 
-    pFrameLessWindowLayout = new QVBoxLayout(this);
+    pFrameLessWindowLayout = new QVBoxLayout(pMainWindow);
     pFrameLessWindowLayout->addWidget(m_pTitleBar);
     pFrameLessWindowLayout->addWidget(m_pCentralWdiget, 1);
     pFrameLessWindowLayout->setSpacing(0);
@@ -127,7 +135,6 @@ bool FramelessWindow::nativeEvent(const QByteArray &eventType, void *message, lo
     }
 }
 
-
 FramelessDialog::FramelessDialog(QWidget *parent)
     : QDialog(parent),
       m_pCentralWidget(new QWidget(this))
@@ -135,7 +142,7 @@ FramelessDialog::FramelessDialog(QWidget *parent)
     setObjectName("framelessDialog");
     resize(400, 300);
 
-    QFile qss(":/style/style.qss");
+    QFile qss(":/style/style_white.qss");
     qss.open(QFile::ReadOnly);
     this->setStyleSheet(qss.readAll());
     qss.close();

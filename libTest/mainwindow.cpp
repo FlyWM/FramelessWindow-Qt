@@ -17,14 +17,14 @@
 MainWindow::MainWindow(QWidget *parent)
     : FramelessWindow(parent)
 {
-    setWindowTitle(tr("自定义无边框窗体"));
+    setWindowTitle(tr("Custom Frameless Window"));
     QWidget *pWidget = new QWidget(this);
     QPushButton *pDialogBtn = new QPushButton(tr("Dialog"), pWidget);
     pDialogBtn->setObjectName("openDlgBtn");
     pDialogBtn->setFixedSize(60, 25);
     QPushButton *pMessageBoxBtn = new QPushButton(tr("MessageBox"), pWidget);
     FramelessDialog *pDialog = new FramelessDialog(this);
-    pDialog->setWindowTitle(tr("自定义无边框对话框"));
+    pDialog->setWindowTitle(tr("Custom Frameless Dialog"));
     QWidget *pDlgWidget = new QWidget(pDialog);
     QPushButton *pDlgBtn = new QPushButton("DialogButton", pDlgWidget);
     pDlgBtn->move(80, 30);
@@ -35,8 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(pMessageBoxBtn, &QPushButton::clicked, [=]() {
         FramelessMessageBox::showInformation(this,
-                                             tr("提示！"),
-                                             tr("自定义无边框提示框！"),
+                                             tr("Information!"),
+                                             tr("Custom Frameless Dialog"),
                                              QMessageBox::Yes);
     });
 
