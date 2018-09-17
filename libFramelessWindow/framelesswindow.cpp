@@ -27,6 +27,10 @@
 #include <windows.h>
 #include <QFile>
 
+#ifdef Q_OS_WIN
+#include "windwmapi.h"
+#endif
+
 #ifdef Q_CC_MSVC
 #pragma comment(lib, "user32.lib")
 #endif
@@ -73,9 +77,22 @@ FramelessWindow::FramelessWindow(QWidget *parent)
 
     // 此行代码可以带回Aero效果，同时也带回了标题栏和边框,在nativeEvent()会再次去掉标题栏
 #ifdef Q_OS_WIN32
+#ifdef HAVE_WINDOW_AERO
     HWND hwnd = (HWND)this->winId();
     DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
     ::SetWindowLong(hwnd, GWL_STYLE, style | WS_MAXIMIZEBOX | WS_THICKFRAME);
+
+    BOOL enabled = FALSE;
+    WinDwmapi::instance()->DwmIsCompositionEnabled(&enabled);
+    if(enabled)
+    {
+        //保留一个像素的边框宽度，否则系统不会绘制边框阴影
+        //
+        //we better left 1 piexl width of border untouch, so OS can draw nice shadow around it
+        const MARGINS shadow = { 1, 1, 1, 1 };
+        WinDwmapi::instance()->DwmExtendFrameIntoClientArea(HWND(winId()), &shadow);
+    }
+#endif
 #endif
 }
 

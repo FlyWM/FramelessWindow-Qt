@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 自定义无边框窗体、对话框和提示框并封装成库
  *
  * framelesswindow.h
@@ -17,10 +17,15 @@
 #include <QWidget>
 #include <QDialog>
 #include <QMessageBox>
+#include <QVBoxLayout>
+
+
+/** 是否启用 window AREO 效果 **/
+//#undef HAVE_WINDOW_AERO
 
 class FramelessHelper;
 class TitleBar;
-class QVBoxLayout;
+
 /**
  * @brief The FramelessWindow class
  *  无边框自定义窗体

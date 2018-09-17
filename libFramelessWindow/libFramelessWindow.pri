@@ -36,8 +36,14 @@ FramelessWindow-buildlib{
         images.qrc \
         style.qrc
 
-    QT += widgets
+    QT += widgets winextras
 
 }else{
     LIBS += -L$$PROJECT_LIBDIR -l$$LIBFRAMELESSWINDOW_NAME
 }
+
+HEADERS += \
+    $$PWD/windwmapi.h
+
+SOURCES += \
+    $$PWD/windwmapi.cpp
