@@ -322,7 +322,8 @@ void WidgetData::moveWidget(const QPoint &gMousePos)
             {
                 m_ptDragPos.setX(m_pWidget->normalGeometry().width() - m_nRightLength);
             }
-            m_pWidget->showNormal();
+
+            m_pWidget->setGeometry(0, 0, m_pWidget->normalGeometry().width(), m_pWidget->normalGeometry().height());
         }
         m_pWidget->move(gMousePos - m_ptDragPos);
     }
