@@ -18,6 +18,7 @@
 #include <QMouseEvent>
 #include <QApplication>
 #include <qt_windows.h>
+#include <QDesktopWidget>
 
 TitleBar::TitleBar(QWidget *parent)
     : QWidget(parent)
@@ -173,6 +174,7 @@ bool TitleBar::eventFilter(QObject *obj, QEvent *event)
             return true;
         }
     }
+    case QEvent::Move:
     case QEvent::WindowStateChange:
     case QEvent::Resize:
         updateMaximize();
@@ -194,7 +196,15 @@ void TitleBar::onClicked()
         }
         else if (pButton == m_pMaximizeButton)
         {
-            pWindow->isMaximized() ? pWindow->showNormal() : pWindow->showMaximized();
+            if(pWindow->isMaximized())
+            {
+                pWindow->showNormal();
+            }
+            else
+            {
+                pWindow->showMaximized();
+                window()->setGeometry(QApplication::desktop()->availableGeometry());
+            }
         }
         else if (pButton == m_pCloseButton)
         {
