@@ -45,59 +45,13 @@ TitleBar::TitleBar(QWidget *parent)
     m_pMaximizeButton->setObjectName("maximizeButton");
     m_pCloseButton->setObjectName("closeButton");
 
+    m_pMinimizeButton->setCheckable(true);
+    m_pMaximizeButton->setCheckable(true);
+    m_pCloseButton->setCheckable(true);
+
     m_pMinimizeButton->setToolTip("Minimize");
     m_pMaximizeButton->setToolTip("Maximize");
     m_pCloseButton->setToolTip("Close");
-
-//    m_pMinimizeButton->setStyleSheet("QPushButton#minimizeButton { \
-//                                          background: #323232; \
-//                                          border: none;               \
-//                                          image: url(:/images/minimizeBtnWhite_16.png); \
-//                                      }  \
-//                                      QPushButton#minimizeButton:hover { \
-//                                          background: #505050;  \
-//                                      } \
-//                                      QPushButton#minimizeButton:pressed { \
-//                                          background: #C8C8C8; \
-//                                          image: url(:/images/minimizeBtnBlack_16.png);\
-//                                      }");
-//    m_pMaximizeButton->setStyleSheet("QPushButton#maximizeButton[maximizeProperty=restore] { \
-//                                          background: #323232; \
-//                                          border: none; \
-//                                          image: url(:/images/restoreWhite_16.png); \
-//                                      }\
-//                                      QPushButton#maximizeButton[maximizeProperty=restore]:hover { \
-//                                          background: #505050; \
-//                                      }\
-//                                      QPushButton#maximizeButton[maximizeProperty=restore]:pressed { \
-//                                          background: #C8C8C8; \
-//                                          image: url(:/images/restoreBlack_16.png);\
-//                                      } \
-//                                      QPushButton#maximizeButton[maximizeProperty=maximize] { \
-//                                          background: #323232; \
-//                                          border: none; \
-//                                          image: url(:/images/maximizeBtnWhite_16.png); \
-//                                      } \
-//                                      QPushButton#maximizeButton[maximizeProperty=maximize]:hover { \
-//                                          background: #505050;\
-//                                      } \
-//                                      QPushButton#maximizeButton[maximizeProperty=maximize]:pressed { \
-//                                          background: #C8C8C8;\
-//                                          image: url(:/images/maximizeBtnBlack_16.png) \
-//                                      }");
-//    m_pCloseButton->setStyleSheet("QPushButton#closeButton { \
-//                                       background: #323232; \ \
-//                                       border: none; \
-//                                       image: url(:/images/closeBtnWhite_16.png);\
-//                                   }  \
-//                                   QPushButton#closeButton:hover { \
-//                                       background: #505050; \
-//                                   } \
-//                                   QPushButton#closeButton:pressed { \
-//                                       background: #C8C8C8;\
-//                                       image: url(:/images/closeBtnBlack_16.png); \
-//                                   }");
-
 
     QHBoxLayout *pLayout = new QHBoxLayout(this);
     pLayout->addWidget(m_pIconLabel);

@@ -45,7 +45,7 @@ FramelessWindow::FramelessWindow(QWidget *parent)
     pLayout->addWidget(pMainWindow);
     pLayout->setContentsMargins(1, 1, 1, 1);
 
-    QFile qss(":/style/style_white.qss");
+    QFile qss(":/style/style_black.qss");
     qss.open(QFile::ReadOnly);
     this->setStyleSheet(qss.readAll());
     qss.close();
@@ -72,27 +72,25 @@ FramelessWindow::FramelessWindow(QWidget *parent)
 
     setWidgetMovalbe();
     setWidgetResizable();
-    setRubberBandOnMove();
-    setRubberBandOnResize();
+    setRubberBandOnMove(false);
+    setRubberBandOnResize(false);
 
     // 此行代码可以带回Aero效果，同时也带回了标题栏和边框,在nativeEvent()会再次去掉标题栏
-#ifdef Q_OS_WIN32
-#ifdef HAVE_WINDOW_AERO
-    HWND hwnd = (HWND)this->winId();
-    DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
-    ::SetWindowLong(hwnd, GWL_STYLE, style | WS_MAXIMIZEBOX | WS_THICKFRAME);
-
+#ifdef Q_OS_WIN32    
     BOOL enabled = FALSE;
     WinDwmapi::instance()->DwmIsCompositionEnabled(&enabled);
-    if(enabled)
+    if (enabled)
     {
+       // m_haveAero = true;
+        HWND hwnd = (HWND)this->winId();
+        DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
+        ::SetWindowLong(hwnd, GWL_STYLE, style | WS_MAXIMIZEBOX | WS_THICKFRAME | WS_CAPTION);
         //保留一个像素的边框宽度，否则系统不会绘制边框阴影
         //
         //we better left 1 piexl width of border untouch, so OS can draw nice shadow around it
         const MARGINS shadow = { 1, 1, 1, 1 };
         WinDwmapi::instance()->DwmExtendFrameIntoClientArea(HWND(winId()), &shadow);
     }
-#endif
 #endif
 }
 
@@ -140,6 +138,7 @@ void FramelessWindow::setCentralWidget(QWidget *w)
 
 bool FramelessWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)
 {
+    //if ()
     MSG* msg = (MSG *)message;
     switch (msg->message)
     {
@@ -161,7 +160,7 @@ FramelessDialog::FramelessDialog(QWidget *parent)
     setObjectName("framelessDialog");
     resize(400, 300);
 
-    QFile qss(":/style/style_white.qss");
+    QFile qss(":/style/style_black.qss");
     qss.open(QFile::ReadOnly);
     this->setStyleSheet(qss.readAll());
     qss.close();

@@ -12,8 +12,14 @@
 
 
 /********** 无边框主窗体 **********/
-FramelessWindow#framelessWindow {
+/*FramelessWindow#framelessWindow {
     background-color: #323232;
+}*/
+QWidget#framelessWindow {
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-color: green;
 }
 /********************************/
 

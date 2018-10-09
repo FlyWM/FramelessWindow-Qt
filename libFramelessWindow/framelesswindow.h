@@ -103,6 +103,7 @@ private:
     TitleBar *m_pTitleBar = nullptr;
     QVBoxLayout *pFrameLessWindowLayout;
     QWidget *m_pCentralWdiget;
+    //bool m_haveAero;
 };
 
 /**

@@ -17,14 +17,13 @@ public:
     WinDwmapi();
     ~WinDwmapi();
 
-    typedef HRESULT (WINAPI* DwmIsCompositionEnabledPtr)(__out BOOL* pfEnabled);
-    typedef HRESULT (WINAPI* DwmExtendFrameIntoClientAreaPtr)(__in HWND hWnd, __in const MARGINS *pMarInset);
+    typedef HRESULT (WINAPI* DwmIsCompositionEnabledPtr)(BOOL* pfEnabled);
+    typedef HRESULT (WINAPI* DwmExtendFrameIntoClientAreaPtr)(HWND hWnd, const MARGINS *pMarInset);
 
     HRESULT DwmIsCompositionEnabled(BOOL* pfEnabled) const;
     HRESULT DwmExtendFrameIntoClientArea(HWND hWnd, const MARGINS *pMarInset) const;
 
     static const WinDwmapi* instance();
-
 
 private:
       DwmIsCompositionEnabledPtr dwm_is_composition_enabled_;
