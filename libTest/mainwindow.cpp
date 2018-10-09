@@ -11,6 +11,7 @@
  */
 
 #include "mainwindow.h"
+#include "stylesheethelper.h"
 #include <QPushButton>
 #include <QLayout>
 
@@ -29,6 +30,17 @@ MainWindow::MainWindow(QWidget *parent)
     QPushButton *pDlgBtn = new QPushButton("DialogButton", pDlgWidget);
     pDlgBtn->move(80, 30);
     pDialog->setCentralWidget(pDlgWidget);
+
+    QPushButton *pChangeSkinBtn = new QPushButton("White Skin", this);
+    QPushButton *pChangeSkinBtn1 = new QPushButton("Dark Skin", this);
+    pChangeSkinBtn->move(50, 30);
+    pChangeSkinBtn1->move(160, 30);
+    connect(pChangeSkinBtn, &QPushButton::clicked, [=](){
+        StyleSheetHelper::setStyle(":/style_white.qss");
+    });
+    connect(pChangeSkinBtn1, &QPushButton::clicked, [=](){
+        StyleSheetHelper::setStyle(":/style_black.qss");
+    });
 
     connect(pDialogBtn, &QPushButton::clicked, [=]() {
         pDialog->show();

@@ -47,10 +47,10 @@ FramelessWindow::FramelessWindow(QWidget *parent)
     pLayout->addWidget(pMainWindow);
     pLayout->setContentsMargins(1, 1, 1, 1);
 
-    QFile qss(":/style/style_black.qss");
-    qss.open(QFile::ReadOnly);
-    this->setStyleSheet(qss.readAll());
-    qss.close();
+//    QFile qss(":/style/style_black.qss");
+//    qss.open(QFile::ReadOnly);
+//    this->setStyleSheet(qss.readAll());
+//    qss.close();
 
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
 
@@ -162,10 +162,10 @@ FramelessDialog::FramelessDialog(QWidget *parent)
     setObjectName("framelessDialog");
     resize(400, 300);
 
-    QFile qss(":/style/style_black.qss");
-    qss.open(QFile::ReadOnly);
-    this->setStyleSheet(qss.readAll());
-    qss.close();
+//    QFile qss(":/style/style_black.qss");
+//    qss.open(QFile::ReadOnly);
+//    this->setStyleSheet(qss.readAll());
+//    qss.close();
 
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
     m_pTitleBar = new TitleBar(this);

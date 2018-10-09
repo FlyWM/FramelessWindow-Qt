@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    StyleSheetHelper::setStyle(":/style.qss");
+    StyleSheetHelper::setStyle(":/style_black.qss");
 
     MainWindow w;
     w.show();
