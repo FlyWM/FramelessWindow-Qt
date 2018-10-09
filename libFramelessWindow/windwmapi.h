@@ -1,4 +1,13 @@
-﻿#ifndef WINDWMAPI_H
+﻿/**
+ * 自定义无边框窗体、对话框和提示框并封装成库
+ *
+ * windwmapi.h
+ *
+ * dnybz
+ * GitHub: https://github.com/dnybz
+ *
+ */
+#ifndef WINDWMAPI_H
 #define WINDWMAPI_H
 
 #include <windows.h>
