@@ -16,7 +16,7 @@
     background-color: #323232;
 }*/
 QWidget#framelessWindow {
-    background-color: white;
+    background-color: black;
     border-style: solid;
     border-width: 1px;
     border-color: green;
@@ -59,7 +59,11 @@ QPushButton#minimizeButton:pressed {
     background: #C8C8C8;
     image: url(:/images/minimizeBtnBlack_16.png);
 }
-QPushButton#maximizeButton:pressed {
+QPushButton#maximizeButton:pressed[maximizeProperty=maximize] {
+    background: #C8C8C8;
+    image: url(:/images/maximizeBtnBlack_16.png);
+}
+QPushButton#maximizeButton:pressed[maximizeProperty=restore] {
     background: #C8C8C8;
     image: url(:/images/restoreBlack_16.png);
 }

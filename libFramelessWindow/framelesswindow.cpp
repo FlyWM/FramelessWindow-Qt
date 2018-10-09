@@ -26,6 +26,7 @@
 #include <QIcon>
 #include <windows.h>
 #include <QFile>
+#include <QDebug>
 
 #ifdef Q_OS_WIN
 #include "windwmapi.h"
@@ -41,6 +42,7 @@ FramelessWindow::FramelessWindow(QWidget *parent)
 {
     QWidget *pMainWindow = new QWidget(this);
     pMainWindow->setObjectName("framelessWindow");
+    m_pCentralWdiget->setObjectName("centralWidget");
     QVBoxLayout *pLayout = new QVBoxLayout(this);
     pLayout->addWidget(pMainWindow);
     pLayout->setContentsMargins(1, 1, 1, 1);
