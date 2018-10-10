@@ -96,6 +96,7 @@ public:
     void setCentralWidget(QWidget *w);
 
 protected:
+    virtual void paintEvent(QPaintEvent *event);
     virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result);
 
 private:

@@ -27,6 +27,9 @@
 #include <windows.h>
 #include <QFile>
 #include <QDebug>
+#include <QtMath>
+#include <QPainter>
+#include <QStyleOption>
 
 #ifdef Q_OS_WIN
 #include "windwmapi.h"
@@ -40,12 +43,14 @@ FramelessWindow::FramelessWindow(QWidget *parent)
     : QWidget(parent),
       m_pCentralWdiget(new QWidget(this))
 {
+    setObjectName("mainWindow");
     QWidget *pMainWindow = new QWidget(this);
     pMainWindow->setObjectName("framelessWindow");
     m_pCentralWdiget->setObjectName("centralWidget");
     QVBoxLayout *pLayout = new QVBoxLayout(this);
     pLayout->addWidget(pMainWindow);
-    pLayout->setContentsMargins(1, 1, 1, 1);
+    pLayout->setContentsMargins(10, 10, 10, 10);
+    setAttribute(Qt::WA_TranslucentBackground);
 
 //    QFile qss(":/style/style_black.qss");
 //    qss.open(QFile::ReadOnly);
@@ -90,8 +95,8 @@ FramelessWindow::FramelessWindow(QWidget *parent)
         //保留一个像素的边框宽度，否则系统不会绘制边框阴影
         //
         //we better left 1 piexl width of border untouch, so OS can draw nice shadow around it
-        const MARGINS shadow = { 1, 1, 1, 1 };
-        WinDwmapi::instance()->DwmExtendFrameIntoClientArea(HWND(winId()), &shadow);
+//        const MARGINS shadow = { 1, 1, 1, 1 };
+//        WinDwmapi::instance()->DwmExtendFrameIntoClientArea(HWND(winId()), &shadow);
     }
 #endif
 }
@@ -136,6 +141,34 @@ void FramelessWindow::setCentralWidget(QWidget *w)
     m_pCentralWdiget->deleteLater();
     m_pCentralWdiget = w;
     pFrameLessWindowLayout->addWidget(w, 1);
+}
+
+void FramelessWindow::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event)
+
+    QStyleOption opt;
+    opt.init(this);
+    QPainter painter(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+
+    // 绘制边框阴影
+    QPainterPath path;
+    path.setFillRule(Qt::WindingFill);
+    path.addRect(10, 10, this->width()-20, this->height()-20);
+
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    painter.fillPath(path,QBrush(Qt::white));
+    QColor color(0, 0, 0, 50);
+    for (int i = 0; i < 10; ++i)
+    {
+        QPainterPath path;
+        path.setFillRule(Qt::WindingFill);
+        path.addRect(10-i, 10-i, this->width()-(10-i)*2, this->height()-(10-i)*2);
+        color.setAlpha(60 - qSqrt(i)*20);
+        painter.setPen(color);
+        painter.drawPath(path);
+    }
 }
 
 bool FramelessWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)

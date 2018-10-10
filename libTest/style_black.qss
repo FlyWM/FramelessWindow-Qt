@@ -17,9 +17,9 @@
 }*/
 QWidget#framelessWindow {
     background-color: black;
-    border-style: solid;
+    /*border-style: solid;
     border-width: 1px;
-    border-color: green;
+    border-color: green;*/
 }
 /********************************/
 

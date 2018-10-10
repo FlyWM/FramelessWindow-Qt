@@ -10,14 +10,16 @@
  *
  */
 
-
+QWidget#mainWindow {
+    border-radius: 5px;
+}
 /********** 无边框主窗体 **********/
-QWidget#framelessWindow {
+/*QWidget#framelessWindow {
     background-color: white;
     border-style: solid;
     border-width: 1px;
     border-color: green;
-}
+}*/
 /********************************/
 
 
