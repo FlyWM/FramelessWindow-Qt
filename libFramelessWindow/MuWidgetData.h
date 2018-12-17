@@ -24,6 +24,8 @@ public:
     // 更新橡皮筋状态
     void updateRubberBandStatus();
 
+    void setShadowWidth(const int width);
+
 private:
     // 处理鼠标按下
     void handleMousePressEvent(QMouseEvent *event);
@@ -56,6 +58,7 @@ private:
     bool m_bLeftButtonTitlePressed;
     bool m_bCursorShapeChanged;
     Qt::WindowFlags m_windowFlags;
+    int m_nShadowWidth;
 };
 
 #endif // MUWIDGETDATA_H

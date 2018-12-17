@@ -39,6 +39,7 @@ public:
 
     static int m_nBorderWidth;
     static int m_nTitleHeight;
+    static int m_nShadowWidth;
 };
 
 #endif // MuCURSORPOSCALCULATOR_H

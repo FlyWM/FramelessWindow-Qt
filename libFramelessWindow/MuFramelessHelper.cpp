@@ -29,8 +29,7 @@ MuFramelessHelper::~MuFramelessHelper()
 {
     QList<QWidget*> keys = d->m_widgetDataHash.keys();
     int size = keys.size();
-    for (int i = 0; i < size; ++i)
-    {
+    for (int i = 0; i < size; ++i) {
         delete d->m_widgetDataHash.take(keys[i]);
     }
 
@@ -39,9 +38,9 @@ MuFramelessHelper::~MuFramelessHelper()
 
 void MuFramelessHelper::activateOn(QWidget *topLevelWidget)
 {
-    if (!d->m_widgetDataHash.contains(topLevelWidget))
-    {
+    if (!d->m_widgetDataHash.contains(topLevelWidget)) {
        MuWidgetData *data = new MuWidgetData(d, topLevelWidget);
+       data->setShadowWidth(d->m_nShadowWidth);
        d->m_widgetDataHash.insert(topLevelWidget, data);
 
        topLevelWidget->installEventFilter(this);
@@ -51,8 +50,7 @@ void MuFramelessHelper::activateOn(QWidget *topLevelWidget)
 void MuFramelessHelper::removeFrom(QWidget *topLevelWidget)
 {
     MuWidgetData *data = d->m_widgetDataHash.take(topLevelWidget);
-    if (data)
-    {
+    if (data) {
         topLevelWidget->removeEventFilter(this);
         delete data;
     }
@@ -72,8 +70,7 @@ void MuFramelessHelper::setRubberBandOnMove(bool movable)
 {
     d->m_bRubberBandOnMove = movable;
     QList<MuWidgetData*> list = d->m_widgetDataHash.values();
-    foreach (MuWidgetData *data, list)
-    {
+    foreach (MuWidgetData *data, list) {
         data->updateRubberBandStatus();
     }
 }
@@ -82,25 +79,29 @@ void MuFramelessHelper::setRubberBandOnResize(bool resizable)
 {
     d->m_bRubberBandOnResize = resizable;
     QList<MuWidgetData*> list = d->m_widgetDataHash.values();
-    foreach (MuWidgetData *data, list)
-    {
+    foreach (MuWidgetData *data, list) {
         data->updateRubberBandStatus();
     }
 }
 
 void MuFramelessHelper::setBorderWidth(uint width)
 {
-    if (width > 0)
-    {
+    if (width > 0) {
         MuCursorPosCalculator::m_nBorderWidth = width;
     }
 }
 
 void MuFramelessHelper::setTitleHeight(uint height)
 {
-    if (height > 0)
-    {
+    if (height > 0) {
         MuCursorPosCalculator::m_nTitleHeight = height;
+    }
+}
+
+void MuFramelessHelper::setShadowWidth(int width)
+{
+    if (width >= 0) {
+        d->m_nShadowWidth = width;
     }
 }
 
@@ -141,11 +142,9 @@ bool MuFramelessHelper::eventFilter(QObject *watched, QEvent *event)
     case QEvent::HoverMove:
     case QEvent::MouseButtonPress:
     case QEvent::MouseButtonRelease:
-    case QEvent::Leave:
-    {
+    case QEvent::Leave: {
         MuWidgetData *data = d->m_widgetDataHash.value(static_cast<QWidget *>(watched));
-        if (data)
-        {
+        if (data) {
             data->handleWidgetEvent(event);
             return true;
         }

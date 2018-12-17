@@ -25,6 +25,7 @@ class MuFramelessHelperPrivate
 {
 public:
     QHash<QWidget*, MuWidgetData*> m_widgetDataHash;
+    int m_nShadowWidth;
     bool m_bWidgetMovable        : true;
     bool m_bWidgetResizable      : true;
     bool m_bRubberBandOnResize   : true;

@@ -30,10 +30,8 @@ public:
 
 protected:
     /**
-     * @brief mouseDoubleClickEvent
-     *  双击标题栏进行界面的最大化/还原
-     * @param event
-     *  QMouseEvent *
+     * @brief mouseDoubleClickEvent 双击标题栏进行界面的最大化/还原
+     * @param event QMouseEvent *
      */
     virtual void mouseDoubleClickEvent(QMouseEvent *event);   
 
@@ -41,8 +39,7 @@ protected:
 //    virtual void mousePressEvent(QMouseEvent *event);
 
     /**
-     * @brief eventFilter
-     *  设置界面标题与图标
+     * @brief eventFilter 设置界面标题与图标
      * @param obj
      * @param event
      * @return
@@ -52,15 +49,17 @@ protected:
 
 private slots:
     /**
-     * @brief onClicked
-     *   进行最小化、最大化/还原、关闭操作
+     * @brief onClicked 进行最小化、最大化/还原、关闭操作
      */
     void onClicked();
 
+signals:
+    void ShowMaximized();
+    void ShowNormal();
+
 private:
     /**
-     * @brief updateMaximize
-     *  最大化/还原
+     * @brief updateMaximize 最大化/还原
      */
     void updateMaximize();
 

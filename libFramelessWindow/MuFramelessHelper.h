@@ -75,6 +75,12 @@ public:
      */
     void setTitleHeight(uint height);
 
+    /**
+     * @brief setShadowWidth 设置边框阴影的宽度，会涉及到在什么位置改变鼠标的形状
+     * @param width
+     */
+    void setShadowWidth(int width);
+
     bool widgetResizable() const;
     bool widgetMoable() const;
     bool rubberBandOnMove() const;
