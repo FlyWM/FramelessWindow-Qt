@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 自定义无边框窗体、对话框和提示框并封装成库
  *
  * cursorposcalculator.h
@@ -10,8 +10,8 @@
  *
  */
 
-#ifndef CURSORPOSCALCULATOR_H
-#define CURSORPOSCALCULATOR_H
+#ifndef MUCURSORPOSCALCULATOR_H
+#define MUCURSORPOSCALCULATOR_H
 
 /**
  * @brief The CursorPosCalculator class
@@ -19,11 +19,10 @@
  */
 class QPoint;
 class QRect;
-class CursorPosCalculator
+class MuCursorPosCalculator
 {
 public:
-    explicit CursorPosCalculator();
-
+    explicit MuCursorPosCalculator();
     void reset();
     void recalculate(const QPoint &gMousePos, const QRect &frameRect);
 
@@ -42,4 +41,4 @@ public:
     static int m_nTitleHeight;
 };
 
-#endif // CURSORPOSCALCULATOR_H
+#endif // MuCURSORPOSCALCULATOR_H

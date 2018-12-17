@@ -7,8 +7,8 @@
  * GitHub: https://github.com/dnybz
  *
  */
-#ifndef WINDWMAPI_H
-#define WINDWMAPI_H
+#ifndef MUWINDWMAPI_H
+#define MUWINDWMAPI_H
 
 #include <windows.h>
 
@@ -20,11 +20,11 @@ typedef struct _MARGINS
     int cyBottomHeight;   // height of bottom border that retains its size
 } MARGINS, *PMARGINS;
 
-class WinDwmapi
+class MuWinDwmapi
 {
 public:
-    WinDwmapi();
-    ~WinDwmapi();
+    MuWinDwmapi();
+    ~MuWinDwmapi();
 
     typedef HRESULT (WINAPI* DwmIsCompositionEnabledPtr)(BOOL* pfEnabled);
     typedef HRESULT (WINAPI* DwmExtendFrameIntoClientAreaPtr)(HWND hWnd, const MARGINS *pMarInset);
@@ -32,7 +32,7 @@ public:
     HRESULT DwmIsCompositionEnabled(BOOL* pfEnabled) const;
     HRESULT DwmExtendFrameIntoClientArea(HWND hWnd, const MARGINS *pMarInset) const;
 
-    static const WinDwmapi* instance();
+    static const MuWinDwmapi* instance();
 
 private:
       DwmIsCompositionEnabledPtr dwm_is_composition_enabled_;
@@ -40,4 +40,4 @@ private:
       HMODULE dwmapi_dll_;
 };
 
-#endif // WINDWMAPI_H
+#endif // MUWINDWMAPI_H

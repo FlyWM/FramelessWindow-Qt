@@ -10,9 +10,6 @@
  *
  */
 
-#include "framelesswindow.h"
-#include "framelesshelper.h"
-#include "titlebar.h"
 #include <QLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -30,9 +27,12 @@
 #include <QtMath>
 #include <QPainter>
 #include <QStyleOption>
+#include "framelesswindow.h"
+#include "MuFramelessHelper.h"
+#include "MuTitleBar.h"
 
 #ifdef Q_OS_WIN
-#include "windwmapi.h"
+#include "MuWinDWMAPI.h"
 #endif
 
 #ifdef Q_CC_MSVC
@@ -50,16 +50,11 @@ FramelessWindow::FramelessWindow(QWidget *parent)
     QVBoxLayout *pLayout = new QVBoxLayout(this);
     pLayout->addWidget(pMainWindow);
     pLayout->setContentsMargins(10, 10, 10, 10);
-    setAttribute(Qt::WA_TranslucentBackground);
-
-//    QFile qss(":/style/style_black.qss");
-//    qss.open(QFile::ReadOnly);
-//    this->setStyleSheet(qss.readAll());
-//    qss.close();
+//    setAttribute(Qt::WA_TranslucentBackground);
 
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
 
-    m_pTitleBar = new TitleBar(this);
+    m_pTitleBar = new MuTitleBar(this);
     installEventFilter(m_pTitleBar);
     setTitleHeight(m_pTitleBar->height());
 
@@ -73,7 +68,7 @@ FramelessWindow::FramelessWindow(QWidget *parent)
     pFrameLessWindowLayout->setSpacing(0);
     pFrameLessWindowLayout->setContentsMargins(0, 0, 0, 0);
 
-    m_helper = new FramelessHelper(this);
+    m_helper = new MuFramelessHelper(this);
     m_helper->activateOn(this);  //激活当前窗体
     setTitleHeight();
 
@@ -85,7 +80,7 @@ FramelessWindow::FramelessWindow(QWidget *parent)
     // 此行代码可以带回Aero效果，同时也带回了标题栏和边框,在nativeEvent()会再次去掉标题栏
 #ifdef Q_OS_WIN32    
     BOOL enabled = FALSE;
-    WinDwmapi::instance()->DwmIsCompositionEnabled(&enabled);
+    MuWinDwmapi::instance()->DwmIsCompositionEnabled(&enabled);
     if (enabled)
     {
        // m_haveAero = true;
@@ -201,7 +196,7 @@ FramelessDialog::FramelessDialog(QWidget *parent)
 //    qss.close();
 
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
-    m_pTitleBar = new TitleBar(this);
+    m_pTitleBar = new MuTitleBar(this);
     installEventFilter(m_pTitleBar);
     setTitleHeight(m_pTitleBar->height());
 
@@ -214,7 +209,7 @@ FramelessDialog::FramelessDialog(QWidget *parent)
     pFrameLessWindowLayout->setContentsMargins(0, 0, 0, 0);
     setLayout(pFrameLessWindowLayout);
 
-    m_helper = new FramelessHelper(this);
+    m_helper = new MuFramelessHelper(this);
     m_helper->activateOn(this);  //激活当前窗体
 
     setTitleHeight(m_pTitleBar->height());

@@ -1,7 +1,7 @@
-/**
+﻿/**
  * 自定义无边框窗体、对话框和提示框并封装成库
  *
- * widgetdata.cpp
+ * MuWidgetData.cpp
  * 处理鼠标事件。
  *
  * FlyWM_
@@ -10,17 +10,17 @@
  *
  */
 
-#include "widgetdata.h"
-#include "framelesshelperprivate.h"
-#include "cursorposcalculator.h"
 #include <QEvent>
 #include <QMouseEvent>
 #include <QRubberBand>
 #include <QPoint>
 #include <QDesktopWidget>
 #include <QDebug>
+#include "MuWidgetData.h"
+#include "MuFramelessHelperPrivate.h"
+#include "MuCursorPosCalculator.h"
 
-WidgetData::WidgetData(FramelessHelperPrivate *_d, QWidget *pTopLevelWidget)
+MuWidgetData::MuWidgetData(MuFramelessHelperPrivate *_d, QWidget *pTopLevelWidget)
 {
     d = _d;
     m_pWidget = pTopLevelWidget;
@@ -36,7 +36,7 @@ WidgetData::WidgetData(FramelessHelperPrivate *_d, QWidget *pTopLevelWidget)
     updateRubberBandStatus();
 }
 
-WidgetData::~WidgetData()
+MuWidgetData::~MuWidgetData()
 {
     m_pWidget->setMouseTracking(false);
     m_pWidget->setWindowFlags(m_windowFlags);
@@ -46,12 +46,12 @@ WidgetData::~WidgetData()
     m_pRubberBand = NULL;
 }
 
-QWidget *WidgetData::widget()
+QWidget *MuWidgetData::widget()
 {
     return m_pWidget;
 }
 
-void WidgetData::handleWidgetEvent(QEvent *event)
+void MuWidgetData::handleWidgetEvent(QEvent *event)
 {
     switch (event->type()) {
     case QEvent::MouseButtonPress:
@@ -79,7 +79,7 @@ void WidgetData::handleWidgetEvent(QEvent *event)
     }
 }
 
-void WidgetData::updateRubberBandStatus()
+void MuWidgetData::updateRubberBandStatus()
 {
     if (d->m_bRubberBandOnMove || d->m_bRubberBandOnResize)
     {
@@ -93,7 +93,7 @@ void WidgetData::updateRubberBandStatus()
     }
 }
 
-void WidgetData::handleMousePressEvent(QMouseEvent *event)
+void MuWidgetData::handleMousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
@@ -123,7 +123,7 @@ void WidgetData::handleMousePressEvent(QMouseEvent *event)
     }
 }
 
-void WidgetData::handleMouseReleaseEvent(QMouseEvent *event)
+void MuWidgetData::handleMouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
@@ -138,7 +138,7 @@ void WidgetData::handleMouseReleaseEvent(QMouseEvent *event)
     }
 }
 
-void WidgetData::handleMouseMoveEvent(QMouseEvent *event)
+void MuWidgetData::handleMouseMoveEvent(QMouseEvent *event)
 {
     if (m_bLeftButtonPressed)
     {
@@ -157,7 +157,7 @@ void WidgetData::handleMouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void WidgetData::handleLeaveEvent(QMouseEvent *event)
+void MuWidgetData::handleLeaveEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
     if (!m_bLeftButtonPressed)
@@ -166,7 +166,7 @@ void WidgetData::handleLeaveEvent(QMouseEvent *event)
     }
 }
 
-void WidgetData::handleHoverMoveEvent(QMouseEvent *event)
+void MuWidgetData::handleHoverMoveEvent(QMouseEvent *event)
 {
     if (d->m_bWidgetResizable)
     {
@@ -174,7 +174,7 @@ void WidgetData::handleHoverMoveEvent(QMouseEvent *event)
     }
 }
 
-void WidgetData::updateCursorShape(const QPoint &gMousePos)
+void MuWidgetData::updateCursorShape(const QPoint &gMousePos)
 {
     if (m_pWidget->isFullScreen() || m_pWidget->isMaximized())
     {
@@ -217,7 +217,7 @@ void WidgetData::updateCursorShape(const QPoint &gMousePos)
     }
 }
 
-void WidgetData::resizeWidget(const QPoint &gMousePos)
+void MuWidgetData::resizeWidget(const QPoint &gMousePos)
 {
     QRect origRect;
 
@@ -302,7 +302,7 @@ void WidgetData::resizeWidget(const QPoint &gMousePos)
     }
 }
 
-void WidgetData::moveWidget(const QPoint &gMousePos)
+void MuWidgetData::moveWidget(const QPoint &gMousePos)
 {
     if (d->m_bRubberBandOnMove)
     {

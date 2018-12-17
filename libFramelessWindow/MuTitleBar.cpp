@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 自定义无边框窗体、对话框和提示框并封装成库
  *
  * titlebar.cpp
@@ -10,7 +10,6 @@
  *
  */
 
-#include "titlebar.h"
 #include <QLabel>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -19,8 +18,9 @@
 #include <QApplication>
 #include <qt_windows.h>
 #include <QDesktopWidget>
+#include "MuTitleBar.h"
 
-TitleBar::TitleBar(QWidget *parent)
+MuTitleBar::MuTitleBar(QWidget *parent)
     : QWidget(parent)
 {
     setFixedHeight(30);
@@ -70,29 +70,29 @@ TitleBar::TitleBar(QWidget *parent)
     connect(m_pMaximizeButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
     connect(m_pCloseButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
 }
-TitleBar::~TitleBar()
+MuTitleBar::~MuTitleBar()
 {
 
 }
 
-void TitleBar::setMinimumVisible(bool minimum)
+void MuTitleBar::setMinimumVisible(bool minimum)
 {
     if (!minimum)  m_pMinimizeButton->hide();
 }
 
-void TitleBar::setMaximumVisible(bool maximum)
+void MuTitleBar::setMaximumVisible(bool maximum)
 {
     if (!maximum) m_pMaximizeButton->hide();
 }
 
-void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
+void MuTitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
 
     emit m_pMaximizeButton->clicked();
 }
 
-//void TitleBar::mousePressEvent(QMouseEvent *event)
+//void MuTitleBar::mousePressEvent(QMouseEvent *event)
 //{
 //    if (ReleaseCapture())
 //    {
@@ -105,7 +105,7 @@ void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 //    event->ignore();
 //}
 
-bool TitleBar::eventFilter(QObject *obj, QEvent *event)
+bool MuTitleBar::eventFilter(QObject *obj, QEvent *event)
 {
     switch (event->type())
     {
@@ -138,7 +138,7 @@ bool TitleBar::eventFilter(QObject *obj, QEvent *event)
     }
 }
 
-void TitleBar::onClicked()
+void MuTitleBar::onClicked()
 {
     QPushButton *pButton = qobject_cast<QPushButton *>(sender());
     QWidget *pWindow = this->window();
@@ -167,7 +167,7 @@ void TitleBar::onClicked()
     }
 }
 
-void TitleBar::updateMaximize()
+void MuTitleBar::updateMaximize()
 {
     QWidget *pWindow = this->window();
     if (pWindow->isTopLevel())

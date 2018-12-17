@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 自定义无边框窗体、对话框和提示框并封装成库
  *
  * framelesshelper.cpp
@@ -10,14 +10,14 @@
  *
  */
 
-#include "framelesshelper.h"
-#include "framelesshelperprivate.h"
-#include "cursorposcalculator.h"
+#include "MuFramelessHelper.h"
+#include "MuFramelessHelperPrivate.h"
+#include "MuCursorPosCalculator.h"
 #include <QEvent>
 
-FramelessHelper::FramelessHelper(QObject *parent)
+MuFramelessHelper::MuFramelessHelper(QObject *parent)
     : QObject(parent)
-    , d(new FramelessHelperPrivate())
+    , d(new MuFramelessHelperPrivate())
 {
     d->m_bWidgetMovable = true;
     d->m_bWidgetResizable = true;
@@ -25,7 +25,7 @@ FramelessHelper::FramelessHelper(QObject *parent)
     d->m_bRubberBandOnResize = false;
 }
 
-FramelessHelper::~FramelessHelper()
+MuFramelessHelper::~MuFramelessHelper()
 {
     QList<QWidget*> keys = d->m_widgetDataHash.keys();
     int size = keys.size();
@@ -37,20 +37,20 @@ FramelessHelper::~FramelessHelper()
     delete d;
 }
 
-void FramelessHelper::activateOn(QWidget *topLevelWidget)
+void MuFramelessHelper::activateOn(QWidget *topLevelWidget)
 {
     if (!d->m_widgetDataHash.contains(topLevelWidget))
     {
-       WidgetData *data = new WidgetData(d, topLevelWidget);
+       MuWidgetData *data = new MuWidgetData(d, topLevelWidget);
        d->m_widgetDataHash.insert(topLevelWidget, data);
 
        topLevelWidget->installEventFilter(this);
     }
 }
 
-void FramelessHelper::removeFrom(QWidget *topLevelWidget)
+void MuFramelessHelper::removeFrom(QWidget *topLevelWidget)
 {
-    WidgetData *data = d->m_widgetDataHash.take(topLevelWidget);
+    MuWidgetData *data = d->m_widgetDataHash.take(topLevelWidget);
     if (data)
     {
         topLevelWidget->removeEventFilter(this);
@@ -58,83 +58,83 @@ void FramelessHelper::removeFrom(QWidget *topLevelWidget)
     }
 }
 
-void FramelessHelper::setWidgetMovable(bool movable)
+void MuFramelessHelper::setWidgetMovable(bool movable)
 {
     d->m_bWidgetMovable = movable;
 }
 
-void FramelessHelper::setWidgetResizable(bool resizable)
+void MuFramelessHelper::setWidgetResizable(bool resizable)
 {
     d->m_bWidgetResizable = resizable;
 }
 
-void FramelessHelper::setRubberBandOnMove(bool movable)
+void MuFramelessHelper::setRubberBandOnMove(bool movable)
 {
     d->m_bRubberBandOnMove = movable;
-    QList<WidgetData*> list = d->m_widgetDataHash.values();
-    foreach (WidgetData *data, list)
+    QList<MuWidgetData*> list = d->m_widgetDataHash.values();
+    foreach (MuWidgetData *data, list)
     {
         data->updateRubberBandStatus();
     }
 }
 
-void FramelessHelper::setRubberBandOnResize(bool resizable)
+void MuFramelessHelper::setRubberBandOnResize(bool resizable)
 {
     d->m_bRubberBandOnResize = resizable;
-    QList<WidgetData*> list = d->m_widgetDataHash.values();
-    foreach (WidgetData *data, list)
+    QList<MuWidgetData*> list = d->m_widgetDataHash.values();
+    foreach (MuWidgetData *data, list)
     {
         data->updateRubberBandStatus();
     }
 }
 
-void FramelessHelper::setBorderWidth(uint width)
+void MuFramelessHelper::setBorderWidth(uint width)
 {
     if (width > 0)
     {
-        CursorPosCalculator::m_nBorderWidth = width;
+        MuCursorPosCalculator::m_nBorderWidth = width;
     }
 }
 
-void FramelessHelper::setTitleHeight(uint height)
+void MuFramelessHelper::setTitleHeight(uint height)
 {
     if (height > 0)
     {
-        CursorPosCalculator::m_nTitleHeight = height;
+        MuCursorPosCalculator::m_nTitleHeight = height;
     }
 }
 
-bool FramelessHelper::widgetResizable() const
+bool MuFramelessHelper::widgetResizable() const
 {
     return d->m_bWidgetResizable;
 }
 
-bool FramelessHelper::widgetMoable() const
+bool MuFramelessHelper::widgetMoable() const
 {
     return d->m_bWidgetMovable;
 }
 
-bool FramelessHelper::rubberBandOnMove() const
+bool MuFramelessHelper::rubberBandOnMove() const
 {
     return d->m_bRubberBandOnMove;
 }
 
-bool FramelessHelper::rubberBandOnResize() const
+bool MuFramelessHelper::rubberBandOnResize() const
 {
     return d->m_bRubberBandOnResize;
 }
 
-uint FramelessHelper::borderWidth() const
+uint MuFramelessHelper::borderWidth() const
 {
-    return CursorPosCalculator::m_nBorderWidth;
+    return MuCursorPosCalculator::m_nBorderWidth;
 }
 
-uint FramelessHelper::titleHeight() const
+uint MuFramelessHelper::titleHeight() const
 {
-    return CursorPosCalculator::m_nTitleHeight;
+    return MuCursorPosCalculator::m_nTitleHeight;
 }
 
-bool FramelessHelper::eventFilter(QObject *watched, QEvent *event)
+bool MuFramelessHelper::eventFilter(QObject *watched, QEvent *event)
 {
     switch (event->type()) {
     case QEvent::MouseMove:
@@ -143,7 +143,7 @@ bool FramelessHelper::eventFilter(QObject *watched, QEvent *event)
     case QEvent::MouseButtonRelease:
     case QEvent::Leave:
     {
-        WidgetData *data = d->m_widgetDataHash.value(static_cast<QWidget *>(watched));
+        MuWidgetData *data = d->m_widgetDataHash.value(static_cast<QWidget *>(watched));
         if (data)
         {
             data->handleWidgetEvent(event);

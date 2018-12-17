@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 自定义无边框窗体、对话框和提示框并封装成库
  *
  * main.cpp
@@ -11,8 +11,10 @@
  */
 
 #include <QApplication>
-#include "mainwindow.h"
+//#include "mainwindow.h"
 #include "stylesheethelper.h"
+//#include "MuCustomWindow.h"
+#include "MuShadowWindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,8 +22,9 @@ int main(int argc, char *argv[])
 
     StyleSheetHelper::setStyle(":/style_white.qss");
 
-    MainWindow w;
-    w.show();
+    MuCustomWidgetWindow w2(true, nullptr);
+    w2.resize(800, 600);
+    w2.show();
 
     return a.exec();
 }

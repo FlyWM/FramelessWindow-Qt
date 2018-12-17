@@ -19,3 +19,5 @@ CONFIG += debug_and_release build_all
 DEFINES += FRAMELESSWINDOW_LIBRARY HAVE_WINDOW_AERO
 
 
+
+

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 自定义无边框窗体、对话框和提示框并封装成库
  *
  * titlebar.h
@@ -10,19 +10,20 @@
  *
  */
 
-#ifndef TITLEBAR_H
-#define TITLEBAR_H
+#ifndef MUTITLEBAR_H
+#define MUTITLEBAR_H
 
 #include <QWidget>
+#include "framelesswindow_global.h"
 
 class QLabel;
 class QPushButton;
-class TitleBar : public QWidget
+class FRAMELESSWINDOWSHARED_EXPORT MuTitleBar : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TitleBar(QWidget *parent = nullptr);
-    ~TitleBar();
+    explicit MuTitleBar(QWidget *parent = nullptr);
+    ~MuTitleBar();
 
     void setMinimumVisible(bool minimum);
     void setMaximumVisible(bool maximum);
@@ -71,4 +72,4 @@ private:
     QPushButton *m_pCloseButton;
 };
 
-#endif // TITLEBAR_H
+#endif // MUTITLEBAR_H

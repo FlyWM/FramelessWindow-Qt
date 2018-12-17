@@ -1,6 +1,6 @@
-﻿#include "windwmapi.h"
+﻿#include "MuWinDWMAPI.h"
 
-WinDwmapi::WinDwmapi()
+MuWinDwmapi::MuWinDwmapi()
     : dwmapi_dll_(LoadLibraryW(L"dwmapi.dll"))
     , dwm_is_composition_enabled_(NULL)
 {
@@ -11,7 +11,7 @@ WinDwmapi::WinDwmapi()
     }
 }
 
-WinDwmapi::~WinDwmapi()
+MuWinDwmapi::~MuWinDwmapi()
 {
     if(dwmapi_dll_)
     {
@@ -19,7 +19,7 @@ WinDwmapi::~WinDwmapi()
     }
 }
 
-HRESULT WinDwmapi::DwmIsCompositionEnabled(BOOL *pfEnabled) const
+HRESULT MuWinDwmapi::DwmIsCompositionEnabled(BOOL *pfEnabled) const
 {
     if(dwm_is_composition_enabled_)
     {
@@ -29,7 +29,7 @@ HRESULT WinDwmapi::DwmIsCompositionEnabled(BOOL *pfEnabled) const
     return E_NOTIMPL;
 }
 
-HRESULT WinDwmapi::DwmExtendFrameIntoClientArea(HWND hWnd, const MARGINS *pMarInset) const
+HRESULT MuWinDwmapi::DwmExtendFrameIntoClientArea(HWND hWnd, const MARGINS *pMarInset) const
 {
     if(dwm_extendframe_into_client_area_)
     {
@@ -39,8 +39,8 @@ HRESULT WinDwmapi::DwmExtendFrameIntoClientArea(HWND hWnd, const MARGINS *pMarIn
     return E_NOTIMPL;
 }
 
-const WinDwmapi *WinDwmapi::instance()
+const MuWinDwmapi *MuWinDwmapi::instance()
 {
-    static const WinDwmapi s_dwmapi;
+    static const MuWinDwmapi s_dwmapi;
     return &s_dwmapi;
 }

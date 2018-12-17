@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 自定义无边框窗体、对话框和提示框并封装成库
  *
  * framelesshelper.h
@@ -10,83 +10,68 @@
  *
  */
 
-#ifndef FRAMELESSHELPER_H
-#define FRAMELESSHELPER_H
+#ifndef MUFRAMELESSHELPER_H
+#define MUFRAMELESSHELPER_H
 
 #include <QObject>
 #include <QHash>
-#include "widgetdata.h"
+#include "MuWidgetData.h"
+#include "FramelessWindow_global.h"
 
 
 class QWdiget;
-class FramelessHelperPrivate;
-class FramelessHelper : public QObject
+class MuFramelessHelperPrivate;
+class FRAMELESSWINDOWSHARED_EXPORT MuFramelessHelper : public QObject
 {
     Q_OBJECT
 public:
-    explicit FramelessHelper(QObject *parent = nullptr);
-    ~FramelessHelper();
+    explicit MuFramelessHelper(QObject *parent = nullptr);
+    ~MuFramelessHelper();
 
     /**
-     * @brief activateOn
-     *  激活窗体
+     * @brief activateOn 激活窗体
      * @param topLevelWidget
-     *  QWidget *
      */
     void activateOn(QWidget *topLevelWidget);
 
     /**
-     * @brief removeFrom
-     *  移除窗体
+     * @brief removeFrom 移除窗体
      * @param topLevelWidget
-     *  QWidget *
      */
     void removeFrom(QWidget *topLevelWidget);
 
     /**
-     * @brief setWidgetMovable
-     *  设置窗体移动
+     * @brief setWidgetMovable 设置窗体移动
      * @param movable
-     *  bool
      */
     void setWidgetMovable(bool movable);
 
     /**
-     * @brief setWidgetResizable
-     *  设置窗体缩放
+     * @brief setWidgetResizable 设置窗体缩放
      * @param resizable
-     *  bool
      */
 
     void setWidgetResizable(bool resizable);
     /**
-     * @brief setRubberBandOnMove
-     *  设置橡皮筋移动
+     * @brief setRubberBandOnMove 设置橡皮筋是否移动
      * @param movable
-     *  bool
      */
     void setRubberBandOnMove(bool movable);
     /**
-     * @brief setRubberBandOnResize
-     *  设置橡皮筋缩放
+     * @brief setRubberBandOnResize 设置橡皮筋是否可以缩放
      * @param resizable
-     *  bool
      */
     void setRubberBandOnResize(bool resizable);
 
     /**
-     * @brief setBorderWidth
-     *  设置边框的宽度
-     * @param width
-     *  unsigned int
+     * @brief setBorderWidth 设置边框的宽度
+     * @param width  unsigned int
      */
     void setBorderWidth(uint width);
 
     /**
-     * @brief setTitleHeight
-     *  设置标题栏高度
-     * @param height
-     *  unsigned int
+     * @brief setTitleHeight 设置标题栏高度
+     * @param height unsigned int
      */
     void setTitleHeight(uint height);
 
@@ -101,7 +86,7 @@ protected:
     virtual bool eventFilter(QObject *watched, QEvent *event);
 
 private:
-    FramelessHelperPrivate *d;
+    MuFramelessHelperPrivate *d;
 };
 
-#endif // FRAMELESSHELPER_H
+#endif // MUFRAMELESSHELPER_H
