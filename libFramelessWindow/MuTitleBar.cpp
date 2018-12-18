@@ -35,11 +35,12 @@ MuTitleBar::MuTitleBar(QWidget *parent, QWidget *window, QWidget *shadowContaine
     m_pMinimizeButton = new QPushButton(this);
     m_pMaximizeButton = new QPushButton(this);
     m_pCloseButton = new QPushButton(this);
+    m_pCustomWidget = new QWidget(this);
 
     m_pIconLabel->setFixedSize(20, 20);
     m_pIconLabel->setScaledContents(true);
 
-    m_pTitleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+//    m_pTitleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
     m_pMinimizeButton->setFixedSize(27, 22);
     m_pMaximizeButton->setFixedSize(27, 22);
@@ -58,11 +59,13 @@ MuTitleBar::MuTitleBar(QWidget *parent, QWidget *window, QWidget *shadowContaine
     m_pMaximizeButton->setToolTip("Maximize");
     m_pCloseButton->setToolTip("Close");
 
+    m_pCustomWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     QHBoxLayout *pLayout = new QHBoxLayout(this);
     pLayout->addWidget(m_pIconLabel);
     pLayout->addSpacing(5);
     pLayout->addWidget(m_pTitleLabel);
-    pLayout->addStretch();
+    pLayout->addWidget(m_pCustomWidget);
     pLayout->addWidget(m_pMinimizeButton);
     pLayout->addWidget(m_pMaximizeButton);
     pLayout->addWidget(m_pCloseButton);
@@ -82,12 +85,43 @@ MuTitleBar::~MuTitleBar()
 
 void MuTitleBar::setMinimumVisible(bool minimum)
 {
-    if (!minimum)  m_pMinimizeButton->hide();
+    if (!minimum)
+        m_pMinimizeButton->hide();
+    else
+        m_pMaximizeButton->show();
 }
 
 void MuTitleBar::setMaximumVisible(bool maximum)
 {
-    if (!maximum) m_pMaximizeButton->hide();
+    if (!maximum)
+        m_pMaximizeButton->hide();
+    else
+        m_pMaximizeButton->show();
+}
+
+QWidget *MuTitleBar::customWidget() const
+{
+    return m_pCustomWidget;
+}
+
+QPushButton *MuTitleBar::minimizeButton() const
+{
+    return m_pMinimizeButton;
+}
+
+QPushButton *MuTitleBar::maximizeButton() const
+{
+    return m_pMaximizeButton;
+}
+
+QPushButton *MuTitleBar::closeButton() const
+{
+    return m_pCloseButton;
+}
+
+QLabel *MuTitleBar::titleLabel() const
+{
+    return m_pTitleLabel;
 }
 
 void MuTitleBar::mouseDoubleClickEvent(QMouseEvent *event)
@@ -96,19 +130,6 @@ void MuTitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 
     emit m_pMaximizeButton->clicked();
 }
-
-//void MuTitleBar::mousePressEvent(QMouseEvent *event)
-//{
-//    if (ReleaseCapture())
-//    {
-//        QWidget *pWindow = this->window();
-//        if (pWindow->isTopLevel())
-//        {
-//           SendMessage(HWND(pWindow->winId()), WM_SYSCOMMAND, SC_MOVE + HTCAPTION, 0);
-//        }
-//    }
-//    event->ignore();
-//}
 
 bool MuTitleBar::eventFilter(QObject *obj, QEvent *event)
 {
@@ -140,7 +161,6 @@ bool MuTitleBar::eventFilter(QObject *obj, QEvent *event)
 
 void MuTitleBar::onClicked()
 {
-
     QPushButton *pButton = qobject_cast<QPushButton *>(sender());
     QWidget *pWindow = this->window();
     if (pWindow->isTopLevel()) {
@@ -150,26 +170,15 @@ void MuTitleBar::onClicked()
         else if (pButton == m_pMaximizeButton) {
             if (!m_canResize)
                 return;
-            //
+
             if (Qt::WindowMaximized == m_window->windowState()) {
-                //
                 m_shadowContainerWidget->setContentsMargins(m_oldContentsMargin);
                 m_window->showNormal();
-                //
             } else {
-                //
                 m_oldContentsMargin = m_shadowContainerWidget->contentsMargins();
                 m_shadowContainerWidget->setContentsMargins(0, 0, 0, 0);
                 m_window->showMaximized();
             }
-//            if(pWindow->isMaximized()) {
-//                pWindow->showNormal();
-//                emit ShowNormal();
-//            } else {
-//                pWindow->showMaximized();
-//                emit ShowMaximized();
-//                window()->setGeometry(QApplication::desktop()->availableGeometry());
-//            }
         }
         else if (pButton == m_pCloseButton)  {
             pWindow->close();
@@ -180,16 +189,12 @@ void MuTitleBar::onClicked()
 void MuTitleBar::updateMaximize()
 {
     QWidget *pWindow = this->window();
-    if (pWindow->isTopLevel())
-    {
+    if (pWindow->isTopLevel()) {
         bool bMaximize = pWindow->isMaximized();
-        if (bMaximize)
-        {
+        if (bMaximize) {
             m_pMaximizeButton->setToolTip(tr("Restore"));
             m_pMaximizeButton->setProperty("maximizeProperty", "restore");
-        }
-        else
-        {
+        } else {
             m_pMaximizeButton->setProperty("maximizeProperty", "maximize");
             m_pMaximizeButton->setToolTip(tr("Maximize"));
         }

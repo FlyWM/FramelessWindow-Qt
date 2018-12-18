@@ -25,8 +25,27 @@ public:
     explicit MuTitleBar(QWidget *parent, QWidget *window, QWidget *shadowContainerWidget, bool canResize);
     ~MuTitleBar();
 
+    /**
+     * @brief setMinimumVisible 设置最小化按钮是否可见
+     * @param minimum
+     */
     void setMinimumVisible(bool minimum);
+    /**
+     * @brief setMaximumVisible 设计最大化还原按钮是否可见
+     * @param maximum
+     */
     void setMaximumVisible(bool maximum);
+
+    /**
+     * @brief customWidget 自定义添加内容
+     * @return
+     */
+    QWidget *customWidget() const;
+
+    QPushButton *minimizeButton() const;
+    QPushButton *maximizeButton() const;
+    QPushButton *closeButton() const;
+    QLabel *titleLabel() const;
 
 protected:
     /**
@@ -34,9 +53,6 @@ protected:
      * @param event QMouseEvent *
      */
     virtual void mouseDoubleClickEvent(QMouseEvent *event);   
-
-    // 进行鼠界面的拖动
-//    virtual void mousePressEvent(QMouseEvent *event);
 
     /**
      * @brief eventFilter 设置界面标题与图标
@@ -69,6 +85,7 @@ private:
     QPushButton *m_pMinimizeButton;
     QPushButton *m_pMaximizeButton;
     QPushButton *m_pCloseButton;
+    QWidget *m_pCustomWidget; // 图标，标题，最大最小关闭按钮之外，自定义添加的内容
 
     QWidget* m_window;
     QWidget* m_shadowContainerWidget;

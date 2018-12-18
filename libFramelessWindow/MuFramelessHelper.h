@@ -32,7 +32,7 @@ public:
      * @brief activateOn 激活窗体
      * @param topLevelWidget
      */
-    void activateOn(QWidget *topLevelWidget);
+    void activateOn(QWidget *topLevelWidget, QWidget *shadowContainerWidget = nullptr);
 
     /**
      * @brief removeFrom 移除窗体

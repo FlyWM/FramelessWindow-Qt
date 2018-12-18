@@ -12,12 +12,12 @@ QT += widgets
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    MainWindow.cpp
 
 HEADERS += \
-    mainwindow.h \
-    stylesheethelper.h
+    stylesheethelper.h \
+    MainWindow.h
 
-RESOURCES += \
-    style.qrc
+FORMS += \
+    MainWindow.ui
 

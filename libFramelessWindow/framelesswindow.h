@@ -207,8 +207,7 @@ public:
     QAbstractButton *clickedButton() const;
     QMessageBox::StandardButton standardButton(QAbstractButton *button) const;
     /**
-     * @brief setDefaultButton
-     *  设置默认按钮
+     * @brief setDefaultButton 设置默认按钮
      * @param button
      */
     void setDefaultButton(QPushButton *button);

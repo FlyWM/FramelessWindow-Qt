@@ -284,8 +284,7 @@ FramelessMessageBox::FramelessMessageBox(QWidget *parent, const QString &title, 
 
     // 根据用到的按钮进行设置,太多了就不一一写了
     QPushButton *pYesButton = m_pButtonBox->button(QDialogButtonBox::Ok);
-    if (pYesButton != NULL)
-    {
+    if (pYesButton != NULL) {
         pYesButton->setObjectName("yesButton");
         pYesButton->setStyleSheet("QPushButton#yesButton { \
                                         background-color: #303030; \

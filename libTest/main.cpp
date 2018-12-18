@@ -12,7 +12,7 @@
 
 #include <QApplication>
 #include <QPushButton>
-//#include "mainwindow.h"
+#include "MainWindow.h"
 #include "stylesheethelper.h"
 #include "MuCustomWindow.h"
 #include "MuShadowWindow.h"
@@ -21,15 +21,22 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    StyleSheetHelper::setStyle(":/style_white.qss");
+//    StyleSheetHelper::setStyle(":/style_black.qss");
 
-    MuCustomWidgetWindow w2(true, nullptr);
-    w2.resize(800, 600);
-    w2.show();
+    MainWindow w;
+    w.show();
 
-    MuCustomWindow w;
-    w.resize(400, 300);
-//    w.show();
+    MuCustomDialog dialog;
+    dialog.setModal(true);
+    dialog.setWindowTitle("dialog");
+    dialog.show();
+
+    MuCustomMessageBox::showInformation(nullptr, "Title", "showInformation !");
+    MuCustomMessageBox::showError(nullptr, "Title", "showError !");
+    MuCustomMessageBox::showSuccess(nullptr, "Title", "showSuccess !");
+    MuCustomMessageBox::showCritical(nullptr, "Title", "showCritical !");
+    MuCustomMessageBox::showQuestion(nullptr, "Title", "showQuestion!");
+    MuCustomMessageBox::showWarning(nullptr, "Title", "showWarning !");
 
     return a.exec();
 }

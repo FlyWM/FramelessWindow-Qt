@@ -42,8 +42,7 @@ FramelessWindow-buildlib{
         MuCustomWindow.cpp
 
     RESOURCES += \
-        images.qrc \
-        style.qrc
+        images.qrc
 
     QT += widgets winextras
 
@@ -51,9 +50,4 @@ FramelessWindow-buildlib{
     LIBS += -L$$PROJECT_LIBDIR -l$$LIBFRAMELESSWINDOW_NAME
 }
 
-HEADERS += \
-    $$PWD/WizWindowTitleBar.h
-
-SOURCES += \
-    $$PWD/WizWindowTitleBar.cpp
 

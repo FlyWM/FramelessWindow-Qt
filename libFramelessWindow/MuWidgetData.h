@@ -2,6 +2,7 @@
 #define MUWIDGETDATA_H
 #include <QObject>
 #include <QPoint>
+#include <QMargins>
 #include "MuCursorPosCalculator.h"
 
 class MuFramelessHelperPrivate;
@@ -15,7 +16,7 @@ class QPoint;
 class MuWidgetData
 {
 public:
-    explicit MuWidgetData(MuFramelessHelperPrivate *_d, QWidget *pTopLevelWidget);
+    explicit MuWidgetData(MuFramelessHelperPrivate *_d, QWidget *window, QWidget *shadowContainerWidget = nullptr);
     ~MuWidgetData();
 
     QWidget *widget();
@@ -59,6 +60,10 @@ private:
     bool m_bCursorShapeChanged;
     Qt::WindowFlags m_windowFlags;
     int m_nShadowWidth;
+    int m_oldShadowWidth;
+    QMargins m_oldContentsMargin;
+    QWidget *m_window;
+    QWidget* m_shadowContainerWidget;
 };
 
 #endif // MUWIDGETDATA_H

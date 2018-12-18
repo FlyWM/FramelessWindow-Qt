@@ -36,13 +36,12 @@ MuFramelessHelper::~MuFramelessHelper()
     delete d;
 }
 
-void MuFramelessHelper::activateOn(QWidget *topLevelWidget)
+void MuFramelessHelper::activateOn(QWidget *topLevelWidget, QWidget *shadowContainerWidget)
 {
     if (!d->m_widgetDataHash.contains(topLevelWidget)) {
-       MuWidgetData *data = new MuWidgetData(d, topLevelWidget);
+       MuWidgetData *data = new MuWidgetData(d, topLevelWidget, shadowContainerWidget);
        data->setShadowWidth(d->m_nShadowWidth);
        d->m_widgetDataHash.insert(topLevelWidget, data);
-
        topLevelWidget->installEventFilter(this);
     }
 }
