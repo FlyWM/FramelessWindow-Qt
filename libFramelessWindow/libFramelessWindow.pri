@@ -51,3 +51,9 @@ FramelessWindow-buildlib{
     LIBS += -L$$PROJECT_LIBDIR -l$$LIBFRAMELESSWINDOW_NAME
 }
 
+HEADERS += \
+    $$PWD/WizWindowTitleBar.h
+
+SOURCES += \
+    $$PWD/WizWindowTitleBar.cpp
+

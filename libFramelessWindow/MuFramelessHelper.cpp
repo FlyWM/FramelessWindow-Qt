@@ -102,6 +102,9 @@ void MuFramelessHelper::setShadowWidth(int width)
 {
     if (width >= 0) {
         d->m_nShadowWidth = width;
+        for (auto key : d->m_widgetDataHash.keys()) {
+            d->m_widgetDataHash.value(key)->setShadowWidth(d->m_nShadowWidth);
+        }
     }
 }
 

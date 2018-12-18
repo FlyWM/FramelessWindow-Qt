@@ -11,9 +11,10 @@
  */
 
 #include <QApplication>
+#include <QPushButton>
 //#include "mainwindow.h"
 #include "stylesheethelper.h"
-//#include "MuCustomWindow.h"
+#include "MuCustomWindow.h"
 #include "MuShadowWindow.h"
 
 int main(int argc, char *argv[])
@@ -25,6 +26,10 @@ int main(int argc, char *argv[])
     MuCustomWidgetWindow w2(true, nullptr);
     w2.resize(800, 600);
     w2.show();
+
+    MuCustomWindow w;
+    w.resize(400, 300);
+//    w.show();
 
     return a.exec();
 }

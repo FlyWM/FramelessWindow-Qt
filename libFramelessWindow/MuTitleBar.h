@@ -22,7 +22,7 @@ class FRAMELESSWINDOWSHARED_EXPORT MuTitleBar : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MuTitleBar(QWidget *parent = nullptr);
+    explicit MuTitleBar(QWidget *parent, QWidget *window, QWidget *shadowContainerWidget, bool canResize);
     ~MuTitleBar();
 
     void setMinimumVisible(bool minimum);
@@ -69,6 +69,11 @@ private:
     QPushButton *m_pMinimizeButton;
     QPushButton *m_pMaximizeButton;
     QPushButton *m_pCloseButton;
+
+    QWidget* m_window;
+    QWidget* m_shadowContainerWidget;
+    QMargins m_oldContentsMargin;
+    bool m_canResize;
 };
 
 #endif // MUTITLEBAR_H

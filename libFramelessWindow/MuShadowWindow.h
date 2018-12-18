@@ -5,10 +5,13 @@
 #include <QVBoxLayout>
 #include <QIcon>
 #include <QDebug>
+#include <QPushButton>
 #include "MuShadowWidget.h"
 #include "FramelessWindow_global.h"
 #include "MuTitleBar.h"
 #include "MuFramelessHelper.h"
+
+#include "WizWindowTitleBar.h"
 
 class QPainter;
 class QLineEdit;
@@ -40,7 +43,7 @@ public:
         , m_pClientWidget(nullptr)
     {
         Base *pT = this;
-        pT->setAttribute(Qt::WA_TranslucentBackground);
+        pT->setAttribute(Qt::WA_TranslucentBackground, true);
         pT->setWindowFlags(Qt::FramelessWindowHint);
         pT->setContentsMargins(0, 0, 0, 0);
 
@@ -49,7 +52,6 @@ public:
         pWindowLayout->setSpacing(0);
 
         // 边框阴影
-        int shadowSize = 20;
         m_pShadowWidget = new MuShadowWidget(m_shadowSize, canResize, this);
         m_pShadowWidget->setContentsMargins(m_shadowSize, m_shadowSize, m_shadowSize, m_shadowSize);
         m_pShadowWidget->setAutoFillBackground(true);
@@ -67,34 +69,23 @@ public:
         pShadowClientLayout->setContentsMargins(0, 0, 0, 0);
         pShadowClientLayout->setSpacing(0);
 
-        MuTitleBar *pTitleBar = new MuTitleBar(pShadowClientWidget);
-        this->installEventFilter(pTitleBar);
+        MuTitleBar *pTitleBar =  new MuTitleBar(pShadowClientWidget, this, m_pShadowWidget, canResize);
+//        pTitleBar->layoutTitleBar();
+//        pTitleBar->setText("test title");
+        //        this->installEventFilter(pTitleBar);
         this->setWindowTitle("Custom Window");
         this->setWindowIcon(QIcon(":/images/logo.jpg"));
         pShadowClientLayout->addWidget(pTitleBar);
         pShadowClientLayout->addStretch();
 
         m_pHelper = new MuFramelessHelper(this);
-        m_pHelper->setShadowWidth(shadowSize);
+        m_pHelper->setShadowWidth(m_shadowSize);
         m_pHelper->activateOn(this);
         m_pHelper->setTitleHeight(50);
         m_pHelper->setWidgetResizable(true);
         m_pHelper->setWidgetMovable(true);
-
-        QObject::connect(pTitleBar, &MuTitleBar::ShowMaximized, [=]() {
-            m_pShadowWidget->setContentsMargins(0, 0, 0, 0);
-        });
-        QObject::connect(pTitleBar, &MuTitleBar::ShowNormal, [=]() {
-            m_pShadowWidget->setContentsMargins(m_shadowSize, m_shadowSize, m_shadowSize, m_shadowSize);
-        });
     }
 public:
-    void showMaximizedWindow() {
-        m_pShadowWidget->setContentsMargins(0, 0, 0, 0);
-    }
-    void restore() {
-        m_pShadowWidget->setContentsMargins(m_shadowSize, m_shadowSize, m_shadowSize, m_shadowSize);
-    }
 
 private:
     int m_shadowSize;
@@ -102,6 +93,7 @@ private:
     QWidget *m_pClientWidget;
     QLayout *m_pCLientLayout;
     MuFramelessHelper *m_pHelper;
+    MuTitleBar *m_titleBar;
 };
 
 typedef MuShadowWindow<QWidget> MuCustomWidgetWindow;

@@ -54,16 +54,16 @@ FramelessWindow::FramelessWindow(QWidget *parent)
 
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
 
-    m_pTitleBar = new MuTitleBar(this);
-    installEventFilter(m_pTitleBar);
-    setTitleHeight(m_pTitleBar->height());
+//    m_pTitleBar = new MuTitleBar(this);
+//    installEventFilter(m_pTitleBar);
+//    setTitleHeight(m_pTitleBar->height());
 
     resize(800, 600);
     setWindowTitle("Custom Window");
     setWindowIcon(QIcon(":/images/logo.jpg"));
 
     pFrameLessWindowLayout = new QVBoxLayout(pMainWindow);
-    pFrameLessWindowLayout->addWidget(m_pTitleBar);
+//    pFrameLessWindowLayout->addWidget(m_pTitleBar);
     pFrameLessWindowLayout->addWidget(m_pCentralWdiget, 1);
     pFrameLessWindowLayout->setSpacing(0);
     pFrameLessWindowLayout->setContentsMargins(0, 0, 0, 0);
@@ -196,14 +196,14 @@ FramelessDialog::FramelessDialog(QWidget *parent)
 //    qss.close();
 
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
-    m_pTitleBar = new MuTitleBar(this);
+/*    m_pTitleBar = new MuTitleBar(this);
     installEventFilter(m_pTitleBar);
-    setTitleHeight(m_pTitleBar->height());
+    setTitleHeight(m_pTitleBar->height())*/;
 
     setWindowTitle("Custom Window");
 
     pFrameLessWindowLayout = new QVBoxLayout();
-    pFrameLessWindowLayout->addWidget(m_pTitleBar);
+//    pFrameLessWindowLayout->addWidget(m_pTitleBar);
     pFrameLessWindowLayout->addWidget(m_pCentralWidget, 1);
     pFrameLessWindowLayout->setSpacing(0);
     pFrameLessWindowLayout->setContentsMargins(0, 0, 0, 0);

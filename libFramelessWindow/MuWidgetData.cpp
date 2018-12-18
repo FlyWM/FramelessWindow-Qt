@@ -112,6 +112,8 @@ void MuWidgetData::handleMousePressEvent(QMouseEvent *event)
         m_pressedMousePos.recalculate(event->globalPos(), frameRect);
 
         m_ptDragPos = event->globalPos() - frameRect.topLeft();
+        m_ptDragPos.setX(m_ptDragPos.x() + m_nShadowWidth);
+        m_ptDragPos.setY(m_ptDragPos.y() + m_nShadowWidth);
         m_dLeftScale = double(m_ptDragPos.x()) / double(frameRect.width());
         m_nRightLength = frameRect.width() - m_ptDragPos.x();
 
@@ -285,10 +287,14 @@ void MuWidgetData::resizeWidget(const QPoint &gMousePos)
 
 void MuWidgetData::moveWidget(const QPoint &gMousePos)
 {
+    qDebug() << m_pWidget;
     if (d->m_bRubberBandOnMove) {
         m_pRubberBand->move(gMousePos - m_ptDragPos);
     } else {
         // 如果全屏时移动窗口，窗口按点击位置还原
+        // showNomal()的话会闪屏
+//        qDebug() << m_pWidget->isMaximized() << m_pWidget->normalGeometry();
+
         if (m_pWidget->isMaximized() || m_pWidget->isFullScreen()) {
             if (m_dLeftScale <= 0.3) { }
             else if (m_dLeftScale > 0.3 && m_dLeftScale < 0.7) {
@@ -296,8 +302,12 @@ void MuWidgetData::moveWidget(const QPoint &gMousePos)
             } else if (m_dLeftScale >= 0.7) {
                 m_ptDragPos.setX(m_pWidget->normalGeometry().width() - m_nRightLength);
             }
+//            m_pWidget->move(gMousePos - m_ptDragPos);
+//            m_pWidget->setGeometry(m_pWidget->x(), m_pWidget->y(), 800, 600);
+//            m_pWidget->resize(800, 600);
+//            m_pWidget->setFixedSize(m_pWidget->normalGeometry().size());
 
-            m_pWidget->setGeometry(0, 0, m_pWidget->normalGeometry().width(), m_pWidget->normalGeometry().height());
+            m_pWidget->showNormal();
         }
         m_pWidget->move(gMousePos - m_ptDragPos);
     }

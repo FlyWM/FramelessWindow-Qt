@@ -21,8 +21,12 @@
 #include "MuTitleBar.h"
 #include "MuShadowWindow.h"
 
-MuTitleBar::MuTitleBar(QWidget *parent)
+MuTitleBar::MuTitleBar(QWidget *parent, QWidget *window, QWidget *shadowContainerWidget, bool canResize)
     : QWidget(parent)
+    , m_window(window)
+    , m_shadowContainerWidget(shadowContainerWidget)
+    , m_oldContentsMargin(10, 10, 10, 10)
+    , m_canResize(canResize)
 {
     setFixedHeight(30);
 
@@ -136,6 +140,7 @@ bool MuTitleBar::eventFilter(QObject *obj, QEvent *event)
 
 void MuTitleBar::onClicked()
 {
+
     QPushButton *pButton = qobject_cast<QPushButton *>(sender());
     QWidget *pWindow = this->window();
     if (pWindow->isTopLevel()) {
@@ -143,14 +148,28 @@ void MuTitleBar::onClicked()
             pWindow->showMinimized();
         }
         else if (pButton == m_pMaximizeButton) {
-            if(pWindow->isMaximized()) {
-                pWindow->showNormal();
-                emit ShowNormal();
+            if (!m_canResize)
+                return;
+            //
+            if (Qt::WindowMaximized == m_window->windowState()) {
+                //
+                m_shadowContainerWidget->setContentsMargins(m_oldContentsMargin);
+                m_window->showNormal();
+                //
             } else {
-                pWindow->showMaximized();
-                emit ShowMaximized();
-                window()->setGeometry(QApplication::desktop()->availableGeometry());
+                //
+                m_oldContentsMargin = m_shadowContainerWidget->contentsMargins();
+                m_shadowContainerWidget->setContentsMargins(0, 0, 0, 0);
+                m_window->showMaximized();
             }
+//            if(pWindow->isMaximized()) {
+//                pWindow->showNormal();
+//                emit ShowNormal();
+//            } else {
+//                pWindow->showMaximized();
+//                emit ShowMaximized();
+//                window()->setGeometry(QApplication::desktop()->availableGeometry());
+//            }
         }
         else if (pButton == m_pCloseButton)  {
             pWindow->close();
