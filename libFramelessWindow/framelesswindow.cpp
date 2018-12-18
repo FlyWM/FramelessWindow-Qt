@@ -86,7 +86,7 @@ FramelessWindow::FramelessWindow(QWidget *parent)
        // m_haveAero = true;
         HWND hwnd = (HWND)this->winId();
         DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
-        ::SetWindowLong(hwnd, GWL_STYLE, style | WS_MAXIMIZEBOX | WS_THICKFRAME | WS_CAPTION);
+        ::SetWindowLong(hwnd, GWL_STYLE, style | WS_MAXIMIZEBOX | WS_THICKFRAME );
         //保留一个像素的边框宽度，否则系统不会绘制边框阴影
         //
         //we better left 1 piexl width of border untouch, so OS can draw nice shadow around it

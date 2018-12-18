@@ -23,20 +23,26 @@ int main(int argc, char *argv[])
 
 //    StyleSheetHelper::setStyle(":/style_black.qss");
 
-    MainWindow w;
+//    MainWindow w;
+//    w.show();
+
+//    MuCustomDialog dialog;
+//    dialog.setModal(true);
+//    dialog.setWindowTitle("dialog");
+//    dialog.show();
+
+//    MuCustomMessageBox::showInformation(nullptr, "Title", "showInformation !");
+//    MuCustomMessageBox::showError(nullptr, "Title", "showError !");
+//    MuCustomMessageBox::showSuccess(nullptr, "Title", "showSuccess !");
+//    MuCustomMessageBox::showCritical(nullptr, "Title", "showCritical !");
+//    MuCustomMessageBox::showQuestion(nullptr, "Title", "showQuestion!");
+//    MuCustomMessageBox::showWarning(nullptr, "Title", "showWarning !");
+
+//    MuCustomWinAeroWindow w;
+//    w.show();
+
+    MuWinAeroShadowWindow w;
     w.show();
-
-    MuCustomDialog dialog;
-    dialog.setModal(true);
-    dialog.setWindowTitle("dialog");
-    dialog.show();
-
-    MuCustomMessageBox::showInformation(nullptr, "Title", "showInformation !");
-    MuCustomMessageBox::showError(nullptr, "Title", "showError !");
-    MuCustomMessageBox::showSuccess(nullptr, "Title", "showSuccess !");
-    MuCustomMessageBox::showCritical(nullptr, "Title", "showCritical !");
-    MuCustomMessageBox::showQuestion(nullptr, "Title", "showQuestion!");
-    MuCustomMessageBox::showWarning(nullptr, "Title", "showWarning !");
 
     return a.exec();
 }

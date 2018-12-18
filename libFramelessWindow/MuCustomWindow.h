@@ -7,6 +7,18 @@ class FRAMELESSWINDOWSHARED_EXPORT MuCustomWindow : public MuShadowWindow<QWidge
 {
 public:
     explicit MuCustomWindow(QWidget *parent = nullptr);
+
+};
+
+class FRAMELESSWINDOWSHARED_EXPORT MuCustomWinAeroWindow : public MuShadowWindow<QWidget>
+{
+public:
+    explicit MuCustomWinAeroWindow(QWidget *parent = nullptr);
+
+protected:
+#ifdef Q_OS_WIN32
+    virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result);
+#endif
 };
 
 class FRAMELESSWINDOWSHARED_EXPORT MuCustomDialog : public MuShadowWindow<QDialog>

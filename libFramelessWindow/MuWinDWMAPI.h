@@ -10,7 +10,9 @@
 #ifndef MUWINDWMAPI_H
 #define MUWINDWMAPI_H
 
+
 #include <windows.h>
+#include "FramelessWindow_Global.h"
 
 typedef struct _MARGINS
 {
@@ -20,7 +22,7 @@ typedef struct _MARGINS
     int cyBottomHeight;   // height of bottom border that retains its size
 } MARGINS, *PMARGINS;
 
-class MuWinDwmapi
+class FRAMELESSWINDOWSHARED_EXPORT MuWinDwmapi
 {
 public:
     MuWinDwmapi();
@@ -39,5 +41,6 @@ private:
       DwmExtendFrameIntoClientAreaPtr dwm_extendframe_into_client_area_;
       HMODULE dwmapi_dll_;
 };
+
 
 #endif // MUWINDWMAPI_H

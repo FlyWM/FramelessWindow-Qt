@@ -9,7 +9,7 @@
 #include <QDialog>
 #include <QMessageBox>
 #include "MuShadowWidget.h"
-#include "FramelessWindow_global.h"
+#include "FramelessWindow_Global.h"
 #include "MuTitleBar.h"
 #include "MuFramelessHelper.h"
 
@@ -56,7 +56,7 @@ public:
         pWindowLayout->setContentsMargins(0, 0, 0, 0);
         pWindowLayout->setSpacing(0);
 
-        // 边框阴影
+        // 边框阴影widget
         m_pShadowWidget = new MuShadowWidget(m_shadowSize, canResize, this);
         m_pShadowWidget->setContentsMargins(m_shadowSize, m_shadowSize, m_shadowSize, m_shadowSize);
         m_pShadowWidget->setAutoFillBackground(true);
@@ -122,5 +122,26 @@ private:
 typedef MuShadowWindow<QWidget> MuCustomWindowWidget;
 typedef MuShadowWindow<QDialog> MuCustomDialogWidget;
 typedef MuShadowWindow<QMessageBox> MuCustomMessageBoxWidget;
+
+#ifdef Q_OS_WIN32
+class FRAMELESSWINDOWSHARED_EXPORT MuWinAeroShadowWindow : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit MuWinAeroShadowWindow(QWidget *parent = nullptr);
+
+    QWidget *clientWidget() const { return m_pClientWidget; }
+    QVBoxLayout *clientLayout() const { return m_pClientLayout; }
+
+protected:
+    virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result);
+
+private:
+    MuTitleBar *m_titleBar;
+    QWidget *m_pClientWidget;
+    QVBoxLayout *m_pClientLayout;
+    MuFramelessHelper *m_pHelper;
+};
+#endif
 
 #endif // MUSHADOWWINDOW_H
