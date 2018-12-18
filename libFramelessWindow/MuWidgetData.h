@@ -1,28 +1,31 @@
-#ifndef WIDGETDATA_H
-#define WIDGETDATA_H
+﻿#ifndef MUWIDGETDATA_H
+#define MUWIDGETDATA_H
 #include <QObject>
 #include <QPoint>
-#include "cursorposcalculator.h"
+#include <QMargins>
+#include "MuCursorPosCalculator.h"
 
-class FramelessHelperPrivate;
-class CursorPosCalculator;
+class MuFramelessHelperPrivate;
+class MuCursorPosCalculator;
 class QWidget;
 class QEvent;
 class QMouseEvent;
 class QRubberBand;
 class QPoint;
 
-class WidgetData
+class MuWidgetData
 {
 public:
-    explicit WidgetData(FramelessHelperPrivate *_d, QWidget *pTopLevelWidget);
-    ~WidgetData();
+    explicit MuWidgetData(MuFramelessHelperPrivate *_d, QWidget *window, QWidget *shadowContainerWidget = nullptr);
+    ~MuWidgetData();
 
     QWidget *widget();
     // 处理鼠标事件-划过、按下、释放、移动
     void handleWidgetEvent(QEvent *event);
     // 更新橡皮筋状态
     void updateRubberBandStatus();
+
+    void setShadowWidth(const int width);
 
 private:
     // 处理鼠标按下
@@ -44,18 +47,23 @@ private:
     void moveWidget(const QPoint &gMousePos);
 
 private:
-    FramelessHelperPrivate *d;
+    MuFramelessHelperPrivate *d;
     QRubberBand *m_pRubberBand;
     QWidget *m_pWidget;
     QPoint m_ptDragPos;
     double m_dLeftScale; // 鼠标位置距离最窗口最左边的距离占整个宽度的比例
     int m_nRightLength; // 鼠标位置距离最窗口最右边的距离
-    CursorPosCalculator m_pressedMousePos;
-    CursorPosCalculator m_moveMousePos;
+    MuCursorPosCalculator m_pressedMousePos;
+    MuCursorPosCalculator m_moveMousePos;
     bool m_bLeftButtonPressed;
     bool m_bLeftButtonTitlePressed;
     bool m_bCursorShapeChanged;
     Qt::WindowFlags m_windowFlags;
+    int m_nShadowWidth;
+    int m_oldShadowWidth;
+    QMargins m_oldContentsMargin;
+    QWidget *m_window;
+    QWidget* m_shadowContainerWidget;
 };
 
-#endif // WIDGETDATA_H
+#endif // MUWIDGETDATA_H

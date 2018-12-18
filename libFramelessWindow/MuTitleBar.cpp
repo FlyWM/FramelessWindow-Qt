@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 自定义无边框窗体、对话框和提示框并封装成库
  *
  * titlebar.cpp
@@ -10,7 +10,6 @@
  *
  */
 
-#include "titlebar.h"
 #include <QLabel>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -19,9 +18,15 @@
 #include <QApplication>
 #include <qt_windows.h>
 #include <QDesktopWidget>
+#include "MuTitleBar.h"
+#include "MuShadowWindow.h"
 
-TitleBar::TitleBar(QWidget *parent)
+MuTitleBar::MuTitleBar(QWidget *parent, QWidget *window, QWidget *shadowContainerWidget, bool canResize)
     : QWidget(parent)
+    , m_window(window)
+    , m_shadowContainerWidget(shadowContainerWidget)
+    , m_oldContentsMargin(10, 10, 10, 10)
+    , m_canResize(canResize)
 {
     setFixedHeight(30);
 
@@ -30,11 +35,12 @@ TitleBar::TitleBar(QWidget *parent)
     m_pMinimizeButton = new QPushButton(this);
     m_pMaximizeButton = new QPushButton(this);
     m_pCloseButton = new QPushButton(this);
+    m_pCustomWidget = new QWidget(this);
 
     m_pIconLabel->setFixedSize(20, 20);
     m_pIconLabel->setScaledContents(true);
 
-    m_pTitleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+//    m_pTitleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
     m_pMinimizeButton->setFixedSize(27, 22);
     m_pMaximizeButton->setFixedSize(27, 22);
@@ -53,11 +59,13 @@ TitleBar::TitleBar(QWidget *parent)
     m_pMaximizeButton->setToolTip("Maximize");
     m_pCloseButton->setToolTip("Close");
 
+    m_pCustomWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     QHBoxLayout *pLayout = new QHBoxLayout(this);
     pLayout->addWidget(m_pIconLabel);
     pLayout->addSpacing(5);
     pLayout->addWidget(m_pTitleLabel);
-    pLayout->addStretch();
+    pLayout->addWidget(m_pCustomWidget);
     pLayout->addWidget(m_pMinimizeButton);
     pLayout->addWidget(m_pMaximizeButton);
     pLayout->addWidget(m_pCloseButton);
@@ -70,59 +78,72 @@ TitleBar::TitleBar(QWidget *parent)
     connect(m_pMaximizeButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
     connect(m_pCloseButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
 }
-TitleBar::~TitleBar()
+MuTitleBar::~MuTitleBar()
 {
 
 }
 
-void TitleBar::setMinimumVisible(bool minimum)
+void MuTitleBar::setMinimumVisible(bool minimum)
 {
-    if (!minimum)  m_pMinimizeButton->hide();
+    if (!minimum)
+        m_pMinimizeButton->hide();
+    else
+        m_pMaximizeButton->show();
 }
 
-void TitleBar::setMaximumVisible(bool maximum)
+void MuTitleBar::setMaximumVisible(bool maximum)
 {
-    if (!maximum) m_pMaximizeButton->hide();
+    if (!maximum)
+        m_pMaximizeButton->hide();
+    else
+        m_pMaximizeButton->show();
 }
 
-void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
+QWidget *MuTitleBar::customWidget() const
+{
+    return m_pCustomWidget;
+}
+
+QPushButton *MuTitleBar::minimizeButton() const
+{
+    return m_pMinimizeButton;
+}
+
+QPushButton *MuTitleBar::maximizeButton() const
+{
+    return m_pMaximizeButton;
+}
+
+QPushButton *MuTitleBar::closeButton() const
+{
+    return m_pCloseButton;
+}
+
+QLabel *MuTitleBar::titleLabel() const
+{
+    return m_pTitleLabel;
+}
+
+void MuTitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
 
     emit m_pMaximizeButton->clicked();
 }
 
-//void TitleBar::mousePressEvent(QMouseEvent *event)
-//{
-//    if (ReleaseCapture())
-//    {
-//        QWidget *pWindow = this->window();
-//        if (pWindow->isTopLevel())
-//        {
-//           SendMessage(HWND(pWindow->winId()), WM_SYSCOMMAND, SC_MOVE + HTCAPTION, 0);
-//        }
-//    }
-//    event->ignore();
-//}
-
-bool TitleBar::eventFilter(QObject *obj, QEvent *event)
+bool MuTitleBar::eventFilter(QObject *obj, QEvent *event)
 {
-    switch (event->type())
-    {
-    case QEvent::WindowTitleChange:
-    {
+    switch (event->type()) {
+    case QEvent::WindowTitleChange: {
         QWidget *pWidget = qobject_cast<QWidget *>(obj);
-        if (pWidget)
-        {
+        if (pWidget) {
             m_pTitleLabel->setText(pWidget->windowTitle());
             return true;
         }
     }
-    case QEvent::WindowIconChange:
-    {
+    case QEvent::WindowIconChange: {
         QWidget *pWidget = qobject_cast<QWidget *>(obj);
-        if (pWidget)
-        {
+        if (pWidget) {
             QIcon icon = pWidget->windowIcon();
             m_pIconLabel->setPixmap(icon.pixmap(m_pIconLabel->size()));
             return true;
@@ -138,48 +159,42 @@ bool TitleBar::eventFilter(QObject *obj, QEvent *event)
     }
 }
 
-void TitleBar::onClicked()
+void MuTitleBar::onClicked()
 {
     QPushButton *pButton = qobject_cast<QPushButton *>(sender());
     QWidget *pWindow = this->window();
-    if (pWindow->isTopLevel())
-    {
-        if (pButton == m_pMinimizeButton)
-        {
+    if (pWindow->isTopLevel()) {
+        if (pButton == m_pMinimizeButton) {
             pWindow->showMinimized();
         }
-        else if (pButton == m_pMaximizeButton)
-        {
-            if(pWindow->isMaximized())
-            {
-                pWindow->showNormal();
-            }
-            else
-            {
-                pWindow->showMaximized();
-                window()->setGeometry(QApplication::desktop()->availableGeometry());
+        else if (pButton == m_pMaximizeButton) {
+            if (!m_canResize)
+                return;
+
+            if (Qt::WindowMaximized == m_window->windowState()) {
+                m_shadowContainerWidget->setContentsMargins(m_oldContentsMargin);
+                m_window->showNormal();
+            } else {
+                m_oldContentsMargin = m_shadowContainerWidget->contentsMargins();
+                m_shadowContainerWidget->setContentsMargins(0, 0, 0, 0);
+                m_window->showMaximized();
             }
         }
-        else if (pButton == m_pCloseButton)
-        {
+        else if (pButton == m_pCloseButton)  {
             pWindow->close();
         }
     }
 }
 
-void TitleBar::updateMaximize()
+void MuTitleBar::updateMaximize()
 {
     QWidget *pWindow = this->window();
-    if (pWindow->isTopLevel())
-    {
+    if (pWindow->isTopLevel()) {
         bool bMaximize = pWindow->isMaximized();
-        if (bMaximize)
-        {
+        if (bMaximize) {
             m_pMaximizeButton->setToolTip(tr("Restore"));
             m_pMaximizeButton->setProperty("maximizeProperty", "restore");
-        }
-        else
-        {
+        } else {
             m_pMaximizeButton->setProperty("maximizeProperty", "maximize");
             m_pMaximizeButton->setToolTip(tr("Maximize"));
         }

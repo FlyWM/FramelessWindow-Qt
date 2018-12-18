@@ -23,8 +23,8 @@
 /** 是否启用 window AREO 效果 **/
 //#undef HAVE_WINDOW_AERO
 
-class FramelessHelper;
-class TitleBar;
+class MuFramelessHelper;
+class MuTitleBar;
 
 /**
  * @brief The FramelessWindow class
@@ -100,8 +100,8 @@ protected:
     virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result);
 
 private:
-    FramelessHelper *m_helper;
-    TitleBar *m_pTitleBar = nullptr;
+    MuFramelessHelper *m_helper;
+    MuTitleBar *m_pTitleBar = nullptr;
     QVBoxLayout *pFrameLessWindowLayout;
     QWidget *m_pCentralWdiget;
     //bool m_haveAero;
@@ -180,8 +180,8 @@ protected:
     QVBoxLayout *pFrameLessWindowLayout;
 
 private:
-    FramelessHelper *m_helper;
-    TitleBar *m_pTitleBar = nullptr;
+    MuFramelessHelper *m_helper;
+    MuTitleBar *m_pTitleBar = nullptr;
     QWidget *m_pCentralWidget;
 };
 
@@ -207,8 +207,7 @@ public:
     QAbstractButton *clickedButton() const;
     QMessageBox::StandardButton standardButton(QAbstractButton *button) const;
     /**
-     * @brief setDefaultButton
-     *  设置默认按钮
+     * @brief setDefaultButton 设置默认按钮
      * @param button
      */
     void setDefaultButton(QPushButton *button);

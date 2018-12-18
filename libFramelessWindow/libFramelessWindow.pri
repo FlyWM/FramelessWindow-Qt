@@ -17,24 +17,33 @@ include(../common.pri)
 # 还是 libTest调用, 所以需要在 libFramelessWindow.pro中
 # 设置 CONFIG += FramelessWindow-buidlib
 FramelessWindow-buildlib{
-    HEADERS += cursorposcalculator.h \
-        framelesshelper.h \
-        framelesshelperprivate.h \
-        framelesswindow.h \
-        framelesswindow_global.h \
-        widgetdata.h\
-        titlebar.h
+# 不要加$$PWD
+    HEADERS += \
+        MuFramelessHelper.h \
+        MuFramelessHelperPrivate.h \
+        FramelessWindow.h \
+        MuCursorPosCalculator.h \
+        MuTitleBar.h \
+        MuWidgetData.h \
+        MuWinDWMAPI.h \
+        MuShadowWidget.h \
+        MuShadowWindow.h \
+        MuCustomWindow.h \
+        FramelessWindow_Global.h
 
     SOURCES += \
-        cursorposcalculator.cpp \
-        framelesshelper.cpp \
-        framelesswindow.cpp \
-        widgetdata.cpp\
-        titlebar.cpp
+        Muframelesshelper.cpp \
+        FramelessWindow.cpp \
+        MuWidgetData.cpp\
+        MuCursorPosCalculator.cpp \
+        MuTitleBar.cpp \
+        MuWinDWMAPI.cpp \
+        MuShadowWidget.cpp \
+        MuCustomWindow.cpp \
+        MuShadowWindow.cpp
 
     RESOURCES += \
-        images.qrc \
-        style.qrc
+        images.qrc
 
     QT += widgets winextras
 
@@ -42,8 +51,6 @@ FramelessWindow-buildlib{
     LIBS += -L$$PROJECT_LIBDIR -l$$LIBFRAMELESSWINDOW_NAME
 }
 
-HEADERS += \
-    $$PWD/windwmapi.h
 
-SOURCES += \
-    $$PWD/windwmapi.cpp
+
+

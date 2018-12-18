@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>style/style_black.qss</file>
-        <file>style/style_white.qss</file>
-    </qresource>
-</RCC>

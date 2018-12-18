@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 自定义无边框窗体、对话框和提示框并封装成库
  *
  * stylesheethelper.h
@@ -19,8 +19,7 @@
 class StyleSheetHelper
 {
 public:
-    static void setStyle(const QString &qssFile)
-    {
+    static void setStyle(const QString &qssFile) {
         QFile qss(qssFile);
         qss.open(QFile::ReadOnly);
         qApp->setStyleSheet(qss.readAll());

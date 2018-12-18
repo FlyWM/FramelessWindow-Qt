@@ -17,6 +17,7 @@
 bin/
 /.qmake.cache
 /.qmake.stash
+bin/
 *.pro.user
 *.pro.user.*
 *.qbs.user

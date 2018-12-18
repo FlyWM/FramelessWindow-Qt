@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 自定义无边框窗体、对话框和提示框并封装成库
  *
  * cursorposcalculator.cpp
@@ -10,19 +10,20 @@
  *
  */
 
-#include "cursorposcalculator.h"
 #include <QPoint>
 #include <QRect>
+#include "MuCursorPoscalCulator.h"
 
-int CursorPosCalculator::m_nBorderWidth = 5;
-int CursorPosCalculator::m_nTitleHeight = 30;
+int MuCursorPosCalculator::m_nBorderWidth = 10;
+int MuCursorPosCalculator::m_nTitleHeight = 30;
+int MuCursorPosCalculator::m_nShadowWidth = 0;
 
-CursorPosCalculator::CursorPosCalculator()
+MuCursorPosCalculator::MuCursorPosCalculator()
 {
     reset();
 }
 
-void CursorPosCalculator::reset()
+void MuCursorPosCalculator::reset()
 {
     m_bOnEdges = false;
     m_bOnLeftEdge = false;
@@ -35,7 +36,7 @@ void CursorPosCalculator::reset()
     m_bOnBottomRightEdge = false;
 }
 
-void CursorPosCalculator::recalculate(const QPoint &gMousePos, const QRect &frameRect)
+void MuCursorPosCalculator::recalculate(const QPoint &gMousePos, const QRect &frameRect)
 {
     int globalMouseX = gMousePos.x();
     int globalMouseY = gMousePos.y();
@@ -46,15 +47,15 @@ void CursorPosCalculator::recalculate(const QPoint &gMousePos, const QRect &fram
     int frameWidth = frameRect.width();
     int frameHeight = frameRect.height();
 
-    m_bOnLeftEdge = (globalMouseX >= frameX &&
-                     globalMouseX <= frameX + m_nBorderWidth);
-    m_bOnRightEdge = (globalMouseX >= frameX + frameWidth - m_nBorderWidth &&
-                      globalMouseX <= frameX + frameWidth);
-    m_bOnTopEdge = (globalMouseY >= frameY &&
-                     globalMouseY <= frameY + m_nBorderWidth );
-
-    m_bOnBottomEdge = (globalMouseY >= frameY + frameHeight - m_nBorderWidth &&
-                    globalMouseY <= frameY + frameHeight);
+    // 从边缘外部触发，以免和标题栏按钮冲突
+    m_bOnLeftEdge = (globalMouseX >= frameX - m_nBorderWidth &&
+                     globalMouseX <= frameX);
+    m_bOnRightEdge = (globalMouseX >= frameX + frameWidth &&
+                      globalMouseX <= frameX + frameWidth + m_nBorderWidth);
+    m_bOnTopEdge = (globalMouseY >= frameY - m_nBorderWidth &&
+                     globalMouseY <= frameY);
+    m_bOnBottomEdge = (globalMouseY >= frameY + frameHeight &&
+                    globalMouseY <= frameY + frameHeight + m_nBorderWidth);
 
     m_bOnTopLeftEdge = m_bOnTopEdge && m_bOnLeftEdge;
     m_bOnBottomLeftEdge = m_bOnBottomEdge && m_bOnLeftEdge;
