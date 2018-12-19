@@ -21,7 +21,6 @@ FramelessWindow-buildlib{
     HEADERS += \
         MuFramelessHelper.h \
         MuFramelessHelperPrivate.h \
-        FramelessWindow.h \
         MuCursorPosCalculator.h \
         MuTitleBar.h \
         MuWidgetData.h \
@@ -33,7 +32,6 @@ FramelessWindow-buildlib{
 
     SOURCES += \
         Muframelesshelper.cpp \
-        FramelessWindow.cpp \
         MuWidgetData.cpp\
         MuCursorPosCalculator.cpp \
         MuTitleBar.cpp \
@@ -46,6 +44,8 @@ FramelessWindow-buildlib{
         images.qrc
 
     QT += widgets winextras
+
+    LIBS += -lDwmapi
 
 }else{
     LIBS += -L$$PROJECT_LIBDIR -l$$LIBFRAMELESSWINDOW_NAME

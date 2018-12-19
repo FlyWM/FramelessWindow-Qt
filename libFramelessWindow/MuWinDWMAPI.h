@@ -7,40 +7,86 @@
  * GitHub: https://github.com/dnybz
  *
  */
+
+#include <QtGlobal>
+
+#ifdef Q_OS_WIN32
+
 #ifndef MUWINDWMAPI_H
 #define MUWINDWMAPI_H
 
-
 #include <windows.h>
+#include <dwmapi.h>
 #include "FramelessWindow_Global.h"
-
-typedef struct _MARGINS
-{
-    int cxLeftWidth;      // width of left border that retains its size
-    int cxRightWidth;     // width of right border that retains its size
-    int cyTopHeight;      // height of top border that retains its size
-    int cyBottomHeight;   // height of bottom border that retains its size
-} MARGINS, *PMARGINS;
 
 class FRAMELESSWINDOWSHARED_EXPORT MuWinDwmapi
 {
 public:
-    MuWinDwmapi();
-    ~MuWinDwmapi();
+    static MuWinDwmapi* instance();
 
-    typedef HRESULT (WINAPI* DwmIsCompositionEnabledPtr)(BOOL* pfEnabled);
-    typedef HRESULT (WINAPI* DwmExtendFrameIntoClientAreaPtr)(HWND hWnd, const MARGINS *pMarInset);
+    /**
+     * @brief DwnIsEnabled 判断系统Aero效果是否开启
+     * @return -1，函数执行失败； 0，未开启；1，已开启；
+     */
+    int dwmIsCompositionEnabledsEnabled() const;
 
-    HRESULT DwmIsCompositionEnabled(BOOL* pfEnabled) const;
-    HRESULT DwmExtendFrameIntoClientArea(HWND hWnd, const MARGINS *pMarInset) const;
+    /**
+     * @brief dwmEnableComposition 开启或关闭Aero Glass效果
+     * @param enable
+     * @return
+     */
+    HRESULT dwmEnableComposition(bool enable);
 
-    static const MuWinDwmapi* instance();
+    /**
+     * @brief dwmEnabledNoClientRender
+     *        开启或者关闭非客户区渲染
+     *        \warning 当系统的Aero Glass关闭时，设置无效。
+     * @param hWnd
+     * @param enable
+     * @return
+     */
+    HRESULT dwmEnabledNoClientRender(HWND hWnd, bool enable);
+
+    /**
+     * @brief dwmExtendFrameIntoClientArea
+     *        GLASS效果向客户区域扩展
+     *        \note 非客户区通常包括窗口标题栏和窗口边框。
+     *              缺省状态下，非客户区会被渲染成毛玻璃效果，这也称为Compostion。
+     * @param hWnd 窗口句柄
+     * @param pMarInset
+     *        MARGINS指定了在上下左右4个方向上扩展的范围。如果4个值均为-1，则扩展到整个客户区。
+     * @return
+     */
+    HRESULT dwmExtendFrameIntoClientArea(HWND hWnd, const MARGINS *pMarInset) const;
+
+    /**
+     * @brief enableBlurBehind 在指定窗口上启用模糊效果。
+     * @param hwnd 窗口句柄
+     * @return
+     */
+    HRESULT enableBlurBehind(HWND hwnd);
+
+    /**
+     * @brief dwmEnableTransition
+     *        Transition控制是否以动画方式显示窗口的最小化和还原。
+     *        只对当前窗口有效
+     * @param hWnd
+     * @param enable
+     * @return
+     */
+    HRESULT dwmEnableTransition(HWND hWnd, bool enable);
 
 private:
-      DwmIsCompositionEnabledPtr dwm_is_composition_enabled_;
-      DwmExtendFrameIntoClientAreaPtr dwm_extendframe_into_client_area_;
-      HMODULE dwmapi_dll_;
+    MuWinDwmapi();
+    MuWinDwmapi(const MuWinDwmapi &);
+    MuWinDwmapi &operator = (const MuWinDwmapi &);
+    ~MuWinDwmapi();
+
+private:
+
 };
 
 
 #endif // MUWINDWMAPI_H
+
+#endif

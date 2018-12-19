@@ -24,50 +24,6 @@ MuCustomWindow::MuCustomWindow(QWidget *parent)
     resize(800, 600);
 }
 
-MuCustomWinAeroWindow::MuCustomWinAeroWindow(QWidget *parent)
-    : MuShadowWindow<QWidget>(true, 0, parent)
-{
-    if (parent != nullptr) {
-        setWindowTitle(parent->windowTitle());
-        setWindowIcon(parent->windowIcon());
-    } else {
-        this->setWindowTitle("Custom Window");
-        this->setWindowIcon(QIcon(":/images/logo.jpg"));
-    }
-    resize(800, 600);
-#ifdef Q_OS_WIN32
-    BOOL enabled = FALSE;
-    MuWinDwmapi::instance()->DwmIsCompositionEnabled(&enabled);
-    if (enabled) {
-        HWND hwnd = (HWND)this->winId();
-        DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
-        ::SetWindowLong(hwnd, GWL_STYLE, style | WS_MAXIMIZEBOX | WS_THICKFRAME | WS_CAPTION);
-        //保留一个像素的边框宽度，否则系统不会绘制边框阴影
-        //we better left 1 piexl width of border untouch, so OS can draw nice shadow around it
-        const MARGINS shadow = { 1, 1, 1, 1 };
-        MuWinDwmapi::instance()->DwmExtendFrameIntoClientArea(HWND(winId()), &shadow);
-    }
-#endif
-}
-
-#ifdef Q_OS_WIN32
-bool MuCustomWinAeroWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)
-{
-    MSG* msg = (MSG *)message;
-    switch (msg->message) {
-    case WM_NCCALCSIZE: {
-        // this kills the window frame and title bar we added with WS_THICKFRAME and WS_CAPTION
-        *result = 0;
-        return true;
-    }
-    default:
-        return QWidget::nativeEvent(eventType, message, result);
-    }
-}
-#endif
-
-
-
 MuCustomDialog::MuCustomDialog(QWidget *parent)
     : MuShadowWindow<QDialog>(false, 10, parent)
 {

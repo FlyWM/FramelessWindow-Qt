@@ -240,29 +240,22 @@ void MuWidgetData::resizeWidget(const QPoint &gMousePos)
     if (m_pressedMousePos.m_bOnTopLeftEdge) {
         left = gMousePos.x() - m_nShadowWidth;
         top = gMousePos.y() - m_nShadowWidth;
-    }
-    else if (m_pressedMousePos.m_bOnBottomLeftEdge) {
+    } else if (m_pressedMousePos.m_bOnBottomLeftEdge) {
         left = gMousePos.x() - m_nShadowWidth;
         bottom = gMousePos.y() + m_nShadowWidth;
-    }
-    else if (m_pressedMousePos.m_bOnTopRightEdge) {
+    } else if (m_pressedMousePos.m_bOnTopRightEdge) {
         right = gMousePos.x() + m_nShadowWidth;
         top = gMousePos.y() - m_nShadowWidth;
-    }
-    else if (m_pressedMousePos.m_bOnBottomRightEdge) {
+    } else if (m_pressedMousePos.m_bOnBottomRightEdge) {
         right = gMousePos.x() + m_nShadowWidth;
         bottom = gMousePos.y() + m_nShadowWidth;
-    }
-    else if (m_pressedMousePos.m_bOnLeftEdge) {
+    } else if (m_pressedMousePos.m_bOnLeftEdge) {
         left = gMousePos.x() - m_nShadowWidth;
-    }
-    else if (m_pressedMousePos.m_bOnRightEdge) {
+    } else if (m_pressedMousePos.m_bOnRightEdge) {
         right = gMousePos.x() + m_nShadowWidth;
-    }
-    else if (m_pressedMousePos.m_bOnTopEdge) {
+    } else if (m_pressedMousePos.m_bOnTopEdge) {
         top = gMousePos.y() - m_nShadowWidth;
-    }
-    else if (m_pressedMousePos.m_bOnBottomEdge) {
+    } else if (m_pressedMousePos.m_bOnBottomEdge) {
         bottom = gMousePos.y() + m_nShadowWidth;
     }
 
@@ -284,8 +277,7 @@ void MuWidgetData::resizeWidget(const QPoint &gMousePos)
 
         if (d->m_bRubberBandOnResize) {
             m_pRubberBand->setGeometry(newRect);
-        }
-        else {
+        } else {
             m_window->setGeometry(newRect);
         }
     }
@@ -307,9 +299,12 @@ void MuWidgetData::moveWidget(const QPoint &gMousePos)
             m_ptDragPos.setY(m_ptDragPos.y() + m_oldShadowWidth);
             m_shadowContainerWidget->setContentsMargins(m_oldContentsMargin);
             m_window->showNormal();
+//            m_window->setGeometry(0, 0, m_window->normalGeometry().width(), m_window->normalGeometry().height());
+//            m_window->showNormal();
         } else {
             m_oldContentsMargin = m_shadowContainerWidget->contentsMargins();
         }
         m_window->move(gMousePos - m_ptDragPos);
+
     }
 }

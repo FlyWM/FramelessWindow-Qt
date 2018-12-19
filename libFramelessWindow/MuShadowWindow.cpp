@@ -1,6 +1,7 @@
 ﻿#include <QtGlobal>
 
 #ifdef Q_OS_WIN32
+#include <QLabel>
 #include "MuShadowWindow.h"
 #include "MuWinDWMAPI.h"
 
@@ -26,16 +27,24 @@ MuWinAeroShadowWindow::MuWinAeroShadowWindow(QWidget *parent)
     m_pHelper->setWidgetResizable(true);
     m_pHelper->setWidgetMovable(true);
 
+    QLabel *label = new QLabel(this);
+    label->setFixedSize(400, 300);
+    label->setPixmap(QPixmap(":/images/logo.jpg"));
+
     BOOL enabled = FALSE;
-    MuWinDwmapi::instance()->DwmIsCompositionEnabled(&enabled);
+    enabled = MuWinDwmapi::instance()->dwmIsCompositionEnabledsEnabled();
     if (enabled) {
         HWND hwnd = (HWND)this->winId();
         DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
-        ::SetWindowLong(hwnd, GWL_STYLE, style | WS_MAXIMIZEBOX | WS_THICKFRAME | WS_CAPTION);
+        ::SetWindowLong(hwnd, GWL_STYLE, style | WS_CAPTION);
         //保留一个像素的边框宽度，否则系统不会绘制边框阴影
         //we better left 1 piexl width of border untouch, so OS can draw nice shadow around it
-        const MARGINS shadow = { 1, 1, 1, 1 };
-        MuWinDwmapi::instance()->DwmExtendFrameIntoClientArea(HWND(winId()), &shadow);
+        const MARGINS shadow = { -1, -1, -1, -1 };
+        MuWinDwmapi::instance()->dwmExtendFrameIntoClientArea(HWND(winId()), &shadow);
+        qDebug() << MuWinDwmapi::instance()->enableBlurBehind(hwnd);
+//        MuWinDwmapi::instance()->dwmIsCompositionEnabledsEnabled();
+
+        qDebug() << MuWinDwmapi::instance()->dwmEnableTransition(hwnd, true);
     }
 }
 
