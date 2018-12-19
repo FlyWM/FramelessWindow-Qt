@@ -18,8 +18,6 @@ CONFIG += debug_and_release build_all
 # 宏定义
 DEFINES += FRAMELESSWINDOW_LIBRARY HAVE_WINDOW_AERO
 
-SOURCES += \
-    MuShadowWindow.cpp
 
 
 
