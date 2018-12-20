@@ -22,6 +22,7 @@
 #include <QPainter>
 #include "MuTitleBar.h"
 #include "MuShadowWindow.h"
+#include "MuCursorPosCalculator.h"
 
 MuTitleBar::MuTitleBar(QWidget *parent, QWidget *window, QWidget *shadowContainerWidget, bool canResize)
     : QWidget(parent)
@@ -30,7 +31,7 @@ MuTitleBar::MuTitleBar(QWidget *parent, QWidget *window, QWidget *shadowContaine
     , m_oldContentsMargin(10, 10, 10, 10)
     , m_canResize(canResize)
 {
-    setFixedHeight(30);
+    setFixedHeight(MuCursorPosCalculator::m_nTitleHeight);
 
     m_pIconLabel = new QLabel(this);
     m_pTitleLabel = new QLabel(this);

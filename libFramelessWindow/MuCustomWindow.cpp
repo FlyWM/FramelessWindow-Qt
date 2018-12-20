@@ -49,12 +49,15 @@ MuWinAeroShadowWindow::MuWinAeroShadowWindow(QWidget *parent)
     setWindowFlags(Qt::FramelessWindowHint);
     setContentsMargins(0, 0, 0, 0);
     resize(800, 600);
+    setWindowIcon(QIcon(":/images/logo.jpg"));
 
     m_pContainerWidget = new QWidget(this);
     m_pContainerLayout = new QVBoxLayout(m_pContainerWidget);
     m_pContainerLayout->setContentsMargins(0, 0, 0, 0);
+    m_pContainerLayout->setSpacing(0);
 
     m_titleBar = new MuTitleBar(this, this, this, true);
+    installEventFilter(m_titleBar);
     m_pClientWidget = new QWidget(this);
     m_pClientLayout = new QVBoxLayout(m_pClientWidget);
 
@@ -71,10 +74,6 @@ MuWinAeroShadowWindow::MuWinAeroShadowWindow(QWidget *parent)
     m_pHelper->setTitleHeight(m_titleBar->height());
     m_pHelper->setWidgetResizable(true);
     m_pHelper->setWidgetMovable(true);
-
-    QLabel *label = new QLabel(this);
-    label->setFixedSize(400, 300);
-    label->setPixmap(QPixmap(":/images/logo.jpg"));
 
     BOOL enabled = FALSE;
     enabled = MuWinDwmapi::instance()->dwmIsCompositionEnabledsEnabled();

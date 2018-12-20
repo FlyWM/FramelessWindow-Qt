@@ -10,10 +10,12 @@
  *
  */
 
+#include <QEvent>
+#include <QDebug>
 #include "MuFramelessHelper.h"
 #include "MuFramelessHelperPrivate.h"
 #include "MuCursorPosCalculator.h"
-#include <QEvent>
+
 
 MuFramelessHelper::MuFramelessHelper(QObject *parent)
     : QObject(parent)
@@ -92,6 +94,7 @@ void MuFramelessHelper::setBorderWidth(uint width)
 
 void MuFramelessHelper::setTitleHeight(uint height)
 {
+    qDebug() << "height: " << height;
     if (height > 0) {
         MuCursorPosCalculator::m_nTitleHeight = height;
     }

@@ -25,6 +25,9 @@ public:
 
     QWidget *clientWidget() const { return m_pClientWidget; }
     QVBoxLayout *clientLayout() const { return m_pClientLayout; }
+    MuTitleBar *titleBar() const { return m_titleBar; }
+    void setRubberBandOnMove(bool enable) { m_pHelper->setRubberBandOnMove(enable); }
+    void setRubberBandOnResize(bool enable) { m_pHelper->setRubberBandOnResize(enable); }
 
     /**
      * @brief setClientWidget

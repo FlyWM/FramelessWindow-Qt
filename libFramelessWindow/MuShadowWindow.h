@@ -91,6 +91,8 @@ public:
         m_pHelper->setTitleHeight(m_titleBar->height());
         m_pHelper->setWidgetResizable(true);
         m_pHelper->setWidgetMovable(true);
+        m_pHelper->setRubberBandOnMove(false);
+        m_pHelper->setRubberBandOnResize(false);
 
         QObject::connect(m_titleBar, &MuTitleBar::HeightChanged, [this](const int &height) { m_pHelper->setTitleHeight(height); });
     }
@@ -100,6 +102,8 @@ public:
     QWidget *clientWidget() const { return m_pClientWidget; }
     QLayout* clientLayout() const { return m_pClientLayout; }
     MuTitleBar *titleBar() const { return m_titleBar; }
+    void setRubberBandOnMove(bool enable) { m_pHelper->setRubberBandOnMove(enable); }
+    void setRubberBandOnResize(bool enable) { m_pHelper->setRubberBandOnResize(enable); }
 
     /**
      * @brief setClientWidget

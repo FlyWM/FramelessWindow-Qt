@@ -87,11 +87,11 @@ void MuWidgetData::handleWidgetEvent(QEvent *event)
 void MuWidgetData::updateRubberBandStatus()
 {
     if (d->m_bRubberBandOnMove || d->m_bRubberBandOnResize) {
-        if(NULL == m_pRubberBand)
+        if(nullptr == m_pRubberBand)
             m_pRubberBand = new QRubberBand(QRubberBand::Rectangle);
     } else {
         delete m_pRubberBand;
-        m_pRubberBand = NULL;
+        m_pRubberBand = nullptr;
     }
 }
 
@@ -142,7 +142,12 @@ void MuWidgetData::handleMouseReleaseEvent(QMouseEvent *event)
         m_pressedMousePos.reset();
         if (m_pRubberBand && m_pRubberBand->isVisible()) {
             m_pRubberBand->hide();
-            m_window->setGeometry(m_pRubberBand->geometry());
+            QRect rectTemp = m_pRubberBand->geometry();
+            QRect windowRect = QRect(rectTemp.x() - m_nShadowWidth,
+                                     rectTemp.y() - m_nShadowWidth,
+                                     rectTemp.width() + m_nShadowWidth * 2,
+                                     rectTemp.height() + m_nShadowWidth * 2);
+            m_window->setGeometry(windowRect);
         }
     }
 }

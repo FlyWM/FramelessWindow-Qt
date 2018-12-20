@@ -6,6 +6,7 @@
 
 namespace Ui {
 class MainWindow;
+class AeroCLientWidget;
 }
 
 class MainWindow : public MuCustomWindow
@@ -22,10 +23,15 @@ private slots:
     void onErrorBtnClicked();
     void onSuccessBtnClicked();
     void onWarningBtnClicked();
-    void onAeroBtnClicked();
+
+private:
+    void initAreoWindow();
 
 private:
     Ui::MainWindow *ui;
+    Ui::AeroCLientWidget *aeroUI;
+
+    MuWinAeroShadowWindow *m_AeroWindow;
 };
 
 #endif // MAINWINDOW_H

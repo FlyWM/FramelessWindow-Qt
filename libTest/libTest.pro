@@ -19,7 +19,8 @@ HEADERS += \
     MainWindow.h
 
 FORMS += \
-    MainWindow.ui
+    MainWindow.ui \
+    AeroClientWidget.ui
 
 RESOURCES += \
     qss.qrc \

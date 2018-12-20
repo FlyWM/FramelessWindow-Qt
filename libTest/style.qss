@@ -4,6 +4,9 @@
 MuTitleBar#titleBar {
     background-color: #c62f2f;
 }
+MuTitleBar#aeroTitleBar {
+    background-color: #4696ff;
+}
 QLabel#titleLabel {
     color: white;
     font-family: 'Microsoft Yahei';

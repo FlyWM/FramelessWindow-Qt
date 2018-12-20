@@ -2,10 +2,12 @@
 #include <QDebug>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+#include "ui_AeroClientWidget.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : MuCustomWindow(parent)
     , ui(new Ui::MainWindow)
+    , aeroUI(new Ui::AeroCLientWidget)
 {
     setWindowTitle("Test Custom Window");
     resize(800, 600);
@@ -20,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
     this->titleBar()->maximizeButton()->setObjectName("maximizeButton");
     this->titleBar()->closeButton()->setObjectName("closeButton");
     setClientWidget(pClientWidget);
-
     const QString buttonStyle = "QPushButton {  \
                                     border: none; \
                                     background-color: #52baff; \
@@ -38,12 +39,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->errorBtn, &QPushButton::clicked, this, &MainWindow::onErrorBtnClicked);
     connect(ui->successBtn, &QPushButton::clicked, this, &MainWindow::onSuccessBtnClicked);
     connect(ui->warningBtn, &QPushButton::clicked, this, &MainWindow::onWarningBtnClicked);
-    connect(ui->aeroBtn, &QPushButton::clicked, this, &MainWindow::onAeroBtnClicked);
+#ifdef Q_OS_WIN32
+    initAreoWindow();
+    connect(ui->aeroBtn, &QPushButton::clicked, m_AeroWindow, &MuWinAeroShadowWindow::show);
+#endif
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete m_AeroWindow;
 }
 
 void MainWindow::onDialogBtnClicked()
@@ -86,9 +91,15 @@ void MainWindow::onWarningBtnClicked()
                                     QStringLiteral("This is a Warning MessageBox!"));
 }
 
-void MainWindow::onAeroBtnClicked()
+void MainWindow::initAreoWindow()
 {
-    MuWinAeroShadowWindow *window = new MuWinAeroShadowWindow;
-    window->show();
+    m_AeroWindow = new MuWinAeroShadowWindow;
+    m_AeroWindow->setRubberBandOnMove(true);
+    m_AeroWindow->setRubberBandOnResize(true);
+    m_AeroWindow->setWindowTitle(QStringLiteral("Test Aero Window"));
+    m_AeroWindow->titleBar()->setObjectName("aeroTitleBar");
+    QWidget *pClientWidget = new QWidget(m_AeroWindow);
+    aeroUI->setupUi(pClientWidget);
+    m_AeroWindow->setClientWidget(pClientWidget);
 }
 
