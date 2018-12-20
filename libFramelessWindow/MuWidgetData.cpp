@@ -24,6 +24,8 @@ MuWidgetData::MuWidgetData(MuFramelessHelperPrivate *_d, QWidget *window, QWidge
     : d(_d)
     , m_window(window)
     , m_shadowContainerWidget(shadowContainerWidget)
+    , m_oldShadowWidth(0)
+    , m_isMoving(false)
 {
     m_bLeftButtonPressed = false;
     m_bCursorShapeChanged = false;
@@ -85,13 +87,10 @@ void MuWidgetData::handleWidgetEvent(QEvent *event)
 
 void MuWidgetData::updateRubberBandStatus()
 {
-    if (d->m_bRubberBandOnMove || d->m_bRubberBandOnResize)
-    {
+    if (d->m_bRubberBandOnMove || d->m_bRubberBandOnResize) {
         if(NULL == m_pRubberBand)
             m_pRubberBand = new QRubberBand(QRubberBand::Rectangle);
-    }
-    else
-    {
+    } else {
         delete m_pRubberBand;
         m_pRubberBand = NULL;
     }
@@ -296,15 +295,15 @@ void MuWidgetData::moveWidget(const QPoint &gMousePos)
             } else if (m_dLeftScale >= 0.7) {
                 m_ptDragPos.setX(m_window->normalGeometry().width() - m_nRightLength);
             }
-            m_ptDragPos.setY(m_ptDragPos.y() + m_oldShadowWidth);
+//            qDebug() << m_ptDragPos.y();
+//            m_ptDragPos.setY(m_ptDragPos.y() + m_oldShadowWidth);
+            m_ptDragPos.setY(m_oldShadowWidth);
             m_shadowContainerWidget->setContentsMargins(m_oldContentsMargin);
+            m_window->resize(m_window->normalGeometry().size());
             m_window->showNormal();
-//            m_window->setGeometry(0, 0, m_window->normalGeometry().width(), m_window->normalGeometry().height());
-//            m_window->showNormal();
         } else {
             m_oldContentsMargin = m_shadowContainerWidget->contentsMargins();
         }
         m_window->move(gMousePos - m_ptDragPos);
-
     }
 }
