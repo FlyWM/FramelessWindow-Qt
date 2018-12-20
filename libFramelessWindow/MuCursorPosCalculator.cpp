@@ -12,7 +12,7 @@
 
 #include <QPoint>
 #include <QRect>
-#include "MuCursorPoscalCulator.h"
+#include "MuCursorPosCalculator.h"
 
 /**
  * @brief MuCursorPosCalculator::m_nBorderWidth

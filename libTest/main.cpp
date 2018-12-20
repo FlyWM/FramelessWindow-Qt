@@ -13,7 +13,7 @@
 #include <QApplication>
 #include <QPushButton>
 #include "MainWindow.h"
-#include "stylesheethelper.h"
+#include "StyleSheetHelper.h"
 #include "MuCustomWindow.h"
 #include "MuShadowWindow.h"
 
@@ -25,24 +25,6 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     w.show();
-
-//    MuCustomDialog dialog;
-//    dialog.setModal(true);
-//    dialog.setWindowTitle("dialog");
-//    dialog.show();
-//    MuCustomMessageBox::setButtonStyleSheet(QDialogButtonBox::Ok, "background-color: red");
-//    MuCustomMessageBox::showInformation(nullptr, "Title", "showInformation !");
-//    MuCustomMessageBox::showError(nullptr, "Title", "showError !");
-//    MuCustomMessageBox::showSuccess(nullptr, "Title", "showSuccess !");
-//    MuCustomMessageBox::showCritical(nullptr, "Title", "showCritical !");
-//    MuCustomMessageBox::showQuestion(nullptr, "Title", "showQuestion!");
-//    MuCustomMessageBox::showWarning(nullptr, "Title", "showWarning !");
-
-//    MuCustomWinAeroWindow w;
-//    w.show();
-
-//    MuWinAeroShadowWindow w1;
-//    w1.show();
 
     return a.exec();
 }

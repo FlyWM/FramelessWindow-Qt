@@ -8,5 +8,19 @@
         <file>images/restoreBtn32_White.png</file>
         <file>images/closeBtn32_Gray.png</file>
         <file>images/closeBtn32_White.png</file>
+        <file>images/logo.jpg</file>
+        <file>images/closeBtnBlack_16.png</file>
+        <file>images/closeBtnWhite_16.png</file>
+        <file>images/errorRed_48.png</file>
+        <file>images/informationBlue_48.png</file>
+        <file>images/maximizeBtnBlack_16.png</file>
+        <file>images/maximizeBtnWhite_16.png</file>
+        <file>images/minimizeBtnBlack_16.png</file>
+        <file>images/minimizeBtnWhite_16.png</file>
+        <file>images/questionBlue_48.png</file>
+        <file>images/restoreBlack_16.png</file>
+        <file>images/restoreWhite_16.png</file>
+        <file>images/successGreen_48.png</file>
+        <file>images/warningYellow_48.png</file>
     </qresource>
 </RCC>

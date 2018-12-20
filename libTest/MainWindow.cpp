@@ -42,13 +42,17 @@ MainWindow::MainWindow(QWidget *parent)
 #ifdef Q_OS_WIN32
     initAreoWindow();
     connect(ui->aeroBtn, &QPushButton::clicked, m_AeroWindow, &MuWinAeroShadowWindow::show);
+#else
+    ui->aeroBtn->hide();
 #endif
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+#ifdef Q_OS_WIN32
     delete m_AeroWindow;
+#endif
 }
 
 void MainWindow::onDialogBtnClicked()
@@ -91,6 +95,7 @@ void MainWindow::onWarningBtnClicked()
                                     QStringLiteral("This is a Warning MessageBox!"));
 }
 
+#ifdef Q_OS_WIN32
 void MainWindow::initAreoWindow()
 {
     m_AeroWindow = new MuWinAeroShadowWindow;
@@ -102,4 +107,4 @@ void MainWindow::initAreoWindow()
     aeroUI->setupUi(pClientWidget);
     m_AeroWindow->setClientWidget(pClientWidget);
 }
-
+#endif

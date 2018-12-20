@@ -25,13 +25,16 @@ private slots:
     void onWarningBtnClicked();
 
 private:
+#ifdef Q_OS_WIN32
     void initAreoWindow();
+#endif
 
 private:
     Ui::MainWindow *ui;
     Ui::AeroCLientWidget *aeroUI;
-
+#ifdef Q_OS_WIN32
     MuWinAeroShadowWindow *m_AeroWindow;
+#endif
 };
 
 #endif // MAINWINDOW_H

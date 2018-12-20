@@ -2,7 +2,7 @@
 #define MUSHADOWWIDGET_H
 
 #include <QWidget>
-#include "framelesswindow_global.h"
+#include "FramelessWindow_Global.h"
 
 class MuSkin9GridImage
 {

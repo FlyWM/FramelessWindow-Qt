@@ -16,7 +16,7 @@
 #include <QObject>
 #include <QHash>
 #include "MuWidgetData.h"
-#include "FramelessWindow_global.h"
+#include "FramelessWindow_Global.h"
 
 
 class QWdiget;

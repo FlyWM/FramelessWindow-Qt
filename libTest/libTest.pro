@@ -15,8 +15,9 @@ SOURCES += \
     MainWindow.cpp
 
 HEADERS += \
-    stylesheethelper.h \
-    MainWindow.h
+    MainWindow.h \
+    MainWindow.h \
+    StyleSheetHelper.h
 
 FORMS += \
     MainWindow.ui \
