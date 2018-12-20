@@ -10,7 +10,6 @@ public:
 
 };
 
-
 class FRAMELESSWINDOWSHARED_EXPORT MuCustomDialog : public MuShadowWindow<QDialog>
 {
 public:

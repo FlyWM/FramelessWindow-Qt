@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
 
 //    StyleSheetHelper::setStyle(":/style_black.qss");
 
-//    MainWindow w;
-//    w.show();
+    MainWindow w;
+    w.show();
 
 //    MuCustomDialog dialog;
 //    dialog.setModal(true);
@@ -41,8 +41,8 @@ int main(int argc, char *argv[])
 //    MuCustomWinAeroWindow w;
 //    w.show();
 
-    MuWinAeroShadowWindow w;
-    w.show();
+//    MuWinAeroShadowWindow w1;
+//    w1.show();
 
     return a.exec();
 }
