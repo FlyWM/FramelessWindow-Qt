@@ -1,6 +1,8 @@
 ﻿#include <QDialogButtonBox>
 #include <QLabel>
 #include <QCheckBox>
+#include <QLabel>
+#include "MuWinDWMAPI.h"
 #include "MuCustomWindow.h"
 
 #ifdef Q_OS_WIN32
@@ -24,6 +26,100 @@ MuCustomWindow::MuCustomWindow(QWidget *parent)
     resize(800, 600);
 }
 
+#ifdef Q_OS_WIN32
+/*
+ * -----------------------------
+ * |MuWinAeroShadowWindow      |
+ * | ------------------------- |
+ * | |m_pContainerWidget     | |
+ * | | --------------------- | |
+ * | | |titleBar           | | |
+ * | | --------------------- | |
+ * | | --------------------- | |
+ * | | |m_pClientWidget    | | |
+ * | | |                   | | |
+ * | | |                   | | |
+ * | | --------------------- | |
+ * | ------------------------- |
+ * -----------------------------
+ */
+MuWinAeroShadowWindow::MuWinAeroShadowWindow(QWidget *parent)
+    :QWidget(parent)
+{
+    setWindowFlags(Qt::FramelessWindowHint);
+    setContentsMargins(0, 0, 0, 0);
+    resize(800, 600);
+
+    m_pContainerWidget = new QWidget(this);
+    m_pContainerLayout = new QVBoxLayout(m_pContainerWidget);
+    m_pContainerLayout->setContentsMargins(0, 0, 0, 0);
+
+    m_titleBar = new MuTitleBar(this, this, this, true);
+    m_pClientWidget = new QWidget(this);
+    m_pClientLayout = new QVBoxLayout(m_pClientWidget);
+
+    QVBoxLayout *pRootLayout = new QVBoxLayout(this);
+    pRootLayout->setContentsMargins(0, 0, 0, 0);
+    pRootLayout->addWidget(m_pContainerWidget);
+
+    m_pContainerLayout->addWidget(m_titleBar);
+    m_pContainerLayout->addWidget(m_pClientWidget);
+
+    m_pHelper = new MuFramelessHelper(this);
+    m_pHelper->setShadowWidth(0);
+    m_pHelper->activateOn(this, this);
+    m_pHelper->setTitleHeight(m_titleBar->height());
+    m_pHelper->setWidgetResizable(true);
+    m_pHelper->setWidgetMovable(true);
+
+    QLabel *label = new QLabel(this);
+    label->setFixedSize(400, 300);
+    label->setPixmap(QPixmap(":/images/logo.jpg"));
+
+    BOOL enabled = FALSE;
+    enabled = MuWinDwmapi::instance()->dwmIsCompositionEnabledsEnabled();
+    if (enabled) {
+        HWND hwnd = (HWND)this->winId();
+        DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
+        ::SetWindowLong(hwnd, GWL_STYLE, style | WS_THICKFRAME | WS_CAPTION);
+        //保留一个像素的边框宽度，否则系统不会绘制边框阴影
+        //we better left 1 piexl width of border untouch, so OS can draw nice shadow around it
+        const MARGINS shadow = { 1, 1, 1, 1 };
+        MuWinDwmapi::instance()->dwmExtendFrameIntoClientArea(hwnd, &shadow);
+        MuWinDwmapi::instance()->dwmEnableTransition(hwnd, true);
+    }
+}
+
+void MuWinAeroShadowWindow::setClientWidget(QWidget *client)
+{
+    if (client == nullptr)
+        return;
+
+    m_pContainerLayout->removeWidget(m_pClientWidget);
+    m_pClientWidget->deleteLater();
+    m_pClientLayout->deleteLater();
+    m_pClientLayout = nullptr;
+    m_pClientWidget = client;
+    m_pContainerLayout->addWidget(m_pClientWidget);
+}
+
+bool MuWinAeroShadowWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)
+{
+    MSG* msg = (MSG *)message;
+    switch (msg->message) {
+    case WM_NCCALCSIZE: {
+        // this kills the window frame and title bar we added with WS_THICKFRAME and WS_CAPTION
+        *result = 0;
+        return true;
+    }
+    default:
+        return QWidget::nativeEvent(eventType, message, result);
+    }
+}
+#endif
+
+
+
 MuCustomDialog::MuCustomDialog(QWidget *parent)
     : MuShadowWindow<QDialog>(false, 10, parent)
 {
@@ -39,6 +135,9 @@ MuCustomDialog::MuCustomDialog(QWidget *parent)
     titleBar()->setMaximumVisible(false);
 }
 
+
+QHash<QDialogButtonBox::StandardButton, QString> MuCustomMessageBox::m_buttonsStyleSheet;
+QString MuCustomMessageBox::m_titleStyleSheet;
 MuCustomMessageBox::MuCustomMessageBox(QWidget *parent,
                                        const QString &title,
                                        const QString &text,
@@ -63,6 +162,7 @@ MuCustomMessageBox::MuCustomMessageBox(QWidget *parent,
 
     m_pIconLabel = new QLabel(this);
     m_pLabel = new QLabel(this);
+    initStyle();
 
     QPixmap pixmap(":/Images/information");
     m_pIconLabel->setPixmap(pixmap);
@@ -86,6 +186,7 @@ MuCustomMessageBox::MuCustomMessageBox(QWidget *parent,
     clientLayout()->addWidget(pClientWidget);
 
     translateUI();
+
 
     connect(m_pButtonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onButtonClicked(QAbstractButton*)));
 }
@@ -134,6 +235,11 @@ void MuCustomMessageBox::addWidget(QWidget *pWidget)
 {
     m_pLabel->hide();
     m_pGridLayout->addWidget(pWidget, 0, 1, 2, 1);
+}
+
+QLabel *MuCustomMessageBox::titleLabel() const
+{
+    return m_pLabel;
 }
 
 QDialogButtonBox *MuCustomMessageBox::buttonBox() const
@@ -234,11 +340,20 @@ QMessageBox::StandardButton MuCustomMessageBox::showCheckBoxQuestion(QWidget *pa
         return QMessageBox::Cancel;
 
     QMessageBox::StandardButton standardButton = msgBox.standardButton(msgBox.clickedButton());
-    if (standardButton == QMessageBox::Yes)
-    {
+    if (standardButton == QMessageBox::Yes) {
         return pCheckBox->isChecked() ? QMessageBox::Yes : QMessageBox::No;
     }
     return QMessageBox::Cancel;
+}
+
+void MuCustomMessageBox::setButtonStyleSheet(QDialogButtonBox::StandardButton button, const QString &styleSheet)
+{
+    m_buttonsStyleSheet[button] = styleSheet;
+}
+
+void MuCustomMessageBox::setTitleStyleSheet(const QString &styleSheet)
+{
+    m_titleStyleSheet = styleSheet;
 }
 
 void MuCustomMessageBox::onButtonClicked(QAbstractButton *button)
@@ -256,19 +371,31 @@ int MuCustomMessageBox::execReturnCode(QAbstractButton *button)
 void MuCustomMessageBox::translateUI()
 {
     QPushButton *pYesButton = m_pButtonBox->button(QDialogButtonBox::Yes);
-    if (pYesButton != NULL)
+    if (pYesButton != nullptr)
         pYesButton->setText(tr("Yes"));
 
     QPushButton *pNoButton = m_pButtonBox->button(QDialogButtonBox::No);
-    if (pNoButton != NULL)
+    if (pNoButton != nullptr)
         pNoButton->setText(tr("No"));
 
     QPushButton *pOkButton = m_pButtonBox->button(QDialogButtonBox::Ok);
-    if (pOkButton != NULL)
+    if (pOkButton != nullptr)
         pOkButton->setText(tr("Ok"));
 
     QPushButton *pCancelButton = m_pButtonBox->button(QDialogButtonBox::Cancel);
-    if (pCancelButton != NULL)
+    if (pCancelButton != nullptr)
         pCancelButton->setText(tr("Cancel"));
+}
+
+void MuCustomMessageBox::initStyle()
+{
+    QPushButton *pButton = nullptr;
+    for (auto key : m_buttonsStyleSheet.keys()) {
+        pButton = m_pButtonBox->button(key);
+        if (pButton != nullptr)
+            pButton->setStyleSheet(m_buttonsStyleSheet.value(key));
+    }
+
+    titleBar()->titleLabel()->setStyleSheet(m_titleStyleSheet);
 }
 

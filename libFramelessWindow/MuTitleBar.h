@@ -37,6 +37,16 @@ public:
     void setMaximumVisible(bool maximum);
 
     /**
+     * @brief setTitleHeight
+     *  改变标题栏的高度
+     *  \warning
+     *  如果通过其它函数改变标题栏高度，标题栏的某些区域可能不能拖动窗口
+     *  或者标题栏以外的区域可能可以拖动窗口
+     * @param height
+     */
+    void setTitleHeight(int height);
+
+    /**
      * @brief customWidget 自定义添加内容
      * @return
      */
@@ -48,6 +58,8 @@ public:
     QLabel *titleLabel() const;
 
 protected:
+    virtual void paintEvent(QPaintEvent *e);
+
     /**
      * @brief mouseDoubleClickEvent 双击标题栏进行界面的最大化/还原
      * @param event QMouseEvent *
@@ -72,6 +84,7 @@ private slots:
 signals:
     void ShowMaximized();
     void ShowNormal();
+    void HeightChanged(int height);
 
 private:
     /**

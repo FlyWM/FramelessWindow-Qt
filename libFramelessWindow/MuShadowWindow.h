@@ -70,16 +70,17 @@ public:
         QWidget *pShadowClientWidget = new QWidget(m_pShadowWidget);
         pRootLayout->addWidget(pShadowClientWidget);
         pShadowClientWidget->setAutoFillBackground(true);
-        QVBoxLayout *pShadowClientLayout = new QVBoxLayout(pShadowClientWidget);
-        pShadowClientLayout->setContentsMargins(0, 0, 0, 0);
-        pShadowClientLayout->setSpacing(0);
+        m_pShadowClientLayout = new QVBoxLayout(pShadowClientWidget);
+        m_pShadowClientLayout->setContentsMargins(0, 0, 0, 0);
+        m_pShadowClientLayout->setSpacing(0);
 
         m_titleBar =  new MuTitleBar(pShadowClientWidget, this, m_pShadowWidget, canResize);
         this->installEventFilter(m_titleBar);
-        pShadowClientLayout->addWidget(m_titleBar);
+        m_pShadowClientLayout->addWidget(m_titleBar);
+        m_titleBar->setObjectName("titleBar1");
 
         m_pClientWidget = new QWidget(pShadowClientWidget);
-        pShadowClientLayout->addWidget(m_pClientWidget);
+        m_pShadowClientLayout->addWidget(m_pClientWidget);
 
         m_pClientLayout = new QVBoxLayout;
         m_pClientWidget->setLayout(m_pClientLayout);
@@ -87,9 +88,11 @@ public:
         m_pHelper = new MuFramelessHelper(this);
         m_pHelper->setShadowWidth(m_shadowSize);
         m_pHelper->activateOn(this, m_pShadowWidget);
-        m_pHelper->setTitleHeight(50);
+        m_pHelper->setTitleHeight(m_titleBar->height());
         m_pHelper->setWidgetResizable(true);
         m_pHelper->setWidgetMovable(true);
+
+        QObject::connect(m_titleBar, &MuTitleBar::HeightChanged, [this](const int &height) { m_pHelper->setTitleHeight(height); });
     }
 
 public:
@@ -97,6 +100,26 @@ public:
     QWidget *clientWidget() const { return m_pClientWidget; }
     QLayout* clientLayout() const { return m_pClientLayout; }
     MuTitleBar *titleBar() const { return m_titleBar; }
+
+    /**
+     * @brief setClientWidget
+     *  设置client替换掉旧的m_pClientWidget
+     *  \warning
+     *  如果调用了该函数就不能调用clientLayout()函数了，因为m_pClientLayout指针已被释放
+     * @param client
+     */
+    void setClientWidget(QWidget *client) {
+        if (client == nullptr)
+            return;
+
+        m_pShadowClientLayout->removeWidget(m_pClientWidget);
+        m_pClientWidget->deleteLater();
+        m_pClientLayout->deleteLater();
+        m_pClientLayout = nullptr;
+        m_pClientWidget = client;
+        m_pShadowClientLayout->addWidget(m_pClientWidget);
+    }
+
     void setResizable(bool resizable) { m_pHelper->setWidgetResizable(resizable); }
     void setMovable(bool movable) {m_pHelper->setWidgetMovable(movable); }
 
@@ -115,6 +138,7 @@ private:
     MuShadowWidget *m_pShadowWidget;
     QWidget *m_pClientWidget;
     QVBoxLayout *m_pClientLayout;
+    QVBoxLayout *m_pShadowClientLayout;
     MuFramelessHelper *m_pHelper;
     MuTitleBar *m_titleBar;
 };
@@ -122,26 +146,5 @@ private:
 typedef MuShadowWindow<QWidget> MuCustomWindowWidget;
 typedef MuShadowWindow<QDialog> MuCustomDialogWidget;
 typedef MuShadowWindow<QMessageBox> MuCustomMessageBoxWidget;
-
-#ifdef Q_OS_WIN32
-class FRAMELESSWINDOWSHARED_EXPORT MuWinAeroShadowWindow : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit MuWinAeroShadowWindow(QWidget *parent = nullptr);
-
-    QWidget *clientWidget() const { return m_pClientWidget; }
-    QVBoxLayout *clientLayout() const { return m_pClientLayout; }
-
-protected:
-    virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result);
-
-private:
-    MuTitleBar *m_titleBar;
-    QWidget *m_pClientWidget;
-    QVBoxLayout *m_pClientLayout;
-    MuFramelessHelper *m_pHelper;
-};
-#endif
 
 #endif // MUSHADOWWINDOW_H

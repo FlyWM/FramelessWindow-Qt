@@ -13,17 +13,82 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QPushButton" name="dialogBtn">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>100</y>
-     <width>211</width>
-     <height>91</height>
+     <x>90</x>
+     <y>80</y>
+     <width>75</width>
+     <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>Custom Window</string>
+    <string>Dialog</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="successBtn">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>190</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>success</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="informationBtn">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>140</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>information</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="errorBtn">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>140</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>error</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="warningBtn">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>190</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>warning</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="aeroBtn">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>80</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>AeroWindow</string>
    </property>
   </widget>
  </widget>

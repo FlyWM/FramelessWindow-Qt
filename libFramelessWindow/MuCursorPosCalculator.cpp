@@ -14,7 +14,14 @@
 #include <QRect>
 #include "MuCursorPoscalCulator.h"
 
-int MuCursorPosCalculator::m_nBorderWidth = 10;
+/**
+ * @brief MuCursorPosCalculator::m_nBorderWidth
+ *  \warning
+ *  如果是WinAeroWindow,那么m_nBorderWidth的大小需要和
+ *  titleBar的rigtMargin一致，不然会造成拖放和关闭按钮的冲突
+ */
+int MuCursorPosCalculator::m_nBorderWidth = 5;
+
 int MuCursorPosCalculator::m_nTitleHeight = 30;
 int MuCursorPosCalculator::m_nShadowWidth = 0;
 
@@ -47,14 +54,15 @@ void MuCursorPosCalculator::recalculate(const QPoint &gMousePos, const QRect &fr
     int frameWidth = frameRect.width();
     int frameHeight = frameRect.height();
 
-    // 从边缘外部触发，以免和标题栏按钮冲突
+    // 边框边缘触发光标变化
+    //
     m_bOnLeftEdge = (globalMouseX >= frameX - m_nBorderWidth &&
-                     globalMouseX <= frameX);
-    m_bOnRightEdge = (globalMouseX >= frameX + frameWidth &&
+                     globalMouseX <= frameX + m_nBorderWidth);
+    m_bOnRightEdge = (globalMouseX >= frameX + frameWidth - m_nBorderWidth &&
                       globalMouseX <= frameX + frameWidth + m_nBorderWidth);
     m_bOnTopEdge = (globalMouseY >= frameY - m_nBorderWidth &&
-                     globalMouseY <= frameY);
-    m_bOnBottomEdge = (globalMouseY >= frameY + frameHeight &&
+                     globalMouseY <= frameY + 5);
+    m_bOnBottomEdge = (globalMouseY >= frameY + frameHeight - m_nBorderWidth &&
                     globalMouseY <= frameY + frameHeight + m_nBorderWidth);
 
     m_bOnTopLeftEdge = m_bOnTopEdge && m_bOnLeftEdge;

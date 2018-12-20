@@ -25,7 +25,6 @@ MuWidgetData::MuWidgetData(MuFramelessHelperPrivate *_d, QWidget *window, QWidge
     , m_window(window)
     , m_shadowContainerWidget(shadowContainerWidget)
     , m_oldShadowWidth(0)
-    , m_isMoving(false)
 {
     m_bLeftButtonPressed = false;
     m_bCursorShapeChanged = false;
@@ -107,14 +106,15 @@ void MuWidgetData::handleMousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
         m_bLeftButtonPressed = true;
-        m_bLeftButtonTitlePressed = event->pos().y() < m_moveMousePos.m_nTitleHeight;
+        m_bLeftButtonTitlePressed = event->pos().y() < m_moveMousePos.m_nTitleHeight + m_oldShadowWidth;
 
         QRect frameRect = m_window->frameGeometry();
         frameRect.setX(frameRect.x() + m_nShadowWidth);
         frameRect.setY(frameRect.y() + m_nShadowWidth);
         frameRect.setWidth(frameRect.width() - m_nShadowWidth);
         frameRect.setHeight(frameRect.height() - m_nShadowWidth);
-        m_pressedMousePos.recalculate(event->globalPos(), frameRect);
+        if (Qt::WindowMaximized != m_window->windowState())
+            m_pressedMousePos.recalculate(event->globalPos(), frameRect);
 
         m_ptDragPos = event->globalPos() - frameRect.topLeft();
         m_ptDragPos.setX(m_ptDragPos.x() + m_nShadowWidth);
@@ -127,8 +127,7 @@ void MuWidgetData::handleMousePressEvent(QMouseEvent *event)
                 m_pRubberBand->setGeometry(frameRect);
                 m_pRubberBand->show();
             }
-        }
-        else if (d->m_bRubberBandOnMove) {
+        } else if (d->m_bRubberBandOnMove) {
             m_pRubberBand->setGeometry(frameRect);
             m_pRubberBand->show();
         }
@@ -153,12 +152,10 @@ void MuWidgetData::handleMouseMoveEvent(QMouseEvent *event)
     if (m_bLeftButtonPressed) {
         if (d->m_bWidgetResizable && m_pressedMousePos.m_bOnEdges && !m_window->isMaximized()) {
             resizeWidget(event->globalPos());
-        }
-        else if (d->m_bWidgetMovable && m_bLeftButtonTitlePressed) {
+        } else if (d->m_bWidgetMovable && m_bLeftButtonTitlePressed) {
             moveWidget(event->globalPos());
         }
-    }
-    else if (d->m_bWidgetResizable) {
+    } else if (d->m_bWidgetResizable) {
         updateCursorShape(event->globalPos());
     }
 }
@@ -197,20 +194,16 @@ void MuWidgetData::updateCursorShape(const QPoint &gMousePos)
     if (m_moveMousePos.m_bOnTopLeftEdge || m_moveMousePos.m_bOnBottomRightEdge) {
         m_window->setCursor( Qt::SizeFDiagCursor );
         m_bCursorShapeChanged = true;
-    }
-    else if(m_moveMousePos.m_bOnTopRightEdge || m_moveMousePos.m_bOnBottomLeftEdge) {
+    } else if(m_moveMousePos.m_bOnTopRightEdge || m_moveMousePos.m_bOnBottomLeftEdge) {
         m_window->setCursor( Qt::SizeBDiagCursor );
         m_bCursorShapeChanged = true;
-    }
-    else if(m_moveMousePos.m_bOnLeftEdge || m_moveMousePos.m_bOnRightEdge) {
+    } else if(m_moveMousePos.m_bOnLeftEdge || m_moveMousePos.m_bOnRightEdge) {
         m_window->setCursor( Qt::SizeHorCursor );
         m_bCursorShapeChanged = true;
-    }
-    else if(m_moveMousePos.m_bOnTopEdge || m_moveMousePos.m_bOnBottomEdge) {
+    } else if(m_moveMousePos.m_bOnTopEdge || m_moveMousePos.m_bOnBottomEdge) {
         m_window->setCursor( Qt::SizeVerCursor );
         m_bCursorShapeChanged = true;
-    }
-    else {
+    } else {
         if (m_bCursorShapeChanged) {
             m_window->unsetCursor();
             m_bCursorShapeChanged = false;
@@ -295,9 +288,7 @@ void MuWidgetData::moveWidget(const QPoint &gMousePos)
             } else if (m_dLeftScale >= 0.7) {
                 m_ptDragPos.setX(m_window->normalGeometry().width() - m_nRightLength);
             }
-//            qDebug() << m_ptDragPos.y();
-//            m_ptDragPos.setY(m_ptDragPos.y() + m_oldShadowWidth);
-            m_ptDragPos.setY(m_oldShadowWidth);
+            m_ptDragPos.setY(m_oldShadowWidth + m_ptDragPos.y());
             m_shadowContainerWidget->setContentsMargins(m_oldContentsMargin);
             m_window->resize(m_window->normalGeometry().size());
             m_window->showNormal();

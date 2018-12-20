@@ -11,7 +11,7 @@ inline unsigned char MuMakeAlpha(int i, double f, int nSize)
     //
     return int(fabs((i * f) * f2));
 }
-QImage MuMakeShadowImage(int shadowSize, bool activated)
+QImage MuMakeShadowImage(int shadowSize, bool activated = false, int borderSize = 0)
 {
     int size = shadowSize * 2 + 10;
     QImage image(size, size, QImage::Format_ARGB32);
@@ -113,6 +113,9 @@ QImage MuMakeShadowImage(int shadowSize, bool activated)
         }
     }
     // 165
+//    int borderR = 165;
+//    int borderG = 165;
+//    int borderB = 165;
     int borderR = 165;
     int borderG = 165;
     int borderB = 165;
@@ -126,7 +129,6 @@ QImage MuMakeShadowImage(int shadowSize, bool activated)
 //        borderB = 0;
     }
     //
-    int borderSize = 1;
     //left
     for (int i = 0; i < borderSize; i++) {
         for (int y = shadowSize - 1; y < szImage.height() - shadowSize + 1; y++) {

@@ -16,6 +16,14 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void onDialogBtnClicked();
+    void onInformationBtnClicked();
+    void onErrorBtnClicked();
+    void onSuccessBtnClicked();
+    void onWarningBtnClicked();
+    void onAeroBtnClicked();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -58,7 +58,6 @@ private:
     bool m_bLeftButtonPressed;
     bool m_bLeftButtonTitlePressed;
     bool m_bCursorShapeChanged;
-    bool m_isMoving;
     Qt::WindowFlags m_windowFlags;
     int m_nShadowWidth;
     int m_oldShadowWidth;

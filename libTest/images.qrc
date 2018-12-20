@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/minBtn32_Gray.png</file>
+        <file>images/minBtn32_White.png</file>
+        <file>images/maxBtn32_Gray.png</file>
+        <file>images/maxBtn32_White.png</file>
+        <file>images/restoreBtn32_Gray.png</file>
+        <file>images/restoreBtn32_White.png</file>
+        <file>images/closeBtn32_Gray.png</file>
+        <file>images/closeBtn32_White.png</file>
+    </qresource>
+</RCC>

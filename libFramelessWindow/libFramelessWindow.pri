@@ -37,8 +37,7 @@ FramelessWindow-buildlib{
         MuTitleBar.cpp \
         MuWinDWMAPI.cpp \
         MuShadowWidget.cpp \
-        MuCustomWindow.cpp \
-        MuShadowWindow.cpp
+        MuCustomWindow.cpp
 
     RESOURCES += \
         images.qrc

@@ -21,3 +21,7 @@ HEADERS += \
 FORMS += \
     MainWindow.ui
 
+RESOURCES += \
+    qss.qrc \
+    images.qrc
+

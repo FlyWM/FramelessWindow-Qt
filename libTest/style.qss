@@ -1,0 +1,52 @@
+﻿/*
+ * titleBar
+ */
+MuTitleBar#titleBar {
+    background-color: #c62f2f;
+}
+QLabel#titleLabel {
+    color: white;
+    font-family: 'Microsoft Yahei';
+}
+QPushButton#minimizeButton, #maximizeButton, #closeButton {
+    border: none;
+}
+QPushButton#minimizeButton {
+    image: url(:/images/minBtn32_Gray.png);
+}
+QPushButton#minimizeButton:hover {
+    image: url(:/images/minBtn32_White.png);
+}
+
+QPushButton#maximizeButton {
+    border: none;
+    image: url(:/images/maxBtn32_Gray.png);
+}
+QPushButton#maximizeButton:hover {
+    image: url(:/images/maxBtn32_White.png);
+}
+QPushButton#maximizeButton[maximizeProperty=restore] {
+    image: url(:/images/restoreBtn32_Gray.png);
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+QPushButton#maximizeButton[maximizeProperty=restore]:hover {
+    image: url(:/images/restoreBtn32_White.png);
+}
+QPushButton#maximizeButton[maximizeProperty=maximize]:hover {
+    image: url(:/images/maxBtn32_White.png);
+}
+
+QPushButton#closeButton {
+    border: none;
+    image: url(:/images/closeBtn32_Gray.png);
+}
+QPushButton#closeButton:hover {
+    image: url(:/images/closeBtn32_White.png);
+}
+/*************************************************/
+
+QLabel#dialogTitleLabel {
+    color: black;
+    font-family: 'Microsoft Yahei';
+}

@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-//    StyleSheetHelper::setStyle(":/style_black.qss");
+    StyleSheetHelper::setStyle(":/style.qss");
 
     MainWindow w;
     w.show();
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 //    dialog.setModal(true);
 //    dialog.setWindowTitle("dialog");
 //    dialog.show();
-
+//    MuCustomMessageBox::setButtonStyleSheet(QDialogButtonBox::Ok, "background-color: red");
 //    MuCustomMessageBox::showInformation(nullptr, "Title", "showInformation !");
 //    MuCustomMessageBox::showError(nullptr, "Title", "showError !");
 //    MuCustomMessageBox::showSuccess(nullptr, "Title", "showSuccess !");

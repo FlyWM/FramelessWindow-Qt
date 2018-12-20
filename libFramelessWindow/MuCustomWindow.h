@@ -1,6 +1,8 @@
 ﻿#ifndef MUCUSTOMWINDOW_H
 #define MUCUSTOMWINDOW_H
 
+#include <QDialogButtonBox>
+#include <QHash>
 #include "MuShadowWindow.h"
 
 class FRAMELESSWINDOWSHARED_EXPORT MuCustomWindow : public MuShadowWindow<QWidget>
@@ -9,6 +11,42 @@ public:
     explicit MuCustomWindow(QWidget *parent = nullptr);
 
 };
+
+#ifdef Q_OS_WIN32
+/**
+ * @brief The MuWinAeroShadowWindow class
+ *  实现Aero部分特效的窗体
+ */
+class FRAMELESSWINDOWSHARED_EXPORT MuWinAeroShadowWindow : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit MuWinAeroShadowWindow(QWidget *parent = nullptr);
+
+    QWidget *clientWidget() const { return m_pClientWidget; }
+    QVBoxLayout *clientLayout() const { return m_pClientLayout; }
+
+    /**
+     * @brief setClientWidget
+     *  设置client替换掉旧的m_pClientWidget
+     *  \warning
+     *  如果调用了该函数就不能调用clientLayout()函数了，因为m_pClientLayout指针已被释放
+     * @param client
+     */
+    void setClientWidget(QWidget *client);
+
+protected:
+    virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result);
+
+private:
+    QWidget *m_pContainerWidget;
+    QVBoxLayout *m_pContainerLayout;
+    MuTitleBar *m_titleBar;
+    QWidget *m_pClientWidget;
+    QVBoxLayout *m_pClientLayout;
+    MuFramelessHelper *m_pHelper;
+};
+#endif
 
 class FRAMELESSWINDOWSHARED_EXPORT MuCustomDialog : public MuShadowWindow<QDialog>
 {
@@ -37,6 +75,8 @@ public:
     void setText(const QString &text);
     void setIcon(const QString &icon);
     void addWidget(QWidget *pWidget);
+
+    QLabel *titleLabel() const;
 
     QDialogButtonBox *buttonBox() const;
 
@@ -81,12 +121,27 @@ public:
                                                             QMessageBox::StandardButtons buttons,
                                                             QMessageBox::StandardButton defaultButton);
 
+public:
+    /**
+     * @brief setButtonStyleSheet 设置MessagBox的Button的样式表
+     * @param button StandardButton
+     * @param styleSheet
+     */
+    static void setButtonStyleSheet(QDialogButtonBox::StandardButton button, const QString &styleSheet);
+
+    /**
+     * @brief setTitleStyleSheet 设置标题栏label的样式表
+     * @param styleSheet
+     */
+    static void setTitleStyleSheet(const QString &styleSheet);
+
 private slots:
     void onButtonClicked(QAbstractButton *button);
 
 private:
     int execReturnCode(QAbstractButton *button);
     void translateUI();
+    void initStyle();
 
 private:
     QLabel *m_pIconLabel;
@@ -95,6 +150,10 @@ private:
     QDialogButtonBox *m_pButtonBox;
     QAbstractButton *m_pClickedButton;
     QAbstractButton *m_pDefaultButton;
+
+    // StandardButton, styleSheet
+    static QHash<QDialogButtonBox::StandardButton, QString> m_buttonsStyleSheet;
+    static QString m_titleStyleSheet;
 };
 
 #endif // MUCUSTOMWINDOW_H
