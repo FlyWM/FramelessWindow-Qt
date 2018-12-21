@@ -140,14 +140,15 @@ public:
     void setMovable(bool movable) {m_pHelper->setWidgetMovable(movable); }
 
 protected:
-    virtual void resizeEvent(QResizeEvent *e) {
-        Q_UNUSED(e)
-        if (Qt::WindowMaximized == this->windowState()) {
-            m_pHelper->setShadowWidth(0);
-        } else {
-            m_pHelper->setShadowWidth(m_shadowSize);
-        }
-    }
+//    virtual void resizeEvent(QResizeEvent *e) {
+//        Q_UNUSED(e)
+//        if (Qt::WindowMaximized == this->windowState()) {
+//            m_pHelper->setShadowWidth(0);
+//        } else {
+//            m_pHelper->setShadowWidth(m_shadowSize);
+//        }
+//        qDebug() << "base resize";
+//    }
 
 private:
     int m_shadowSize;
