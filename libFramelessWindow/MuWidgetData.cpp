@@ -19,12 +19,13 @@
 #include "MuWidgetData.h"
 #include "MuFramelessHelperPrivate.h"
 #include "MuCursorPosCalculator.h"
+#include "MuShadowWindow.h"
 
 MuWidgetData::MuWidgetData(MuFramelessHelperPrivate *_d, QWidget *window, QWidget *shadowContainerWidget)
     : d(_d)
     , m_window(window)
-    , m_shadowContainerWidget(shadowContainerWidget)
     , m_oldShadowWidth(0)
+    , m_shadowContainerWidget(shadowContainerWidget)
 {
     m_bLeftButtonPressed = false;
     m_bCursorShapeChanged = false;
@@ -297,8 +298,10 @@ void MuWidgetData::moveWidget(const QPoint &gMousePos)
             }
             m_ptDragPos.setY(m_oldShadowWidth + m_ptDragPos.y());
             m_shadowContainerWidget->setContentsMargins(m_oldContentsMargin);
-            m_window->resize(m_window->normalGeometry().size());
-            m_window->showNormal();
+            m_window->setWindowState(Qt::WindowNoState);
+            MuShadowWindow<QWidget> *pWindow = reinterpret_cast<MuShadowWindow<QWidget> *>(m_window);
+            if (pWindow != nullptr)
+                m_window->resize(pWindow->oldSize());
             // 当全屏的时候先不显示橡皮筋，先还原大小，再显示橡皮筋
             if (d->m_bRubberBandOnMove) {
                 m_pRubberBand->setGeometry(m_window->geometry());

@@ -114,6 +114,7 @@ public:
     QWidget *clientWidget() const { return m_pClientWidget; }
     QLayout* clientLayout() const { return m_pClientLayout; }
     MuTitleBar *titleBar() const { return m_titleBar; }
+    QSize oldSize() const { return m_titleBar->oldSize(); }
     void setRubberBandOnMove(bool enable) { m_pHelper->setRubberBandOnMove(enable); }
     void setRubberBandOnResize(bool enable) { m_pHelper->setRubberBandOnResize(enable); }
 
@@ -139,16 +140,6 @@ public:
     void setResizable(bool resizable) { m_pHelper->setWidgetResizable(resizable); }
     void setMovable(bool movable) {m_pHelper->setWidgetMovable(movable); }
 
-protected:
-    virtual void resizeEvent(QResizeEvent *e) {
-        Q_UNUSED(e)
-        if (Qt::WindowMaximized == this->windowState()) {
-            m_pHelper->setShadowWidth(0);
-        } else {
-            m_pHelper->setShadowWidth(m_shadowSize);
-        }
-    }
-
 private:
     int m_shadowSize;
     MuShadowWidget *m_pShadowWidget;
@@ -157,6 +148,7 @@ private:
     QVBoxLayout *m_pShadowClientLayout;
     MuFramelessHelper *m_pHelper;
     MuTitleBar *m_titleBar;
+
 };
 
 typedef MuShadowWindow<QWidget> MuCustomWindowWidget;
