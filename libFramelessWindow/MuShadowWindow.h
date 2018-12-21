@@ -148,7 +148,6 @@ private:
     QVBoxLayout *m_pShadowClientLayout;
     MuFramelessHelper *m_pHelper;
     MuTitleBar *m_titleBar;
-
 };
 
 typedef MuShadowWindow<QWidget> MuCustomWindowWidget;

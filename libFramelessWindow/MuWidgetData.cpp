@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 自定义无边框窗体、对话框和提示框
  *
  * MuWidgetData.cpp
@@ -297,11 +297,20 @@ void MuWidgetData::moveWidget(const QPoint &gMousePos)
                 m_ptDragPos.setX(m_window->normalGeometry().width() - m_nRightLength);
             }
             m_ptDragPos.setY(m_oldShadowWidth + m_ptDragPos.y());
-            m_shadowContainerWidget->setContentsMargins(m_oldContentsMargin);
-            m_window->setWindowState(Qt::WindowNoState);
-            MuShadowWindow<QWidget> *pWindow = reinterpret_cast<MuShadowWindow<QWidget> *>(m_window);
-            if (pWindow != nullptr)
+            m_shadowContainerWidget->setContentsMargins(m_oldContentsMargin);            
+            MuShadowWindow<QWidget> *pWindow = static_cast<MuShadowWindow<QWidget> *>(m_window);
+
+            if (typeid(m_window).name() == "MuWinAeroShadowWindow") {
+                m_window->resize(m_window->normalGeometry().size());
+            } else {
+#ifdef Q_OS_LINUX
+                m_window->setWindowState(Qt::WindowNoState);
                 m_window->resize(pWindow->oldSize());
+#endif
+                m_window->resize(pWindow->normalGeometry().size());
+            }
+            m_window->showNormal();
+
             // 当全屏的时候先不显示橡皮筋，先还原大小，再显示橡皮筋
             if (d->m_bRubberBandOnMove) {
                 m_pRubberBand->setGeometry(m_window->geometry());
