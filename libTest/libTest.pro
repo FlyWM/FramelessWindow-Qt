@@ -9,6 +9,7 @@
 # CSDN: https://blog.csdn.net/a844651990
 #
 #---------------------------------------------
+
 TEMPLATE = app
 
 TARGET = libTest

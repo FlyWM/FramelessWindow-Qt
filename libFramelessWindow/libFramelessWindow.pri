@@ -57,10 +57,11 @@ FramelessWindow-buildlib{
     QT += widgets
     win32: {
         QT += winextras
-        }
+        LIBS += -lDwmapi
+    }
 }else{
-    win32: LIBS += -lDwmapi
     LIBS += -L$$PROJECT_LIBDIR -l$$LIBFRAMELESSWINDOW_NAME
+
 }
 
 
