@@ -55,6 +55,7 @@ FramelessWindow-buildlib{
         images.qrc
 
     QT += widgets
+
     win32: {
         QT += winextras
         LIBS += -lDwmapi
