@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 自定义无边框窗体、对话框和提示框
  *
  * MuWidgetData.cpp
@@ -127,7 +127,9 @@ void MuWidgetData::handleMousePressEvent(QMouseEvent *event)
                 m_pRubberBand->setGeometry(frameRect);
                 m_pRubberBand->show();
             }
-        } else if (d->m_bRubberBandOnMove) {
+        }
+        // 当全屏的时候先不显示橡皮筋，先还原大小，再显示橡皮筋
+        else if (d->m_bRubberBandOnMove && Qt::WindowMaximized != m_window->windowState()) {
             m_pRubberBand->setGeometry(frameRect);
             m_pRubberBand->show();
         }
@@ -282,7 +284,7 @@ void MuWidgetData::resizeWidget(const QPoint &gMousePos)
 
 void MuWidgetData::moveWidget(const QPoint &gMousePos)
 {
-    if (d->m_bRubberBandOnMove) {
+    if (d->m_bRubberBandOnMove && Qt::WindowMaximized != m_window->windowState()) {
         m_pRubberBand->move(gMousePos - m_ptDragPos);
     } else {
         // 如果全屏时移动窗口，窗口按点击位置还原
@@ -297,6 +299,12 @@ void MuWidgetData::moveWidget(const QPoint &gMousePos)
             m_shadowContainerWidget->setContentsMargins(m_oldContentsMargin);
             m_window->resize(m_window->normalGeometry().size());
             m_window->showNormal();
+            // 当全屏的时候先不显示橡皮筋，先还原大小，再显示橡皮筋
+            if (d->m_bRubberBandOnMove) {
+                m_pRubberBand->setGeometry(m_window->geometry());
+                m_pRubberBand->move(gMousePos - m_ptDragPos);
+                m_pRubberBand->show();
+            }
         } else {
             m_oldContentsMargin = m_shadowContainerWidget->contentsMargins();
         }
