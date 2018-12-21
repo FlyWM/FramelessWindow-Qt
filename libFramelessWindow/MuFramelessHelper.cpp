@@ -1,7 +1,7 @@
 ﻿/**
- * 自定义无边框窗体、对话框和提示框并封装成库
+ * 自定义无边框窗体、对话框和提示框
  *
- * framelesshelper.cpp
+ * MuFramelessHelper.cpp
  * 实现了FramelessHelper类。设置窗体是否可移动、缩放、橡皮筋等属性。
  *
  * FlyWM_

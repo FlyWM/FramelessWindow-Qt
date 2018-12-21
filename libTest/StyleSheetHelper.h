@@ -1,7 +1,7 @@
 ﻿/**
- * 自定义无边框窗体、对话框和提示框并封装成库
+ * 自定义无边框窗体、对话框和提示框
  *
- * stylesheethelper.h
+ * StyleSheetHelper.h
  * 加载qss文件。
  *
  * FlyWM_

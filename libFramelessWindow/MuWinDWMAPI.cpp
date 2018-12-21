@@ -1,4 +1,18 @@
-﻿#include "MuWinDWMAPI.h"
+﻿/**
+ * 自定义无边框窗体、对话框和提示框
+ *
+ * MuWinDwmapi.cpp
+ * 简单封装了Win平台下的DWM接口实现，后期可能弃用
+ *
+ * dnybz
+ * GitHub: https://github.com/dnybz
+ *
+ * FlyWM_
+ * GitHub: https://github.com/FlyWM
+ * CSDN: https://blog.csdn.net/a844651990
+ *
+ */
+#include "MuWinDWMAPI.h"
 
 #ifdef Q_OS_WIN32
 

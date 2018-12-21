@@ -1,7 +1,7 @@
 ﻿/**
- * 自定义无边框窗体、对话框和提示框并封装成库
+ * 自定义无边框窗体、对话框和提示框
  *
- * titlebar.h
+ * MuTitleBar.h
  * 自定义窗体的标题栏。
  *
  * FlyWM_
@@ -14,7 +14,7 @@
 #define MUTITLEBAR_H
 
 #include <QWidget>
-#include "framelesswindow_global.h"
+#include "FramelessWindow_Global.h"
 
 class QLabel;
 class QPushButton;

@@ -1,7 +1,7 @@
 ﻿/**
- * 自定义无边框窗体、对话框和提示框并封装成库
+ * 自定义无边框窗体、对话框和提示框
  *
- * cursorposcalculator.h
+ * MuCursorPosCalculator.h
  * 计算鼠标是否位于左、上、右、下、左上角、左下角、右上角、右下角
  *
  * FlyWM_

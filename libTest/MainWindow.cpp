@@ -1,4 +1,16 @@
-﻿#include <QLabel>
+﻿/**
+ * 自定义无边框窗体、对话框和提示框
+ *
+ * MainWindow.h
+ * 测试用例主要窗口
+ *
+ * FlyWM_
+ * GitHub: https://github.com/FlyWM
+ * CSDN: https://blog.csdn.net/a844651990
+ *
+ */
+
+#include <QLabel>
 #include <QDebug>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
@@ -42,13 +54,17 @@ MainWindow::MainWindow(QWidget *parent)
 #ifdef Q_OS_WIN32
     initAreoWindow();
     connect(ui->aeroBtn, &QPushButton::clicked, m_AeroWindow, &MuWinAeroShadowWindow::show);
+#else
+    ui->aeroBtn->hide();
 #endif
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+#ifdef Q_OS_WIN32
     delete m_AeroWindow;
+#endif
 }
 
 void MainWindow::onDialogBtnClicked()
@@ -91,15 +107,16 @@ void MainWindow::onWarningBtnClicked()
                                     QStringLiteral("This is a Warning MessageBox!"));
 }
 
+#ifdef Q_OS_WIN32
 void MainWindow::initAreoWindow()
 {
     m_AeroWindow = new MuWinAeroShadowWindow;
-    m_AeroWindow->setRubberBandOnMove(true);
-    m_AeroWindow->setRubberBandOnResize(true);
+//    m_AeroWindow->setRubberBandOnMove(true);
+//    m_AeroWindow->setRubberBandOnResize(true);
     m_AeroWindow->setWindowTitle(QStringLiteral("Test Aero Window"));
     m_AeroWindow->titleBar()->setObjectName("aeroTitleBar");
     QWidget *pClientWidget = new QWidget(m_AeroWindow);
     aeroUI->setupUi(pClientWidget);
     m_AeroWindow->setClientWidget(pClientWidget);
 }
-
+#endif

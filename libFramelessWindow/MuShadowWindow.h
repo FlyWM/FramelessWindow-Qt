@@ -1,4 +1,16 @@
-﻿#ifndef MUSHADOWWINDOW_H
+﻿/**
+ * 自定义无边框窗体、对话框和提示框
+ *
+ * MuShadowWindow.h
+ * 所有自定义窗口的基类，定义窗口各个位置的布局
+ *
+ * FlyWM_
+ * GitHub: https://github.com/FlyWM
+ * CSDN: https://blog.csdn.net/a844651990
+ *
+ */
+
+#ifndef MUSHADOWWINDOW_H
 #define MUSHADOWWINDOW_H
 
 #include <QWidget>
