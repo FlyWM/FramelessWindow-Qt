@@ -15,6 +15,7 @@
 #include <QObject>
 #include <QPoint>
 #include <QMargins>
+#include <QRect>
 #include "MuCursorPosCalculator.h"
 
 class MuFramelessHelperPrivate;
@@ -75,7 +76,8 @@ private:
     int m_oldShadowWidth;
     QMargins m_oldContentsMargin;
     QWidget *m_window;
-    QWidget* m_shadowContainerWidget;
+    QWidget *m_shadowContainerWidget;
+    QRect m_oldGeometry;
 };
 
 #endif // MUWIDGETDATA_H

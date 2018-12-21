@@ -135,6 +135,11 @@ QLabel *MuTitleBar::titleLabel() const
     return m_pTitleLabel;
 }
 
+QSize MuTitleBar::oldSize() const
+{
+    return m_oldSize;
+}
+
 void MuTitleBar::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e)
@@ -172,7 +177,16 @@ bool MuTitleBar::eventFilter(QObject *obj, QEvent *event)
     }
     case QEvent::Move:
     case QEvent::WindowStateChange:
+        updateMaximize();
+        return true;
+
     case QEvent::Resize:
+        if (m_window->isMaximized()) {
+            QResizeEvent *re = reinterpret_cast<QResizeEvent *>(event);
+            if (re != nullptr) {
+                m_oldSize = re->oldSize();
+            }
+        }
         updateMaximize();
         return true;
     default:
@@ -209,9 +223,8 @@ void MuTitleBar::onClicked()
 
 void MuTitleBar::updateMaximize()
 {
-    QWidget *pWindow = this->window();
-    if (pWindow->isTopLevel()) {
-        bool bMaximize = pWindow->isMaximized();
+    if (m_window != nullptr) {
+        bool bMaximize = m_window->isMaximized();
         if (bMaximize) {
             m_pMaximizeButton->setToolTip(tr("Restore"));
             m_pMaximizeButton->setProperty("maximizeProperty", "restore");
@@ -219,7 +232,6 @@ void MuTitleBar::updateMaximize()
             m_pMaximizeButton->setProperty("maximizeProperty", "maximize");
             m_pMaximizeButton->setToolTip(tr("Maximize"));
         }
-
         m_pMaximizeButton->setStyle(QApplication::style());
     }
 }

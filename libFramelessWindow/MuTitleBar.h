@@ -57,6 +57,12 @@ public:
     QPushButton *closeButton() const;
     QLabel *titleLabel() const;
 
+    /**
+     * @brief oldSize
+     * @return
+     */
+    QSize oldSize() const;
+
 protected:
     virtual void paintEvent(QPaintEvent *e);
 
@@ -88,7 +94,7 @@ signals:
 
 private:
     /**
-     * @brief updateMaximize 最大化/还原
+     * @brief updateMaximize update the button status
      */
     void updateMaximize();
 
@@ -99,11 +105,11 @@ private:
     QPushButton *m_pMaximizeButton;
     QPushButton *m_pCloseButton;
     QWidget *m_pCustomWidget; // 图标，标题，最大最小关闭按钮之外，自定义添加的内容
-
     QWidget* m_window;
     QWidget* m_shadowContainerWidget;
     QMargins m_oldContentsMargin;
     bool m_canResize;
+    QSize m_oldSize; // the size before Maximized
 };
 
 #endif // MUTITLEBAR_H

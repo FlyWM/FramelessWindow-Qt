@@ -43,7 +43,7 @@ FramelessWindow-buildlib{
         FramelessWindow_Global.h
 
     SOURCES += \
-        Muframelesshelper.cpp \
+        MuFramelessHelper.cpp \
         MuWidgetData.cpp\
         MuCursorPosCalculator.cpp \
         MuTitleBar.cpp \

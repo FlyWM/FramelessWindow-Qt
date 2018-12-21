@@ -39,6 +39,11 @@ MuCustomWindow::MuCustomWindow(QWidget *parent)
     resize(800, 600);
 }
 
+void MuCustomWindow::resizeEvent(QResizeEvent *e)
+{
+    qDebug() << "resize: " << this->geometry();
+}
+
 #ifdef Q_OS_WIN32
 /*
  * -----------------------------

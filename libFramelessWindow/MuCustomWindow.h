@@ -21,6 +21,9 @@ class FRAMELESSWINDOWSHARED_EXPORT MuCustomWindow : public MuShadowWindow<QWidge
 {
 public:
     explicit MuCustomWindow(QWidget *parent = nullptr);
+
+protected:
+    virtual void resizeEvent(QResizeEvent *e);
 };
 
 #ifdef Q_OS_WIN32
