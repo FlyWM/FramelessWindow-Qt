@@ -111,8 +111,8 @@ void MainWindow::onWarningBtnClicked()
 void MainWindow::initAreoWindow()
 {
     m_AeroWindow = new MuWinAeroShadowWindow;
-    m_AeroWindow->setRubberBandOnMove(true);
-    m_AeroWindow->setRubberBandOnResize(true);
+//    m_AeroWindow->setRubberBandOnMove(true);
+//    m_AeroWindow->setRubberBandOnResize(true);
     m_AeroWindow->setWindowTitle(QStringLiteral("Test Aero Window"));
     m_AeroWindow->titleBar()->setObjectName("aeroTitleBar");
     QWidget *pClientWidget = new QWidget(m_AeroWindow);

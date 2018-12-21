@@ -18,7 +18,8 @@
 #include "MuCustomWindow.h"
 
 #ifdef Q_OS_WIN32
-#include "MuWinDWMAPI.h"
+//#include "MuWinDWMAPI.h"
+#include <QtWin>
 #endif
 
 #ifdef Q_CC_MSVC
@@ -87,17 +88,13 @@ MuWinAeroShadowWindow::MuWinAeroShadowWindow(QWidget *parent)
     m_pHelper->setWidgetResizable(true);
     m_pHelper->setWidgetMovable(true);
 
-    BOOL enabled = FALSE;
-    enabled = MuWinDwmapi::instance()->dwmIsCompositionEnabledsEnabled();
+    bool enabled = QtWin::isCompositionEnabled();
+
+    HWND hwnd = (HWND)this->winId();
+    DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
+    ::SetWindowLong(hwnd, GWL_STYLE, style | WS_THICKFRAME | WS_CAPTION);
     if (enabled) {
-        HWND hwnd = (HWND)this->winId();
-        DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
-        ::SetWindowLong(hwnd, GWL_STYLE, style | WS_THICKFRAME | WS_CAPTION);
-        //保留一个像素的边框宽度，否则系统不会绘制边框阴影
-        //we better left 1 piexl width of border untouch, so OS can draw nice shadow around it
-        const MARGINS shadow = { 1, 1, 1, 1 };
-        MuWinDwmapi::instance()->dwmExtendFrameIntoClientArea(hwnd, &shadow);
-        MuWinDwmapi::instance()->dwmEnableTransition(hwnd, true);
+        QtWin::extendFrameIntoClientArea(this, 1, 1, 1, 1);
     }
 }
 
