@@ -1,7 +1,7 @@
 ﻿/**
- * 自定义无边框窗体、对话框和提示框并封装成库
+ * 自定义无边框窗体、对话框和提示框
  *
- * framelesshelperprivate.h
+ * MuFramelessHelperPrivate.h
  * 存储界面对应的数据集合，以及是否可移动、可缩放属性。
  *
  * FlyWM_

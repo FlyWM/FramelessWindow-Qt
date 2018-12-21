@@ -1,4 +1,16 @@
-﻿#ifndef MUCUSTOMWINDOW_H
+﻿/**
+ * 自定义无边框窗体、对话框和提示框
+ *
+ * MuCustomWindow.h
+ * 自定义无边框窗体、对话框和提示框的实现文件，主要API头文件
+ *
+ * FlyWM_
+ * GitHub: https://github.com/FlyWM
+ * CSDN: https://blog.csdn.net/a844651990
+ *
+ */
+
+#ifndef MUCUSTOMWINDOW_H
 #define MUCUSTOMWINDOW_H
 
 #include <QDialogButtonBox>

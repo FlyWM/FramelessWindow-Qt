@@ -1,4 +1,16 @@
-﻿#include <QDialogButtonBox>
+﻿/**
+ * 自定义无边框窗体、对话框和提示框
+ *
+ * MuCustomWindow.cpp
+ * 自定义无边框窗体、对话框和提示框的实现文件，主要API实现文件
+ *
+ * FlyWM_
+ * GitHub: https://github.com/FlyWM
+ * CSDN: https://blog.csdn.net/a844651990
+ *
+ */
+
+#include <QDialogButtonBox>
 #include <QLabel>
 #include <QCheckBox>
 #include <QLabel>

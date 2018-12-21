@@ -1,4 +1,16 @@
-﻿#include <QLabel>
+﻿/**
+ * 自定义无边框窗体、对话框和提示框
+ *
+ * MainWindow.h
+ * 测试用例主要窗口
+ *
+ * FlyWM_
+ * GitHub: https://github.com/FlyWM
+ * CSDN: https://blog.csdn.net/a844651990
+ *
+ */
+
+#include <QLabel>
 #include <QDebug>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"

@@ -1,7 +1,7 @@
-/**
- * 自定义无边框窗体、对话框和提示框并封装成库
+﻿/**
+ * 自定义无边框窗体、对话框和提示框
  *
- * framelesswindow_global.h
+ * FramelessWindow_Global.h
  *
  * FlyWM_
  * GitHub: https://github.com/FlyWM

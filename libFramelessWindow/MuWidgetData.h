@@ -1,4 +1,16 @@
-﻿#ifndef MUWIDGETDATA_H
+﻿/**
+ * 自定义无边框窗体、对话框和提示框
+ *
+ * MuWidgetData.h
+ * 处理窗口的放大缩小移动等事件
+ *
+ * FlyWM_
+ * GitHub: https://github.com/FlyWM
+ * CSDN: https://blog.csdn.net/a844651990
+ *
+ */
+
+#ifndef MUWIDGETDATA_H
 #define MUWIDGETDATA_H
 #include <QObject>
 #include <QPoint>

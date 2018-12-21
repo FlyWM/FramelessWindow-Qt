@@ -1,10 +1,15 @@
 ﻿/**
- * 自定义无边框窗体、对话框和提示框并封装成库
+ * 自定义无边框窗体、对话框和提示框
  *
- * windwmapi.h
+ * MuWinDwmapi.h
+ * 简单封装了Win平台下的DWM接口，后期可能弃用
  *
  * dnybz
  * GitHub: https://github.com/dnybz
+ *
+ * FlyWM_
+ * GitHub: https://github.com/FlyWM
+ * CSDN: https://blog.csdn.net/a844651990
  *
  */
 

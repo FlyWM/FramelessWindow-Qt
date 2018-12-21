@@ -1,3 +1,15 @@
+#---------------------------------------------
+# 自定义无边框窗体、对话框和提示框
+#
+# libFramelessWindow.pri
+# 工程文件
+#
+# FlyWM_
+# GitHub: https://github.com/FlyWM
+# CSDN: https://blog.csdn.net/a844651990
+#
+#---------------------------------------------
+
 INCLUDEPATH += $$PWD
 
 DEPENDPATH += $$PWD

@@ -1,4 +1,16 @@
-﻿#ifndef MUSHADOWWIDGET_H
+﻿/**
+ * 自定义无边框窗体、对话框和提示框
+ *
+ * MuShadowWidget.h
+ * 实现边框阴影
+ *
+ * FlyWM_
+ * GitHub: https://github.com/FlyWM
+ * CSDN: https://blog.csdn.net/a844651990
+ *
+ */
+
+#ifndef MUSHADOWWIDGET_H
 #define MUSHADOWWIDGET_H
 
 #include <QWidget>

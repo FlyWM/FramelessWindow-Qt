@@ -1,4 +1,16 @@
-﻿#ifndef MAINWINDOW_H
+﻿/**
+ * 自定义无边框窗体、对话框和提示框
+ *
+ * MainWindow.h
+ * 测试用例主要窗口
+ *
+ * FlyWM_
+ * GitHub: https://github.com/FlyWM
+ * CSDN: https://blog.csdn.net/a844651990
+ *
+ */
+
+#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QWidget>
