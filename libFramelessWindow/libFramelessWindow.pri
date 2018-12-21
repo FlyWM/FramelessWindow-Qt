@@ -42,9 +42,12 @@ FramelessWindow-buildlib{
     RESOURCES += \
         images.qrc
 
-    QT += widgets winextras
+    QT += widgets
+    win32 : {
+        QT += winextras
+        LIBS += -lDwmapi
+    }
 
-    LIBS += -lDwmapi
 
 }else{
     LIBS += -L$$PROJECT_LIBDIR -l$$LIBFRAMELESSWINDOW_NAME
