@@ -5,7 +5,14 @@ FlyWM_
 GitHub: https://github.com/FlyWM
 CSDN: https://blog.csdn.net/a844651990
 
-效果图：
+# 使用方法
+1. 只需要包含头文件 MuCustomWindow.h 即可。
+2. 设置客户区域的widget调用函数 void setClientWidget(QWidget *client)或者调用QLayout* clientLayout()函数去添加自己需要的widget。
+3. 获取标题栏MuTitleBar *titleBar() const，然后可以获取标题栏的各个部分。
+4. 如果想要在标题栏添加选项，可以调用titleBar()->customWidget()获取出去按钮、图标和标题之外的widget。
+
+
+# 效果图：
 ### Window
 ![image](https://github.com/FlyWM/FramelessWindow-Qt/blob/master/samples/CustomWindow.png)
 
