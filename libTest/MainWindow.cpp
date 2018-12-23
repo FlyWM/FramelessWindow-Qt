@@ -33,7 +33,11 @@ MainWindow::MainWindow(QWidget *parent)
     this->titleBar()->minimizeButton()->setObjectName("minimizeButton");
     this->titleBar()->maximizeButton()->setObjectName("maximizeButton");
     this->titleBar()->closeButton()->setObjectName("closeButton");
+
+    // 设置中心客户区域
     setClientWidget(pClientWidget);
+
+    // 设置messagebox的按钮样式表和标题样式表
     const QString buttonStyle = "QPushButton {  \
                                     border: none; \
                                     background-color: #52baff; \

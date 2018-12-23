@@ -47,7 +47,8 @@ public:
     void setTitleHeight(int height);
 
     /**
-     * @brief customWidget 自定义添加内容
+     * @brief customWidget
+     *  自定义添加内容。除按钮图标标题之外的widget
      * @return
      */
     QWidget *customWidget() const;

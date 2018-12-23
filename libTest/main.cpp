@@ -26,8 +26,5 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-//    MuWinAeroShadowWindow w1;
-//    w1.show();
-
     return a.exec();
 }

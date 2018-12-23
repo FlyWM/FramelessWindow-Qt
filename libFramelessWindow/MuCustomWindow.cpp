@@ -14,12 +14,11 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QLabel>
-#include "MuWinDWMAPI.h"
 #include "MuCustomWindow.h"
 
 #ifdef Q_OS_WIN32
-//#include "MuWinDWMAPI.h"
 #include <QtWin>
+#include "MuWinDWMAPI.h"
 #endif
 
 #ifdef Q_CC_MSVC
@@ -37,11 +36,6 @@ MuCustomWindow::MuCustomWindow(QWidget *parent)
         this->setWindowIcon(QIcon(":/images/logo.jpg"));
     }
     resize(800, 600);
-}
-
-void MuCustomWindow::resizeEvent(QResizeEvent *e)
-{
-    qDebug() << "resize: " << this->geometry();
 }
 
 #ifdef Q_OS_WIN32
@@ -94,11 +88,10 @@ MuWinAeroShadowWindow::MuWinAeroShadowWindow(QWidget *parent)
     m_pHelper->setWidgetMovable(true);
 
     bool enabled = QtWin::isCompositionEnabled();
-
-    HWND hwnd = (HWND)this->winId();
-    DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
-    ::SetWindowLong(hwnd, GWL_STYLE, style | WS_THICKFRAME | WS_CAPTION);
     if (enabled) {
+        HWND hwnd = (HWND)this->winId();
+        DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
+        ::SetWindowLong(hwnd, GWL_STYLE, style | WS_THICKFRAME | WS_CAPTION);
         QtWin::extendFrameIntoClientArea(this, 1, 1, 1, 1);
     }
 }

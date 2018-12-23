@@ -307,9 +307,11 @@ void MuWidgetData::moveWidget(const QPoint &gMousePos)
                 m_window->setWindowState(Qt::WindowNoState);
                 m_window->resize(pWindow->oldSize());
 #endif
+                // 先resize一下，不然Aero窗体会有明显的误差
                 m_window->resize(pWindow->normalGeometry().size());
             }
             m_window->showNormal();
+
 
             // 当全屏的时候先不显示橡皮筋，先还原大小，再显示橡皮筋
             if (d->m_bRubberBandOnMove) {
