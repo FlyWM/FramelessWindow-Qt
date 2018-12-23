@@ -96,6 +96,16 @@ MuWinAeroShadowWindow::MuWinAeroShadowWindow(QWidget *parent)
     }
 }
 
+void MuWinAeroShadowWindow::setTitleBarHeight(int height)
+{
+    if (height < 0)
+        return;
+
+    m_titleBar->setFixedHeight(height);
+    m_pHelper->setTitleHeight(height);
+}
+
+
 void MuWinAeroShadowWindow::setClientWidget(QWidget *client)
 {
     if (client == nullptr)

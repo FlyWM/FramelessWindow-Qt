@@ -117,6 +117,15 @@ public:
     QSize oldSize() const { return m_titleBar->oldSize(); }
     void setRubberBandOnMove(bool enable) { m_pHelper->setRubberBandOnMove(enable); }
     void setRubberBandOnResize(bool enable) { m_pHelper->setRubberBandOnResize(enable); }
+    void setTitleBarHeight(int height)
+    {
+        if (height < 0)
+            return;
+
+        m_titleBar->setFixedHeight(height);
+        m_pHelper->setTitleHeight(height);
+    }
+
 
     /**
      * @brief setClientWidget

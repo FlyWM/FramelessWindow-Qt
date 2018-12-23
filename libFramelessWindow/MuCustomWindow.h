@@ -41,6 +41,7 @@ public:
     MuTitleBar *titleBar() const { return m_titleBar; }
     void setRubberBandOnMove(bool enable) { m_pHelper->setRubberBandOnMove(enable); }
     void setRubberBandOnResize(bool enable) { m_pHelper->setRubberBandOnResize(enable); }
+    void setTitleBarHeight(int height);
 
     /**
      * @brief setClientWidget
