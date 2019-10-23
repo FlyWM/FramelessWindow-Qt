@@ -76,10 +76,9 @@ void MainWindow::onDialogBtnClicked()
     QLabel label("This is a Custom Dialog!");
     label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     dialog.titleBar()->titleLabel()->setObjectName("dialogTitleLabel");
-    dialog.setModal(false);
+    dialog.setModal(true);
     dialog.setWindowTitle("dialog");
     dialog.setClientWidget(&label);
-    dialog.setModal(false);
     dialog.exec();
 }
 
