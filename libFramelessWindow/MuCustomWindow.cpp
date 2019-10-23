@@ -149,6 +149,7 @@ MuCustomDialog::MuCustomDialog(QWidget *parent)
     setResizable(false);
     titleBar()->setMinimumVisible(false);
     titleBar()->setMaximumVisible(false);
+    setModal(false);
 }
 
 

@@ -16,7 +16,9 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <QApplication>
+#ifdef Q_OS_WIN32
 #include <qt_windows.h>
+#endif
 #include <QDesktopWidget>
 #include <QStyleOption>
 #include <QPainter>

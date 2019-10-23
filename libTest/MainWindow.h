@@ -44,6 +44,7 @@ private:
 private:
     Ui::MainWindow *ui;
     Ui::AeroCLientWidget *aeroUI;
+    MuCustomDialog *dialog;
 #ifdef Q_OS_WIN32
     MuWinAeroShadowWindow *m_AeroWindow;
 #endif

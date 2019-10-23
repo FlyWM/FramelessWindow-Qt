@@ -49,7 +49,6 @@ MainWindow::MainWindow(QWidget *parent)
                                  }";
     MuCustomMessageBox::setTitleStyleSheet(QStringLiteral("QLabel { color: black }"));
     MuCustomMessageBox::setButtonStyleSheet(QDialogButtonBox::Ok, buttonStyle);
-
     connect(ui->dialogBtn, &QPushButton::clicked, this, &MainWindow::onDialogBtnClicked);
     connect(ui->informationBtn, &QPushButton::clicked, this, &MainWindow::onInformationBtnClicked);
     connect(ui->errorBtn, &QPushButton::clicked, this, &MainWindow::onErrorBtnClicked);
@@ -77,9 +76,10 @@ void MainWindow::onDialogBtnClicked()
     QLabel label("This is a Custom Dialog!");
     label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     dialog.titleBar()->titleLabel()->setObjectName("dialogTitleLabel");
-    dialog.setModal(true);
+    dialog.setModal(false);
     dialog.setWindowTitle("dialog");
     dialog.setClientWidget(&label);
+    dialog.setModal(false);
     dialog.exec();
 }
 
