@@ -14,5 +14,10 @@
         <file>images/warningYellow_48.png</file>
         <file>images/logo.jpg</file>
         <file>images/informationBlue_48.png</file>
+        <file>images/winwindow/1.jpg</file>
+        <file>images/winwindow/close.png</file>
+        <file>images/winwindow/maximize.png</file>
+        <file>images/winwindow/minimize.png</file>
+        <file>images/winwindow/restore.png</file>
     </qresource>
 </RCC>

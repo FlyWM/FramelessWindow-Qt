@@ -15,6 +15,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "ui_AeroClientWidget.h"
+#include "MuWinWindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : MuCustomWindow(parent)
@@ -57,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
 #ifdef Q_OS_WIN32
     initAreoWindow();
     connect(ui->aeroBtn, &QPushButton::clicked, m_AeroWindow, &MuWinAeroShadowWindow::show);
+    connect(ui->winWindowBtn, &QPushButton::clicked, this, &MainWindow::onWinWindow);
 #else
     ui->aeroBtn->hide();
 #endif
@@ -114,8 +116,8 @@ void MainWindow::onWarningBtnClicked()
 void MainWindow::initAreoWindow()
 {
     m_AeroWindow = new MuWinAeroShadowWindow;
-//    m_AeroWindow->setRubberBandOnMove(true);
-//    m_AeroWindow->setRubberBandOnResize(true);
+    m_AeroWindow->setRubberBandOnMove(true);
+    m_AeroWindow->setRubberBandOnResize(true);
     m_AeroWindow->setWindowTitle(QStringLiteral("Test Aero Window"));
     m_AeroWindow->titleBar()->setObjectName("aeroTitleBar");
     QWidget *pClientWidget = new QWidget(m_AeroWindow);
@@ -123,3 +125,10 @@ void MainWindow::initAreoWindow()
     m_AeroWindow->setClientWidget(pClientWidget);
 }
 #endif
+
+void MainWindow::onWinWindow()
+{
+    MuWinWindow *window = new MuWinWindow;
+    window->resize(800, 600);
+    window->show();
+}

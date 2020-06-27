@@ -91,6 +91,19 @@
     <string>AeroWindow</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="winWindowBtn">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>240</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>WinWindow</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

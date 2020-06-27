@@ -35,6 +35,7 @@ private slots:
     void onErrorBtnClicked();
     void onSuccessBtnClicked();
     void onWarningBtnClicked();
+    void onWinWindow();
 
 private:
 #ifdef Q_OS_WIN32
