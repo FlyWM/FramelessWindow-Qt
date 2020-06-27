@@ -7,7 +7,6 @@
 #include <QApplication>
 #include <QPainter>
 #include <QDebug>
-
 #include "muwinwindow.h"
 
 MuWinTitlebar::MuWinTitlebar(QWidget *parent)
