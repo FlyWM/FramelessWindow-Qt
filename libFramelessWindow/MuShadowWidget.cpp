@@ -37,7 +37,7 @@ QImage MuMakeShadowImage(int shadowSize, bool activated = false, int borderSize 
     //left
     for (int y = shadowSize; y < szImage.height() - shadowSize; y++) {
         for (int x = 0; x < shadowSize; x++) {
-            int i = x + 1;
+            int i = x;
             int alpha = MuMakeAlpha(i, f, shadowSize);
             image.setPixelColor(x, y, QColor(0, 0, 0, alpha));
         }
@@ -52,7 +52,7 @@ QImage MuMakeShadowImage(int shadowSize, bool activated = false, int borderSize 
     }
     //top
     for (int y = 0; y < shadowSize; y++) {
-        int i = y + 1;
+        int i = y;
         for (int x = shadowSize; x < szImage.width() - shadowSize; x++) {
             int alpha = MuMakeAlpha(i, f, shadowSize);
             image.setPixelColor(x, y, QColor(0, 0, 0, alpha));

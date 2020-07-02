@@ -26,7 +26,7 @@
 #endif
 
 MuCustomWindow::MuCustomWindow(QWidget *parent)
-    : MuShadowWindow<QWidget>(true, 15, parent)
+    : MuShadowWindow<QWidget>(true, 20, parent)
 {
     if (parent != nullptr) {
         setWindowTitle(parent->windowTitle());
